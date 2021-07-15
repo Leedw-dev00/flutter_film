@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -186,6 +187,7 @@ class _LoginPageState extends State<LoginPage>{
                   child: Column(
                     children: <Widget>[
                       TextField(
+                        cursorHeight: 20.0,
                         style: TextStyle(
                           fontSize: 13.0, height: 1.0
                         ),
@@ -196,6 +198,7 @@ class _LoginPageState extends State<LoginPage>{
                       ),
                       SizedBox(height: 15.0,),
                       TextField(
+                        cursorHeight: 20.0,
                         obscureText: true,
                         style: TextStyle(
                             fontSize: 13.0, height: 1.0
@@ -241,6 +244,7 @@ class _LoginPageState extends State<LoginPage>{
                     ),
                     ),
                       onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
                         print('회원가입');
                       },
                     ),
