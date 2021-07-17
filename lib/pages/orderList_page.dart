@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/estimate_page.dart';
 
 class OrderListPage extends StatefulWidget{
   @override
@@ -34,7 +35,12 @@ class _OrderListPageState extends State<OrderListPage>{
         child: Container(
           child: Column(
             children: <Widget>[
-              Text('OrderListPage')
+              TextButton(
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EstimatePage()));
+                  },
+                  child: Text('견적서 보기')
+              ),
             ],
           ),
         ),
