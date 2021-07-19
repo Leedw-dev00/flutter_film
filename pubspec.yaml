@@ -55,6 +55,11 @@ flutter:
     - assets/images/pro3.jpg
     - assets/images/pro4.png
     - assets/images/pro5.png
+    - assets/images/port1.jpg
+    - assets/images/port2.jpg
+    - assets/images/port3.jpg
+    - assets/images/port4.jpg
+    - assets/images/port5.jpg
     - assets/images/
 
 

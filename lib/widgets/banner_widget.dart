@@ -33,18 +33,19 @@ class Home_Banner extends StatelessWidget{
                   Text('인테리어 전문가로 배정 해드립니다', style:
                   TextStyle(
                       fontSize: 18.0,
-                      fontWeight: FontWeight.w600
+                      fontWeight: FontWeight.w700
                   ),
                   ),
                   Text('한 번의 견적으로 5명의 전문가를 추천해드려요', style:
                   TextStyle(
                       fontSize: 12.0,
-                      fontWeight: FontWeight.w400
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w700
                   ),
                   ),
                   SizedBox(height: 25.0,),
                   ButtonTheme(
-                    minWidth: MediaQuery.of(context).size.width*0.3,
+                    minWidth: 120,
                     height: 35.0,
                     child: RaisedButton(
                         color: Color(0xFF398FE2),

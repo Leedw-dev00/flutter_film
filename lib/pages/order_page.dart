@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/matching_page.dart';
 
 
 class OrderPage extends StatefulWidget{
@@ -7,6 +8,26 @@ class OrderPage extends StatefulWidget{
 }
 
 class _OrderPageState extends State<OrderPage>{
+
+  DateTime _selectedDate = DateTime.now();
+  final _valueList1 = ["선택","아파트", "주택", "사무실", "상가", "기타"];
+  final _valueList2 = ["선택", "미터제곱", "평형", "기타"];
+  var _selectedValue1 = '선택';
+  var _selectedValue2 = '선택';
+
+  _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2021),
+        lastDate: DateTime(2999)
+    );
+    if(picked != null && picked != _selectedDate)
+      setState(() {
+        _selectedDate = picked;
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +52,321 @@ class _OrderPageState extends State<OrderPage>{
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
+          width: MediaQuery.of(context).size.width,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              Text('OrderPage')
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                color: Color(0xFFF0F0F0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        SizedBox(width: 5.0,),
+                        Text('날짜 선택')
+                      ],
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      height: 45.0,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                          borderRadius: BorderRadius.circular(3.0)
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(width: 10.0,),
+                          Text('${_selectedDate.toLocal()}'.split(' ')[0], style:
+                          TextStyle(
+                              fontSize: 16.0
+                          ),
+                          ),
+                          Spacer(),
+                          IconButton(icon: Icon(Icons.calendar_today_outlined), onPressed: (){
+                            _selectDate(context);
+                          })
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                color: Color(0xFFF0F0F0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        SizedBox(width: 5.0,),
+                        Text('건물 형태')
+                      ],
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      height: 45.0,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                          borderRadius: BorderRadius.circular(3.0)
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                        value: _selectedValue1,
+                        items: _valueList1.map(
+                                (value){
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value, style: TextStyle(color: Colors.grey),),
+                              );
+                            }
+                          ).toList(),
+                          onChanged: (value){
+                            setState(() {
+                              _selectedValue1 = value;
+                            });
+                          },
+                        ),
+                      )
+                    )
+                  ],
+                )
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  color: Color(0xFFF0F0F0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text('면적')
+                        ],
+                      ),
+                      SizedBox(height: 10.0,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 1,
+                              child: Container(
+                                height: 45.0,
+                                child: TextField(
+                                  cursorHeight: 20.0,
+                                  style: TextStyle(
+                                      fontSize: 13.0, height: 1.0
+                                  ),
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    filled: true,
+                                    labelText: '숫자를 입력하세요',
+                                    labelStyle: TextStyle(fontSize: 11.0),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Color(0xFF636363), width: 0.5),
+                                    ),
+                                    border: OutlineInputBorder(borderSide: BorderSide(width: 0.5)),
+                                  ),
+                                ),
+                              )
+                          ),
+                          SizedBox(width: 5.0,),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                height: 45.0,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                                    borderRadius: BorderRadius.circular(3.0)
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    value: _selectedValue2,
+                                    items: _valueList2.map(
+                                            (value){
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(value, style: TextStyle(color: Colors.grey),),
+                                          );
+                                        }
+                                    ).toList(),
+                                    onChanged: (value){
+                                      setState(() {
+                                        _selectedValue2 = value;
+                                      });
+                                    },
+                                  ),
+                                )
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  )
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                color: Color(0xFFF0F0F0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        SizedBox(width: 5.0,),
+                        Text('서비스 범위')
+                      ],
+                    ),
+                    Text('서비스를 희망하는 내용을 작성해주세요', style:
+                      TextStyle(
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.w200,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    SizedBox(height: 15.0,),
+                    Container(
+                      height: 80.0,
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        cursorHeight: 20.0,
+                        style: TextStyle(
+                            fontSize: 13.0, height: 1.0
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          labelText: '대략적인 내용을 입력해주세요',
+                          labelStyle: TextStyle(fontSize: 11.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFF636363), width: 0.5),
+                          ),
+                          border: OutlineInputBorder(borderSide: BorderSide(width: 0.5)),
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  color: Color(0xFFF0F0F0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text('사진 추가(선택)')
+                        ],
+                      ),
+                      Text('자세한 상담을 위해 작업이 필요한 곳의 사진을 추가해주세요', style:
+                        TextStyle(
+                          fontSize: 10.0,
+                          fontWeight: FontWeight.w200,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      SizedBox(height: 15.0,),
+                      Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                          borderRadius: BorderRadius.circular(3.0),
+                          color: Colors.white
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(Icons.camera_alt_outlined, color: Colors.grey, size: 70.0,),
+                          ],
+                        )
+                      ),
+                    ],
+                  ),
+              ),
+              SizedBox(height: 20.0),
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(
+                  child: Text('신청하기', style:
+                    TextStyle(
+                      fontSize: 13.0,
+                      fontWeight: FontWeight.w600
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF398FE2)
+                  ),
+                  onPressed: (){
+                    print('신청하기');
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingPage()));
+                  },
+                ),
+              ),
             ],
           ),
         ),

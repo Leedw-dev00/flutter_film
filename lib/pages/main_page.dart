@@ -3,6 +3,8 @@ import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/my_page.dart';
 import 'package:flutter_film/pages/noti_page.dart';
 import 'package:flutter_film/pages/orderList_page.dart';
+import 'package:flutter_film/pages/point_page.dart';
+import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/widgets/banner_widget.dart';
 
 
@@ -33,7 +35,7 @@ class _MainPageState extends State<MainPage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Image.asset('assets/images/logo.jpeg', width: MediaQuery.of(context).size.width*0.4, fit: BoxFit.cover,),
+        title: Image.asset('assets/images/logo.jpeg', width: 170.0, fit: BoxFit.cover,),
         actions: [
           IconButton(
             icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
@@ -55,6 +57,7 @@ class _MainPageState extends State<MainPage>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Home_Banner(),
+              SizedBox(height: 20.0,),
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0, bottom: 10.0),
                 child: Column(
@@ -77,13 +80,14 @@ class _MainPageState extends State<MainPage>{
               ),
               Container(
                 color: Colors.white,
-                height: 500.0,
                 width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
+                child: Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePPage()));
+                      },
+                      child: Container(
                         color: Color(0xFFF0F0F0),
                         padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
                         child: Column(
@@ -124,265 +128,182 @@ class _MainPageState extends State<MainPage>{
                           ],
                         ),
                       ),
-                      SizedBox(height: 10.0),
+                    ),
+                    SizedBox(height: 10.0),
 
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro2.jpg',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('한솔 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.2', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
+                    Container(
+                      color: Color(0xFFF0F0F0),
+                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/pro2.jpg',),
+                                radius: 20,
+                              ),
+                              SizedBox(width: 20.0,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                  Text('한솔 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                      Text('4.2', style: TextStyle(fontSize: 12.0),)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                ],
+                              ),
 
-                              ],
-                            )
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
-                      SizedBox(height: 10.0,),
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro3.jpg',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('대신 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.6', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      color: Color(0xFFF0F0F0),
+                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/pro3.jpg',),
+                                radius: 20,
+                              ),
+                              SizedBox(width: 20.0,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                  Text('대신 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                      Text('4.6', style: TextStyle(fontSize: 12.0),)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                ],
+                              ),
 
-                              ],
-                            )
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
-                      SizedBox(height: 10.0,),
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro4.png',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('성운 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      color: Color(0xFFF0F0F0),
+                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/pro4.png',),
+                                radius: 20,
+                              ),
+                              SizedBox(width: 20.0,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                  Text('성운 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                      Text('4.7', style: TextStyle(fontSize: 12.0),)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                ],
+                              ),
 
-                              ],
-                            )
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
+                    ),
 
-                      SizedBox(height: 10.0,),
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro5.png',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('우원건업', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      color: Color(0xFFF0F0F0),
+                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              CircleAvatar(
+                                backgroundImage: AssetImage('assets/images/pro5.png',),
+                                radius: 20,
+                              ),
+                              SizedBox(width: 20.0,),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                  Text('우원건업', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                  Row(
+                                    children: <Widget>[
+                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                      Text('4.7', style: TextStyle(fontSize: 12.0),)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                ],
+                              ),
 
-                              ],
-                            )
-                          ],
-                        ),
+                            ],
+                          )
+                        ],
                       ),
+                    ),
 
-                      SizedBox(height: 10.0,),
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro.jpg',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('ABC 컴퍼니', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
-
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 10.0,),
-                      Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro.jpg',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('빠민 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
-                                      children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('3.0', style: TextStyle(fontSize: 12.0),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
+                  ],
                 ),
               ),
+              SizedBox(height: 40.0),
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0, bottom: 10.0),
                 child: Column(
@@ -406,35 +327,31 @@ class _MainPageState extends State<MainPage>{
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 width: MediaQuery.of(context).size.width,
-                height: 250.0,
                 color: Colors.white,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                        ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
                       ),
-                      SizedBox(height: 10.0,),
-                      Container(
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                        ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
                       ),
-                      SizedBox(height: 10.0,),
-                      Container(
-                        height: 80.0,
-                        decoration: BoxDecoration(
-                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                        ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      height: 80.0,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
                       ),
-                    ],
-                  ),
-                )
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 80.0,),
             ],
@@ -502,6 +419,19 @@ class _MainPageState extends State<MainPage>{
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => OrderListPage())
+                  );
+                },
+              ),
+              ListTile(
+                title: Text('포인트', style:
+                TextStyle(
+                    fontSize: 13.0,
+                    fontWeight: FontWeight.bold
+                ),
+                ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PointPage())
                   );
                 },
               ),
