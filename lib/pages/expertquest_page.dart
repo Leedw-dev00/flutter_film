@@ -3,13 +3,13 @@ import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/expertmy_page.dart';
 
 
-class RequestPage extends StatefulWidget {
+class ExpertquestPage extends StatefulWidget {
 
   @override
-  _RequestPageState createState() => _RequestPageState();
+  _ExpertquestPageState createState() => _ExpertquestPageState();
 }
 
-class _RequestPageState extends State<RequestPage> {
+class _ExpertquestPageState extends State<ExpertquestPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class _RequestPageState extends State<RequestPage> {
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('의뢰내역', style:
+        title: Text('작업내역', style:
         TextStyle(
           color: Colors.black,
           fontSize: 16.0,
@@ -47,7 +47,7 @@ class _RequestPageState extends State<RequestPage> {
                     children: <Widget>[
                       SizedBox(height:30),
                       Text(
-                        '진행중인 의뢰',
+                        '진행중인 작업',
                         style: TextStyle(
                           fontSize:15,
                         ),
@@ -77,7 +77,7 @@ class _RequestPageState extends State<RequestPage> {
                                     ),
                                   ),
                                   Text(
-                                    '한솔 컴퍼니',
+                                    '홍길동 고객님',
                                     style: TextStyle(
                                       fontSize:13,
                                     ),
@@ -103,7 +103,7 @@ class _RequestPageState extends State<RequestPage> {
                       ),
                       SizedBox(height: 40.0,),
                       Text(
-                        '완료된 의뢰',
+                        '완료된 작업',
                         style: TextStyle(
                           fontSize:15,
                         ),
@@ -140,7 +140,7 @@ class _RequestPageState extends State<RequestPage> {
                                           ),
                                         ),
                                         Text(
-                                          '한솔 컴퍼니',
+                                          '홍길동 고객님',
                                           style: TextStyle(
                                             fontSize:13,
                                           ),
@@ -172,7 +172,7 @@ class _RequestPageState extends State<RequestPage> {
 
                                   width: 130.0,
                                   child: ElevatedButton(
-                                      child:Text('후기 작성하기'),
+                                      child:Text('후기 확인하기'),
                                       onPressed: (){
                                         Navigator.push(
                                           context,
@@ -211,7 +211,7 @@ class _RequestPageState extends State<RequestPage> {
                                           ),
                                         ),
                                         Text(
-                                          '한솔 컴퍼니',
+                                          '홍길동 고객님',
                                           style: TextStyle(
                                             fontSize:13,
                                           ),
@@ -245,7 +245,7 @@ class _RequestPageState extends State<RequestPage> {
 
                                   width: 130.0,
                                   child: ElevatedButton(
-                                      child:Text('후기 작성하기'),
+                                      child:Text('후기 확인하기'),
                                       onPressed: (){
                                         Navigator.push(
                                           context,
@@ -284,7 +284,7 @@ class _RequestPageState extends State<RequestPage> {
                                           ),
                                         ),
                                         Text(
-                                          '한솔 컴퍼니',
+                                          '홍길동 고객님',
                                           style: TextStyle(
                                             fontSize:13,
                                           ),
@@ -316,7 +316,7 @@ class _RequestPageState extends State<RequestPage> {
 
                                   width: 130.0,
                                   child: ElevatedButton(
-                                      child:Text('후기 작성하기'),
+                                      child:Text('후기 확인하기'),
                                       onPressed: (){
                                         Navigator.push(
                                           context,

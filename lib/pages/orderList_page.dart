@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/orderW_page.dart';
 
 class OrderListPage extends StatefulWidget{
   @override
@@ -39,56 +40,117 @@ class _OrderListPageState extends State<OrderListPage>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                width: MediaQuery.of(context).size.width*0.9,
-                height: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 1.0, color: Color(0xFF398FE2),),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Color(0xffffffff),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/pro.jpg'),
-                          radius: 30,
-                        ),
-                        SizedBox(width:20.0,),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text('인테리어', style: TextStyle(fontSize:10.0,)),
-                            Text('한솔 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-                            Row(
-                              children: <Widget> [
-                                Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                Text('4.7', style: TextStyle(fontSize:12.0),),
-                                SizedBox(width:5),
-                                Text('(10개)', style: TextStyle(fontSize:10.0),),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget> [
-                            Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                            Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                          ],
-                        ),
-                        SizedBox(width: 10.0,)
-                      ],
-                    ),
-                  ],
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OrderwPage())
+                  );
+                  print('success');
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  width: 350,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0, color: Color(0xFF398FE2),),
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffffffff),
+                  ),
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/pro.jpg'),
+                            radius: 30,
+                          ),
+                          SizedBox(width:20.0,),
+
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text('인테리어', style: TextStyle(fontSize:10.0,)),
+                              Text('한솔 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
+                              Row(
+                                children: <Widget> [
+                                  Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
+                                  Text('4.7', style: TextStyle(fontSize:12.0),),
+                                  SizedBox(width:5),
+                                  Text('(10개)', style: TextStyle(fontSize:10.0),),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget> [
+                              Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
+                              Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                            ],
+                          ),
+                          SizedBox(width: 10.0,)
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
+              // Container(
+              //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              //   width: MediaQuery.of(context).size.width*0.9,
+              //   height: 100,
+              //   decoration: BoxDecoration(
+              //     border: Border.all(width: 1.0, color: Color(0xFF398FE2),),
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: Color(0xffffffff),
+              //   ),
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[
+              //       Row(
+              //         children: [
+              //           CircleAvatar(
+              //             backgroundImage: AssetImage('assets/images/pro.jpg'),
+              //             radius: 30,
+              //           ),
+              //           SizedBox(width:20.0,),
+              //           Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: <Widget>[
+              //               Text('인테리어', style: TextStyle(fontSize:10.0,)),
+              //               Text('한솔 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
+              //               Row(
+              //                 children: <Widget> [
+              //                   Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
+              //                   Text('4.7', style: TextStyle(fontSize:12.0),),
+              //                   SizedBox(width:5),
+              //                   Text('(10개)', style: TextStyle(fontSize:10.0),),
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //           Spacer(),
+              //           Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             crossAxisAlignment: CrossAxisAlignment.center,
+              //             children: <Widget> [
+              //               Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
+              //               Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+              //             ],
+              //           ),
+              //           SizedBox(width: 10.0,)
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              // ),
               SizedBox(height: 20.0,),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),

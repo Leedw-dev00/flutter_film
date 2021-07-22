@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:flutter_film/datas/register_Pro_data.dart';
+import 'package:flutter_film/datas/userCheck_data.dart';
+import 'package:flutter_film/models/userCheck_model.dart';
+
 
 class RegisterPage extends StatefulWidget{
   @override
@@ -8,11 +11,39 @@ class RegisterPage extends StatefulWidget{
 
 class _RegisterPageState extends State<RegisterPage>{
 
+  TextEditingController idController;
+  TextEditingController pwController;
+  TextEditingController checkController;
+  TextEditingController phoneController;
+  TextEditingController comNameController;
+  TextEditingController comNoController;
   DateTime _selectedDate = DateTime.now();
   final _valueList = ["선택","서울", "인천", "경기", "대전"];
   var _selectedValue1 = '선택';
   var _selectedValue2 = '선택';
   var _selectedValue3 = '선택';
+  bool _ispwCheck = false;
+  bool _ispwLength = false;
+  bool _isOverlap = true;
+  List<User_Check> _user_check;
+
+  @override
+  void initState(){
+    _user_check = [];
+    idController = TextEditingController();
+    pwController = TextEditingController();
+    checkController = TextEditingController();
+    phoneController = TextEditingController();
+    comNameController = TextEditingController();
+    comNoController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose(){
+    _selectDate;
+    super.dispose();
+  }
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -27,6 +58,45 @@ class _RegisterPageState extends State<RegisterPage>{
       });
   }
 
+
+  //전문가 회원 회원가입
+  _addProUser(){
+    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || comNoController.text.isEmpty){
+      print(_ispwCheck);
+      return;
+    }else{
+      if(_ispwLength && _ispwCheck) {
+        print('회원가입 완료');
+        ProUser_Data.addProUser(idController.text, pwController.text, _selectedDate.toLocal().toString(), phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
+          if('success' == result){
+            print('전문가 회원 회원가입 성공');
+          }
+        });
+        return;
+      }else{
+        print('입력을 확인 해주세요');
+        return;
+      }
+    }
+  }
+
+  //중복확인
+  _getUserCheck(){
+    UserCheck_Data.getUserCheck(idController.text).then((user_check){
+      setState(() {
+        _user_check = user_check;
+      });
+      if(user_check.length == 0){
+        setState(() {
+          _isOverlap = false;
+        });
+      }else{
+        setState(() {
+          _isOverlap = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,21 +129,66 @@ class _RegisterPageState extends State<RegisterPage>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextField(
-                cursorHeight: 20.0,
-                style: TextStyle(
-                  fontSize: 13.0, height: 0.5
-                ),
-                decoration: InputDecoration(
-                  fillColor: Color(0xFFF8F8F8),
-                  filled: true,
-                  labelText: '아이디 (이메일)',
-                  labelStyle: TextStyle(fontSize: 11.0),
-                  border: OutlineInputBorder(),
-                ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 3,
+                    child: TextField(
+                      controller: idController,
+                      cursorHeight: 20.0,
+                      style: TextStyle(
+                          fontSize: 13.0, height: 0.5
+                      ),
+                      decoration: InputDecoration(
+                        fillColor: Color(0xFFF8F8F8),
+                        filled: true,
+                        labelText: '아이디 (이메일)',
+                        labelStyle: TextStyle(fontSize: 11.0),
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5.0,),
+                  Expanded(
+                    flex: 1,
+                    child: ElevatedButton(
+                      child: Text('중복확인', style:
+                      TextStyle(
+                          fontSize: 13.0
+                      ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF398FE2)
+                      ),
+                      onPressed: (){
+                        _getUserCheck();
+                        print('중복확인');
+                      },
+                    ),
+                  )
+                ],
               ),
-              SizedBox(height: 8.0,),
+              _isOverlap
+              ?
+              Text('아이디를 사용할 수 없습니다.', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),)
+              :
+              Text('아이디를 사용할 수 있습니다.', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),),
+              SizedBox(height: 20.0,),
               TextField(
+                controller: pwController,
+                onChanged: (String value){
+                  if(value.toString() == checkController.text && value.length > 9){
+                    setState(() {
+                      _ispwCheck = true;
+                      _ispwLength = true;
+                    });
+                  }else{
+                    setState(() {
+                      _ispwCheck = false;
+                      _ispwLength = false;
+                    });
+                  }
+                },
                 cursorHeight: 20.0,
                 style: TextStyle(
                     fontSize: 13.0, height: 0.5
@@ -88,6 +203,20 @@ class _RegisterPageState extends State<RegisterPage>{
               ),
               SizedBox(height: 8.0,),
               TextField(
+                controller: checkController,
+                onChanged: (String value){
+                  if (value.toString() == pwController.text && value.length > 9) {
+                    setState(() {
+                      _ispwCheck = true;
+                      _ispwLength = true;
+                    });
+                  }else{
+                    setState(() {
+                      _ispwCheck = false;
+                      _ispwLength = false;
+                    });
+                  }
+                },
                 cursorHeight: 20.0,
                 style: TextStyle(
                     fontSize: 13.0, height: 0.5
@@ -100,6 +229,11 @@ class _RegisterPageState extends State<RegisterPage>{
                   border: OutlineInputBorder(),
                 ),
               ),
+              _ispwCheck
+              ?
+              Text('비밀번호가 일치합니다.', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),)
+              :
+              Text('비밀번호가 일치하지 않습니다.', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
               SizedBox(height: 20.0,),
               Text('생년월일', style:
                 TextStyle(
@@ -142,6 +276,7 @@ class _RegisterPageState extends State<RegisterPage>{
                   Expanded(
                     flex: 3,
                     child: TextField(
+                      controller: phoneController,
                       cursorHeight: 20.0,
                       style: TextStyle(
                           fontSize: 13.0, height: 0.5
@@ -214,6 +349,7 @@ class _RegisterPageState extends State<RegisterPage>{
               ),
               SizedBox(height: 20.0,),
               TextField(
+                controller: comNameController,
                 cursorHeight: 20.0,
                 style: TextStyle(
                     fontSize: 13.0, height: 0.5
@@ -228,6 +364,7 @@ class _RegisterPageState extends State<RegisterPage>{
               ),
               SizedBox(height: 8.0,),
               TextField(
+                controller: comNoController,
                 cursorHeight: 20.0,
                 style: TextStyle(
                     fontSize: 13.0, height: 0.5
@@ -342,7 +479,7 @@ class _RegisterPageState extends State<RegisterPage>{
                           primary: Color(0xFF398FE2)
                       ),
                       onPressed: (){
-                        print('가입 완료');
+                        _addProUser();
                       },
                     ),
                   ),
