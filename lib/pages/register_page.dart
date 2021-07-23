@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/register_Pro_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
+import 'package:flutter_film/pages/registerProfile_page.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 
 class RegisterPage extends StatefulWidget{
@@ -45,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage>{
     super.dispose();
   }
 
+
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -65,7 +68,7 @@ class _RegisterPageState extends State<RegisterPage>{
       print(_ispwCheck);
       return;
     }else{
-      if(_ispwLength && _ispwCheck) {
+      if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
         ProUser_Data.addProUser(idController.text, pwController.text, _selectedDate.toLocal().toString(), phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
           if('success' == result){
@@ -303,6 +306,7 @@ class _RegisterPageState extends State<RegisterPage>{
                         primary: Color(0xFF398FE2)
                       ),
                       onPressed: (){
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => ))
                         print('인증 번호 전송');
                       },
                     ),
@@ -480,6 +484,7 @@ class _RegisterPageState extends State<RegisterPage>{
                       ),
                       onPressed: (){
                         _addProUser();
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterProfilePage(user_id : idController.text)));
                       },
                     ),
                   ),
@@ -494,3 +499,5 @@ class _RegisterPageState extends State<RegisterPage>{
     );
   }
 }
+
+

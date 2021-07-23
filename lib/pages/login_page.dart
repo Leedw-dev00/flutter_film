@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/login_pro_data.dart';
+import 'package:flutter_film/models/userCheck_model.dart';
+import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_film/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget{
@@ -9,6 +12,10 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage>{
 
   bool _isCustomer = true;
+  List<User_Check> _user_login;
+  TextEditingController idController;
+  TextEditingController pwController;
+  bool _isLogin;
 
   @override
   void dispose(){
@@ -17,8 +24,34 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   void initState(){
+    _isLogin = false;
+    _user_login = [];
+    idController = TextEditingController();
+    pwController = TextEditingController();
+    _getLogin();
     super.initState();
   }
+
+  //중복확인
+  _getLogin(){
+    Login_Data.getLogin(idController.text, pwController.text).then((user_login){
+      setState(() {
+        _user_login = user_login;
+      });
+      if(user_login.length == 1){
+        setState(() {
+          _isLogin = true;
+          print(_isLogin);
+        });
+      }else{
+        setState(() {
+          _isLogin = false;
+          print(_isLogin);
+        });
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -187,6 +220,7 @@ class _LoginPageState extends State<LoginPage>{
                   child: Column(
                     children: <Widget>[
                       TextField(
+                        controller: idController,
                         cursorHeight: 20.0,
                         style: TextStyle(
                           fontSize: 13.0, height: 1.0
@@ -198,6 +232,7 @@ class _LoginPageState extends State<LoginPage>{
                       ),
                       SizedBox(height: 15.0,),
                       TextField(
+                        controller: pwController,
                         cursorHeight: 20.0,
                         obscureText: true,
                         style: TextStyle(
@@ -214,6 +249,17 @@ class _LoginPageState extends State<LoginPage>{
                 Row(
                   children: <Widget>[
                     Spacer(),
+                    TextButton(
+                      child: Text('프로필 설정', style:
+                      TextStyle(
+                          color: Colors.black54,
+                          fontSize: 13.0
+                      ),
+                      ),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterProfilePage()));
+                      },
+                    ),
                     TextButton(
                       child: Text('아이디 찾기', style:
                         TextStyle(
@@ -266,6 +312,7 @@ class _LoginPageState extends State<LoginPage>{
                       ),
                     ),
                     onPressed: (){
+                      _getLogin();
                       print('로그인');
                     }
                   ),
