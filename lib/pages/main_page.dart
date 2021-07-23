@@ -6,6 +6,7 @@ import 'package:flutter_film/pages/orderList_page.dart';
 import 'package:flutter_film/pages/point_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/widgets/banner_widget.dart';
+import 'package:get/get.dart';
 
 
 
@@ -85,7 +86,7 @@ class _MainPageState extends State<MainPage>{
                   children: <Widget>[
                     GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePPage()));
+                        Get.to(ProfilePPage());
                       },
                       child: Container(
                         color: Color(0xFFF0F0F0),
@@ -417,9 +418,7 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => OrderListPage())
-                  );
+                  Get.to(OrderListPage());
                 },
               ),
               ListTile(
@@ -430,9 +429,7 @@ class _MainPageState extends State<MainPage>{
                 ),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PointPage())
-                  );
+                  Get.to(PointPage());
                 },
               ),
               ListTile(
@@ -443,9 +440,7 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyPage())
-                  );
+                  Get.to(MyPage());
                 },
               ),
               SizedBox(height: 100.0,),
@@ -455,9 +450,7 @@ class _MainPageState extends State<MainPage>{
                   TextButton(
                     child: Text('로그인'),
                     onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage())
-                      );
+                      Get.to(LoginPage());
                     },
                   )
                 ],

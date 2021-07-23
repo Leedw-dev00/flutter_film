@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
+import 'package:flutter_film/pages/my_page.dart';
+import 'package:flutter_film/pages/orderList_page.dart';
+import 'package:flutter_film/pages/order_page.dart';
+import 'package:flutter_film/pages/point_page.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,14 +14,45 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         primarySwatch: Colors.blue,
       ),
       home: SplashPage(),
+      getPages: [
+        GetPage(
+          name: '/',
+          page: () => MainPage()
+        ),
+
+        //MainPage
+        GetPage(
+          name: '/order',
+          page: () => OrderPage(),
+        ),
+        GetPage(
+          name: '/profilePPage',
+          page: () => OrderPage(),
+        ),
+        GetPage(
+          name: '/orderListPage',
+          page: () => OrderListPage(),
+        ),
+        GetPage(
+          name: '/pointPage',
+          page: () => PointPage(),
+        ),
+        GetPage(
+          name: '/myPage',
+          page: () => MyPage(),
+        ),
+        GetPage(
+          name: '/loginPage',
+          page: () => LoginPage(),
+        ),
+      ]
     );
   }
 }
@@ -43,7 +80,12 @@ class _SplashPageState extends State<SplashPage>{
       ),
       backgroundColor: Colors.white,
       body: Container(
-        child: TextButton(child: Text('Next'), onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));},)
+        child: TextButton(child: Text('Next'),
+          onPressed: (){
+            Get.offAll(MainPage());
+            //Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+          },
+        )
 
       ),
     );

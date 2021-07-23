@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/order_page.dart';
+import 'package:get/get.dart';
 
 
 class Home_Banner extends StatelessWidget{
@@ -52,7 +53,7 @@ class Home_Banner extends StatelessWidget{
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(3.0),
                         ),
-                        child: Text('견적보기', style:
+                        child: Text('견적요청', style:
                         TextStyle(
                             fontSize: 14.0,
                             color: Colors.white,
@@ -61,11 +62,7 @@ class Home_Banner extends StatelessWidget{
                         ),
                         onPressed: (){
                           print('견적 보기');
-                          Navigator.push(context,
-                            MaterialPageRoute(
-                              builder: (context) => OrderPage()
-                            )
-                          );
+                          Get.to(OrderPage());
                         }
                     ),
                   ),
