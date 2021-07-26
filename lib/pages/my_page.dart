@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/alarm_page.dart';
 import 'package:flutter_film/pages/profile_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
+import 'package:get/get.dart';
 
 
 class MyPage extends StatefulWidget{
@@ -10,6 +11,16 @@ class MyPage extends StatefulWidget{
 }
 
 class _MyPageState extends State<MyPage>{
+
+  String _userId;
+
+  @override
+  void initState(){
+    _userId = Get.parameters['id'];
+    super.initState();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +74,16 @@ class _MyPageState extends State<MyPage>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          _userId == 'null'
+                          ?
+                          Text(
+                          '로그인 후 이용 가능합니다',
+                            style: TextStyle(
+                              fontSize:16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                          :
                           Text(
                             '홍길동',
                             style: TextStyle(
@@ -71,7 +92,7 @@ class _MyPageState extends State<MyPage>{
                             ),
                           ),
                           SizedBox(height:5),
-                          Text('dgrab0501@naver.com'),
+                          Text('${Get.parameters['id']}'),
                         ],
                       ),
                       SizedBox(width:10),

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/registerP_Profile_data.dart';
+import 'package:flutter_film/pages/login_page.dart';
+import 'package:get/get.dart';
 
 class RegisterProfilePage extends StatefulWidget{
   @override
-  String user_id;
-  RegisterProfilePage({@required this.user_id});
-  _RegisterProfilePageState createState() => _RegisterProfilePageState(user_id);
+  _RegisterProfilePageState createState() => _RegisterProfilePageState();
 }
 
 class _RegisterProfilePageState extends State<RegisterProfilePage>{
-  String user_id;
-  _RegisterProfilePageState(this.user_id);
 
   TextEditingController introduceController;
   TextEditingController basicController;
@@ -31,11 +29,8 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
 
   //전문가 회원 회원가입
   _addProfile(){
-    RegisterProfile_Data.addProfile(user_id.toString(), introduceController.text, basicController.text, comController.text).then((result){
-      if('success' == result){
-        print(user_id);
-        print('전문가 회원 회원가입 성공');
-      }
+    RegisterProfile_Data.addProfile(Get.arguments, introduceController.text, basicController.text, comController.text).then((result){
+        Get.offAll(LoginPage());
     });
   }
 
@@ -46,18 +41,13 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('${user_id} 프로필 등록', style:
+        title: Text('${Get.arguments} 프로필 등록', style:
         TextStyle(
           color: Colors.black,
           fontSize: 16.0,
         ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black,),
-          onPressed: (){
-            Navigator.pop(context);
-          },
-        ),
+
       ),
       backgroundColor: Color(0xFFF0F0F0),
       body: SingleChildScrollView(

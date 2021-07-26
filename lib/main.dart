@@ -5,6 +5,7 @@ import 'package:flutter_film/pages/my_page.dart';
 import 'package:flutter_film/pages/orderList_page.dart';
 import 'package:flutter_film/pages/order_page.dart';
 import 'package:flutter_film/pages/point_page.dart';
+import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       home: SplashPage(),
       getPages: [
         GetPage(
-          name: '/',
+          name: '/main/:param',
           page: () => MainPage()
         ),
 
@@ -45,13 +46,17 @@ class MyApp extends StatelessWidget {
           page: () => PointPage(),
         ),
         GetPage(
-          name: '/myPage',
+          name: '/myPage/:param',
           page: () => MyPage(),
         ),
         GetPage(
           name: '/loginPage',
           page: () => LoginPage(),
         ),
+        GetPage(
+          name: '/registerProfilePage',
+          page: () => RegisterProfilePage(),
+        )
       ]
     );
   }
@@ -82,8 +87,7 @@ class _SplashPageState extends State<SplashPage>{
       body: Container(
         child: TextButton(child: Text('Next'),
           onPressed: (){
-            Get.offAll(MainPage());
-            //Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+            Get.offAllNamed('/main/false?id=null');
           },
         )
 

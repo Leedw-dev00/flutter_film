@@ -17,6 +17,8 @@ class MainPage extends StatefulWidget{
 
 class _MainPageState extends State<MainPage>{
 
+  String _isLogin;
+  String _userId;
 
   @override
   void dispose(){
@@ -25,6 +27,8 @@ class _MainPageState extends State<MainPage>{
 
   @override
   void initState(){
+    _isLogin = Get.parameters['param'];
+    _userId = Get.parameters['id'];
     super.initState();
   }
 
@@ -75,7 +79,7 @@ class _MainPageState extends State<MainPage>{
                         fontWeight: FontWeight.w600,
                         fontSize: 13.0
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -388,7 +392,17 @@ class _MainPageState extends State<MainPage>{
                       Column(
                         children: <Widget>[
                           Spacer(),
-                          Text('홍길동 고객님', style:
+                          _isLogin == 'false'
+                          ?
+                          Text('로그인해주세요', style:
+                            TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600
+                            ),
+                          )
+                          :
+                          Text('$_userId 님', style:
                             TextStyle(
                               fontSize: 18.0,
                               color: Colors.black,
@@ -440,10 +454,12 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
                 onTap: () {
-                  Get.to(MyPage());
+                  Get.toNamed('/myPage/$_isLogin?id=$_userId');
                 },
               ),
               SizedBox(height: 100.0,),
+              _isLogin == 'false'
+              ?
               Row(
                 children: <Widget>[
                   Spacer(),
@@ -451,6 +467,22 @@ class _MainPageState extends State<MainPage>{
                     child: Text('로그인'),
                     onPressed: (){
                       Get.to(LoginPage());
+                    },
+                  )
+                ],
+              )
+              :
+              Row(
+                children: <Widget>[
+                  Spacer(),
+                  TextButton(
+                    child: Text('로그아웃'),
+                    onPressed: (){
+                      print('로그아웃');
+                      setState(() {
+                        _isLogin = 'false';
+                        _userId = 'null';
+                      });
                     },
                   )
                 ],

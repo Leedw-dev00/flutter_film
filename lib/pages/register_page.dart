@@ -4,6 +4,7 @@ import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:get/get.dart';
 
 
 class RegisterPage extends StatefulWidget{
@@ -65,15 +66,13 @@ class _RegisterPageState extends State<RegisterPage>{
   //전문가 회원 회원가입
   _addProUser(){
     if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || comNoController.text.isEmpty){
-      print(_ispwCheck);
+      Get.snackbar('회원가입 실패', '값이 입력되지 않았습니다.\n확인 후 회원가입을 완료해주세요');
       return;
     }else{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
         ProUser_Data.addProUser(idController.text, pwController.text, _selectedDate.toLocal().toString(), phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
-          if('success' == result){
-            print('전문가 회원 회원가입 성공');
-          }
+        Get.toNamed('/registerProfilePage', arguments: idController.text);
         });
         return;
       }else{
@@ -138,6 +137,11 @@ class _RegisterPageState extends State<RegisterPage>{
                     flex: 3,
                     child: TextField(
                       controller: idController,
+                      onChanged: (String value){
+                        setState(() {
+                          _isOverlap = true;
+                        });
+                      },
                       cursorHeight: 20.0,
                       style: TextStyle(
                           fontSize: 13.0, height: 0.5
@@ -484,7 +488,6 @@ class _RegisterPageState extends State<RegisterPage>{
                       ),
                       onPressed: (){
                         _addProUser();
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RegisterProfilePage(user_id : idController.text)));
                       },
                     ),
                   ),

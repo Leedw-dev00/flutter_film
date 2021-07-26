@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
+import 'package:flutter_film/pages/main_page.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_film/pages/register_page.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -28,11 +30,11 @@ class _LoginPageState extends State<LoginPage>{
     _user_login = [];
     idController = TextEditingController();
     pwController = TextEditingController();
-    _getLogin();
+    //_getLogin();
     super.initState();
   }
 
-  //중복확인
+  //로그인
   _getLogin(){
     Login_Data.getLogin(idController.text, pwController.text).then((user_login){
       setState(() {
@@ -42,16 +44,17 @@ class _LoginPageState extends State<LoginPage>{
         setState(() {
           _isLogin = true;
           print(_isLogin);
+          Get.offNamed('/main/true?id=${idController.text}');
         });
       }else{
         setState(() {
           _isLogin = false;
+          Get.snackbar('로그인 실패', '로그인에 실패하였습니다. 아이디와 비밀번호를 확인해주세요');
           print(_isLogin);
         });
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +316,6 @@ class _LoginPageState extends State<LoginPage>{
                     ),
                     onPressed: (){
                       _getLogin();
-                      print('로그인');
                     }
                   ),
                 )
