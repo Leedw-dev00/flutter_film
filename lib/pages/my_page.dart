@@ -45,15 +45,33 @@ class _MyPageState extends State<MyPage>{
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Align(
-            alignment: Alignment.center,
+          width: Get.width,
+          child:
+          _userId == 'null'
+          ?
+          Container(
+            height: Get.height*0.7,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '로그인 후 이용 가능합니다',
+                  style: TextStyle(
+                    fontSize:16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            )
+          )
+          :
+          Column(
               children: <Widget> [
                 SizedBox(height:15),
                 Container(
                   padding:const EdgeInsets.only(left:20,right: 20.0),
-                  width: MediaQuery.of(context).size.width,
+                  width: Get.width,
                   height:150,
                   color: Color(0xFFffffff),
                   child: Row(
@@ -74,16 +92,6 @@ class _MyPageState extends State<MyPage>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _userId == 'null'
-                          ?
-                          Text(
-                          '로그인 후 이용 가능합니다',
-                            style: TextStyle(
-                              fontSize:16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                          :
                           Text(
                             '홍길동',
                             style: TextStyle(
@@ -114,12 +122,10 @@ class _MyPageState extends State<MyPage>{
                     ],
                   ),
                 ),
-
                 SizedBox(height:15),
-
                 Container(
                   padding:const EdgeInsets.only(left:20,right: 20.0),
-                  width: MediaQuery.of(context).size.width,
+                  width: Get.width,
                   height:50,
                   color: Color(0xFFffffff),
                   child: Row(
@@ -141,7 +147,6 @@ class _MyPageState extends State<MyPage>{
                     ],
                   ),
                 ),
-
                 GestureDetector(
                   onTap: (){
                     Navigator.push(
@@ -153,7 +158,7 @@ class _MyPageState extends State<MyPage>{
 
                   child: Container(
                     padding:const EdgeInsets.only(left:20,right: 20.0),
-                    width: MediaQuery.of(context).size.width,
+                    width: Get.width,
                     height:50,
                     color: Color(0xFFffffff),
                     child: Row(
@@ -195,7 +200,7 @@ class _MyPageState extends State<MyPage>{
 
                   child: Container(
                     padding:const EdgeInsets.only(left:20,right: 20.0),
-                    width: MediaQuery.of(context).size.width,
+                    width: Get.width,
                     height:50,
                     color: Color(0xFFffffff),
                     child: Row(
@@ -231,7 +236,7 @@ class _MyPageState extends State<MyPage>{
 
                 Container(
                   padding:const EdgeInsets.only(left:20,right: 20.0),
-                  width: MediaQuery.of(context).size.width,
+                  width: Get.width,
                   height:50,
                   color: Color(0xFFffffff),
                   child: Row(
@@ -264,7 +269,7 @@ class _MyPageState extends State<MyPage>{
 
                   child: Container(
                     padding:const EdgeInsets.only(left:20,right: 20.0),
-                    width: MediaQuery.of(context).size.width,
+                    width: Get.width,
                     height:50,
                     color: Color(0xFFffffff),
                     child: Row(
@@ -296,7 +301,7 @@ class _MyPageState extends State<MyPage>{
                 ),
               ],
             ),
-          ),
+
         ),
       ),
     );
