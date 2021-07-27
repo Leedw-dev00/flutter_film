@@ -3,7 +3,20 @@ import 'package:flutter_film/pages/order_page.dart';
 import 'package:get/get.dart';
 
 
-class Home_Banner extends StatelessWidget{
+class Home_Banner extends StatefulWidget{
+  @override
+  _Home_BannerState createState() => _Home_BannerState();
+}
+
+class _Home_BannerState extends State<Home_Banner>{
+
+  String _userId;
+
+  @override
+  void initState(){
+    _userId = Get.parameters['id'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

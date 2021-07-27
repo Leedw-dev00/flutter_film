@@ -424,40 +424,66 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
               ),
-              ListTile(
-                title: Text('받은 견적서', style:
-                  TextStyle(
-                      fontSize: 13.0,
-                      fontWeight: FontWeight.bold
-                  ),
+              _userId == 'null'
+              ?
+              Container(
+                height: Get.height*0.4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                    '로그인 후 이용 가능합니다',
+                      style: TextStyle(
+                        fontSize:16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ]
+                )
+              )
+              :
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text('받은 견적서', style:
+                      TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.bold
+                      ),
+                      ),
+                      onTap: () {
+                        Get.to(OrderListPage());
+                      },
+                    ),
+                    ListTile(
+                      title: Text('포인트', style:
+                      TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.bold
+                      ),
+                      ),
+                      onTap: () {
+                        Get.to(PointPage());
+                      },
+                    ),
+                    ListTile(
+                      title: Text('마이페이지', style:
+                      TextStyle(
+                          fontSize: 13.0,
+                          fontWeight: FontWeight.bold
+                      ),
+                      ),
+                      onTap: () {
+                        Get.toNamed('/myPage/$_isLogin?id=$_userId');
+                      },
+                    ),
+                    SizedBox(height: 100.0,),
+                  ],
                 ),
-                onTap: () {
-                  Get.to(OrderListPage());
-                },
               ),
-              ListTile(
-                title: Text('포인트', style:
-                TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold
-                ),
-                ),
-                onTap: () {
-                  Get.to(PointPage());
-                },
-              ),
-              ListTile(
-                title: Text('마이페이지', style:
-                  TextStyle(
-                    fontSize: 13.0,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                onTap: () {
-                  Get.toNamed('/myPage/$_isLogin?id=$_userId');
-                },
-              ),
-              SizedBox(height: 100.0,),
+
               _isLogin == 'false'
               ?
               Row(

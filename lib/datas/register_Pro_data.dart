@@ -4,13 +4,13 @@ class ProUser_Data{
   static const ROOT = "https://d-grab.co.kr/prousers_register.php";
   static const _ADD_PRO_ACTION = 'ADD_RRO';
 
-  static Future<String> addProUser(String user_id, String user_pw, String user_birth, String phone_number, String com_name, String com_no, String area1, String area2, String area3) async {
+  static Future<String> addProUser(String user_id, String user_pw, String user_email, String phone_number, String com_name, String com_no, String area1, String area2, String area3) async {
     try{
       var map = Map<String, dynamic>();
       map['action'] = _ADD_PRO_ACTION;
       map['user_id'] = user_id;
       map['user_pw'] = user_pw;
-      map['user_birth'] = user_birth;
+      map['user_email'] = user_email;
       map['phone_number'] = phone_number;
       map['com_name'] = com_name;
       map['com_no'] = com_no;

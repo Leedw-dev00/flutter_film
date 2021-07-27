@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage>{
   TextEditingController phoneController;
   TextEditingController comNameController;
   TextEditingController comNoController;
+  TextEditingController emailController;
   DateTime _selectedDate = DateTime.now();
   final _valueList = ["선택","서울", "인천", "경기", "대전"];
   var _selectedValue1 = '선택';
@@ -36,6 +37,7 @@ class _RegisterPageState extends State<RegisterPage>{
     idController = TextEditingController();
     pwController = TextEditingController();
     checkController = TextEditingController();
+    emailController = TextEditingController();
     phoneController = TextEditingController();
     comNameController = TextEditingController();
     comNoController = TextEditingController();
@@ -65,13 +67,13 @@ class _RegisterPageState extends State<RegisterPage>{
 
   //전문가 회원 회원가입
   _addProUser(){
-    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || comNoController.text.isEmpty){
+    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || emailController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || comNoController.text.isEmpty){
       Get.snackbar('회원가입 실패', '값이 입력되지 않았습니다.\n확인 후 회원가입을 완료해주세요');
       return;
     }else{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
-        ProUser_Data.addProUser(idController.text, pwController.text, _selectedDate.toLocal().toString(), phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
+        ProUser_Data.addProUser(idController.text, pwController.text, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
         Get.toNamed('/registerProfilePage', arguments: idController.text);
         });
         return;
@@ -183,6 +185,7 @@ class _RegisterPageState extends State<RegisterPage>{
               SizedBox(height: 20.0,),
               TextField(
                 controller: pwController,
+                obscureText: true,
                 onChanged: (String value){
                   if(value.toString() == checkController.text && value.length > 9){
                     setState(() {
@@ -211,6 +214,7 @@ class _RegisterPageState extends State<RegisterPage>{
               SizedBox(height: 8.0,),
               TextField(
                 controller: checkController,
+                obscureText: true,
                 onChanged: (String value){
                   if (value.toString() == pwController.text && value.length > 9) {
                     setState(() {
@@ -242,32 +246,18 @@ class _RegisterPageState extends State<RegisterPage>{
               :
               Text('비밀번호가 일치하지 않습니다.', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
               SizedBox(height: 20.0,),
-              Text('생년월일', style:
-                TextStyle(
-                  color: Colors.grey,
-                  fontSize: 13.0,
+              TextField(
+                controller: emailController,
+                cursorHeight: 20.0,
+                style: TextStyle(
+                    fontSize: 13.0, height: 0.5
                 ),
-              ),
-              SizedBox(height: 8.0,),
-              Container(
-                decoration: BoxDecoration(
-                  color: Color(0xFFF8F8F8),
-                  border: Border.all(width: 1.0, color: Color(0xFF636363)),
-                  borderRadius: BorderRadius.circular(3.0)
-                ),
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(width: 10.0,),
-                    Text('${_selectedDate.toLocal()}'.split(' ')[0], style:
-                    TextStyle(
-                        fontSize: 16.0
-                    ),
-                    ),
-                    Spacer(),
-                    IconButton(icon: Icon(Icons.calendar_today_outlined), onPressed: (){
-                      _selectDate(context);
-                    })
-                  ],
+                decoration: InputDecoration(
+                  fillColor: Color(0xFFF8F8F8),
+                  filled: true,
+                  labelText: '이메일을 입력해주세',
+                  labelStyle: TextStyle(fontSize: 11.0),
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 20.0,),

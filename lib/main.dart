@@ -5,6 +5,7 @@ import 'package:flutter_film/pages/my_page.dart';
 import 'package:flutter_film/pages/orderList_page.dart';
 import 'package:flutter_film/pages/order_page.dart';
 import 'package:flutter_film/pages/point_page.dart';
+import 'package:flutter_film/pages/profile_page.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:get/get.dart';
 
@@ -56,6 +57,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/registerProfilePage',
           page: () => RegisterProfilePage(),
+        ),
+        GetPage(
+          name:'/profilePage/:param',
+          page: () => ProfilePage(),
         )
       ]
     );

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/userCheck_data.dart';
+import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/alarm_page.dart';
 import 'package:flutter_film/pages/profile_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
@@ -13,11 +15,34 @@ class MyPage extends StatefulWidget{
 class _MyPageState extends State<MyPage>{
 
   String _userId;
+  String _isLogin;
+  bool _isLoading;
+  List<User_Check> _user_info;
 
   @override
   void initState(){
     _userId = Get.parameters['id'];
+    _isLogin = Get.parameters['param'];
+    _isLoading = false;
+    _getUserInfo();
     super.initState();
+  }
+
+  _getUserInfo(){
+    UserCheck_Data.getUserCheck(_userId).then((user_info){
+      setState(() {
+        _user_info = user_info;
+      });
+      if(user_info.length == 0){
+        setState(() {
+          _isLoading = false;
+        });
+      }else{
+        setState(() {
+          _isLoading = true;
+        });
+      }
+    });
   }
 
 
@@ -46,29 +71,11 @@ class _MyPageState extends State<MyPage>{
         scrollDirection: Axis.vertical,
         child: Container(
           width: Get.width,
-          child:
-          _userId == 'null'
-          ?
-          Container(
-            height: Get.height*0.7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '로그인 후 이용 가능합니다',
-                  style: TextStyle(
-                    fontSize:16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            )
-          )
-          :
-          Column(
+          child: Column(
               children: <Widget> [
                 SizedBox(height:15),
+                _isLoading
+                ?
                 Container(
                   padding:const EdgeInsets.only(left:20,right: 20.0),
                   width: Get.width,
@@ -93,7 +100,7 @@ class _MyPageState extends State<MyPage>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '홍길동',
+                            _user_info[0].com_name,
                             style: TextStyle(
                               fontSize:16,
                               fontWeight: FontWeight.w600,
@@ -104,24 +111,16 @@ class _MyPageState extends State<MyPage>{
                         ],
                       ),
                       SizedBox(width:10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              icon: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 25.0,),
-                              onPressed: (){
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ProfilePage())
-                                );
-                              }
-                          ),
-                        ],
+                      IconButton(
+                          icon: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 25.0,),
+                          onPressed: (){
+                            Get.toNamed('/profilePage/$_isLogin?id=$_userId');
+                          }
                       ),
                     ],
                   ),
-                ),
+                )
+                : CircularProgressIndicator(),
                 SizedBox(height:15),
                 Container(
                   padding:const EdgeInsets.only(left:20,right: 20.0),
