@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/enter_order_data.dart';
 import 'package:flutter_film/pages/matching_page.dart';
+import 'package:get/get.dart';
 
 
 class OrderPage extends StatefulWidget{
@@ -11,9 +13,14 @@ class _OrderPageState extends State<OrderPage>{
 
   DateTime _selectedDate = DateTime.now();
   final _valueList1 = ["선택","아파트", "주택", "사무실", "상가", "기타"];
-  final _valueList2 = ["선택", "미터제곱", "평형", "기타"];
+  final _valueList2 = ["선택", "제곱미터", "평형", "기타"];
+  final _valueList3 = ["선택", "서울", "경기", "인천", "대전", "천안", "대구", "부산", "제주", "기타"];
   var _selectedValue1 = '선택';
   var _selectedValue2 = '선택';
+  var _selectedValue3 = '선택';
+  TextEditingController sizeController;
+  TextEditingController detailController;
+
 
   _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -27,6 +34,24 @@ class _OrderPageState extends State<OrderPage>{
         _selectedDate = picked;
       });
   }
+  
+  @override
+  void dispose(){
+    super.dispose();
+  }
+  
+  @override
+  void initState(){
+    sizeController = TextEditingController();
+    detailController = TextEditingController();
+    super.initState();
+  }
+  
+  _addOrder(){
+    Order_Data.addOrder(Get.parameters['id'], _selectedDate.toLocal().toString().split(' ')[0], _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text).then((result){
+    print('success');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +60,7 @@ class _OrderPageState extends State<OrderPage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('견적신청', style:
+        title: Text('${Get.parameters['id']}견적신청', style:
         TextStyle(
           color: Colors.black,
           fontSize: 16.0,
@@ -108,6 +133,60 @@ class _OrderPageState extends State<OrderPage>{
               ),
               SizedBox(height: 10.0,),
               Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  color: Color(0xFFF0F0F0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text('작업 지역')
+                        ],
+                      ),
+                      SizedBox(height: 10.0,),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 45.0,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                              borderRadius: BorderRadius.circular(3.0)
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: _selectedValue3,
+                              items: _valueList3.map(
+                                      (value){
+                                    return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value, style: TextStyle(color: Colors.black),),
+                                    );
+                                  }
+                              ).toList(),
+                              onChanged: (value){
+                                setState(() {
+                                  _selectedValue3 = value;
+                                });
+                              },
+                            ),
+                          )
+                      )
+                    ],
+                  )
+              ),
+              SizedBox(height: 10.0,),
+              Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                 color: Color(0xFFF0F0F0),
                 child: Column(
@@ -145,7 +224,7 @@ class _OrderPageState extends State<OrderPage>{
                                 (value){
                               return DropdownMenuItem(
                                 value: value,
-                                child: Text(value, style: TextStyle(color: Colors.grey),),
+                                child: Text(value, style: TextStyle(color: Colors.black),),
                               );
                             }
                           ).toList(),
@@ -192,6 +271,7 @@ class _OrderPageState extends State<OrderPage>{
                               child: Container(
                                 height: 45.0,
                                 child: TextField(
+                                  controller: sizeController,
                                   cursorHeight: 20.0,
                                   style: TextStyle(
                                       fontSize: 13.0, height: 1.0
@@ -278,6 +358,7 @@ class _OrderPageState extends State<OrderPage>{
                     Container(
                       height: 80.0,
                       child: TextField(
+                        controller: detailController,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         cursorHeight: 20.0,
@@ -363,7 +444,8 @@ class _OrderPageState extends State<OrderPage>{
                   ),
                   onPressed: (){
                     print('신청하기');
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingPage()));
+                    _addOrder();
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingPage()));
                   },
                 ),
               ),

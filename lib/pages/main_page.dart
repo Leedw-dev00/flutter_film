@@ -366,8 +366,10 @@ class _MainPageState extends State<MainPage>{
       drawer: Drawer(
         child: Container(
           color: Colors.white,
-          child:  ListView(
-            // Important: Remove any padding from the ListView.
+          child:
+          _isLogin == 'true'
+              ?
+          ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
               DrawerHeader(
@@ -392,29 +394,19 @@ class _MainPageState extends State<MainPage>{
                       Column(
                         children: <Widget>[
                           Spacer(),
-                          _isLogin == 'false'
-                          ?
-                          Text('로그인해주세요', style:
-                            TextStyle(
-                                fontSize: 18.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600
-                            ),
-                          )
-                          :
                           Text('$_userId 님', style:
-                            TextStyle(
+                          TextStyle(
                               fontSize: 18.0,
                               color: Colors.black,
                               fontWeight: FontWeight.w600
-                            ),
+                          ),
                           ),
                           SizedBox(height: 5.0,),
                           Text('안녕하세요', style:
-                            TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.grey,
-                            ),
+                          TextStyle(
+                            fontSize: 13.0,
+                            color: Colors.grey,
+                          ),
                           ),
                           Spacer(),
                         ],
@@ -424,25 +416,6 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
               ),
-              _userId == 'null'
-              ?
-              Container(
-                height: Get.height*0.4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                    '로그인 후 이용 가능합니다',
-                      style: TextStyle(
-                        fontSize:16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ]
-                )
-              )
-              :
               Container(
                 child: Column(
                   children: <Widget>[
@@ -483,21 +456,6 @@ class _MainPageState extends State<MainPage>{
                   ],
                 ),
               ),
-
-              _isLogin == 'false'
-              ?
-              Row(
-                children: <Widget>[
-                  Spacer(),
-                  TextButton(
-                    child: Text('로그인'),
-                    onPressed: (){
-                      Get.to(LoginPage());
-                    },
-                  )
-                ],
-              )
-              :
               Row(
                 children: <Widget>[
                   Spacer(),
@@ -512,7 +470,63 @@ class _MainPageState extends State<MainPage>{
                     },
                   )
                 ],
-              )
+              ),
+            ],
+          )
+              :
+          ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        children: <Widget>[
+                          Spacer(),
+                          Text('로그인해주세요', style:
+                          TextStyle(
+                              fontSize: 18.0,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600
+                          ),
+                          ),
+                          SizedBox(height: 5.0,),
+                          Text('안녕하세요', style:
+                            TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                  height: Get.height*0.4,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        ElevatedButton(
+                          child: Text('로그인'),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.blue
+                          ),
+                          onPressed: (){
+                            Get.to(LoginPage());
+                          },
+                        )
+                      ]
+                  )
+              ),
             ],
           ),
         )

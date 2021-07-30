@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/profileP_page.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
 import 'package:flutter_film/pages/my_page.dart';
@@ -31,12 +33,12 @@ class MyApp extends StatelessWidget {
 
         //MainPage
         GetPage(
-          name: '/order',
+          name: '/order/:param',
           page: () => OrderPage(),
         ),
         GetPage(
           name: '/profilePPage',
-          page: () => OrderPage(),
+          page: () => ProfilePPage(),
         ),
         GetPage(
           name: '/orderListPage',
@@ -77,26 +79,14 @@ class _SplashPageState extends State<SplashPage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('로그인', style:
-          TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0.0,
-      ),
       backgroundColor: Colors.white,
-      body: Container(
-        child: TextButton(child: Text('Next'),
-          onPressed: (){
-            Get.offAllNamed('/main/false?id=null');
-          },
-        )
-
-      ),
+      body: SplashScreenView(
+        home: MainPage(),
+        duration: 5000,
+        imageSize: 50,
+        imageSrc: 'assets/images/logo.gif',
+        backgroundColor: Colors.white,
+      )
     );
 
   }

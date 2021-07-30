@@ -28,6 +28,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  splash_screen_view: ^1.0.3 #splash screen
   syncfusion_flutter_datepicker: ^19.2.47
   http: ^0.13.3
   flutter_sms: ^2.3.1
@@ -64,6 +65,7 @@ flutter:
     - assets/images/port4.jpg
     - assets/images/port5.jpg
     - assets/images/defaultImage.png
+    - assets/images/logo.gif
     - assets/images/
 
 

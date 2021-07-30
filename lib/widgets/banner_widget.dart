@@ -75,7 +75,7 @@ class _Home_BannerState extends State<Home_Banner>{
                         ),
                         onPressed: (){
                           print('견적 보기');
-                          Get.to(OrderPage());
+                          Get.toNamed('/order/true?id=$_userId');
                         }
                     ),
                   ),
