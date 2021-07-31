@@ -7,6 +7,7 @@ import 'package:flutter_film/pages/point_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/widgets/banner_widget.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 
 
 
@@ -29,8 +30,27 @@ class _MainPageState extends State<MainPage>{
   void initState(){
     _isLogin = Get.parameters['param'];
     _userId = Get.parameters['id'];
+    _initTexts();
     super.initState();
   }
+
+  _initTexts() async{
+    final User user = await UserApi.instance.me();
+
+    setState(() {
+      user_id = user.kakaoAccount.email;
+      user_name = user.kakaoAccount.legalName;
+      user_birth = user.kakaoAccount.birthyear;
+      _default_Image = user.kakaoAccount.profile.isDefaultImage;
+      profile_image = user.kakaoAccount.profile.profileImageUrl;
+
+    });
+  }
+  String user_id = 'None';
+  String user_name = 'None';
+  String user_birth = 'None';
+  String profile_image = 'None';
+  bool _default_Image = true;
 
   @override
   Widget build(BuildContext context) {
