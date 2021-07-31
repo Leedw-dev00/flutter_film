@@ -5,6 +5,7 @@ import 'package:flutter_film/pages/main_page.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_film/pages/register_page.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 
 class LoginPage extends StatefulWidget{
   @override
@@ -18,6 +19,7 @@ class _LoginPageState extends State<LoginPage>{
   TextEditingController idController;
   TextEditingController pwController;
   bool _isLogin;
+  bool _isKakaoTalkInstalled = true;
 
   @override
   void dispose(){
@@ -26,6 +28,7 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   void initState(){
+    _initKakaoTalkInstalled();
     _isLogin = false;
     _user_login = [];
     idController = TextEditingController();
@@ -34,7 +37,45 @@ class _LoginPageState extends State<LoginPage>{
     super.initState();
   }
 
-  //로그인
+
+  //고객 카카오 로그인
+  _initKakaoTalkInstalled() async {
+    final installed = await isKakaoTalkInstalled();
+    setState(() {
+      _isKakaoTalkInstalled = installed;
+    });
+  }
+
+  _issueAccessToken(String authCode) async {
+    try {
+      var token = await AuthApi.instance.issueAccessToken(authCode);
+      AccessTokenStore.instance.toStore(token);
+      Get.toNamed('/main/true');
+    } catch (e) {
+      print("error on issuing access token: $e");
+    }
+  }
+
+  _loginWithKakao() async {
+    try {
+      var code = await AuthCodeClient.instance.request();
+      await _issueAccessToken(code);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  _loginWithTalk() async{
+    try{
+      var code = await AuthCodeClient.instance.requestWithTalk();
+      await _issueAccessToken(code);
+    }catch(e){
+      print(e.toString());
+    }
+  }
+
+
+  //전문가로그인
   _getLogin(){
     Login_Data.getLogin(idController.text, pwController.text).then((user_login){
       setState(() {
@@ -58,6 +99,14 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   Widget build(BuildContext context) {
+
+    // KaKao native app key
+    KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";  //Native Key
+    // KaKao javascript key
+    KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";  //JavaScript Key
+
+    isKakaoTalkInstalled();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -150,9 +199,7 @@ class _LoginPageState extends State<LoginPage>{
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    onPressed: (){
-                      print('카카오톡 로그인');
-                    },
+                    onPressed: () => _loginWithKakao(),
                   )
                 )
               ],

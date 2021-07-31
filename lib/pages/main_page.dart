@@ -61,7 +61,78 @@ class _MainPageState extends State<MainPage>{
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Home_Banner(),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height*0.4,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                          Colors.black.withOpacity(0.5), BlendMode.dstATop
+                      ),
+                      image: AssetImage('assets/images/back.png'),
+                    )
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset('assets/images/rec.png', fit: BoxFit.cover,),
+                    ),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Column(
+                          children: <Widget>[
+                            Spacer(),
+                            SizedBox(height: 30.0,),
+                            Text('인테리어 전문가로 배정 해드립니다', style:
+                            TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.w700
+                            ),
+                            ),
+                            Text('한 번의 견적으로 5명의 전문가를 추천해드려요', style:
+                            TextStyle(
+                                fontSize: 12.0,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w700
+                            ),
+                            ),
+                            SizedBox(height: 25.0,),
+                            ButtonTheme(
+                              minWidth: 120,
+                              height: 35.0,
+                              child: RaisedButton(
+                                  color: Color(0xFF398FE2),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(3.0),
+                                  ),
+                                  child: Text('견적요청', style:
+                                  TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500
+                                  ),
+                                  ),
+                                  onPressed: (){
+                                    print('견적 보기');
+                                    if(_isLogin == 'true'){
+                                      Get.toNamed('/order/true?id=$_userId');
+                                    }else{
+                                      Get.snackbar('로그인 실패', '로그인 후 이용해주세요');
+                                    }
+
+                                  }
+                              ),
+                            ),
+                            Spacer(),
+                          ],
+                        )
+                    ),
+
+                  ],
+                ),
+              ),
               SizedBox(height: 20.0,),
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0, bottom: 10.0),
@@ -325,7 +396,7 @@ class _MainPageState extends State<MainPage>{
                         fontWeight: FontWeight.w600,
                         fontSize: 13.0
                     ),
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -11,10 +11,12 @@ class Home_Banner extends StatefulWidget{
 class _Home_BannerState extends State<Home_Banner>{
 
   String _userId;
+  String _isLogin;
 
   @override
   void initState(){
     _userId = Get.parameters['id'];
+    _isLogin = Get.parameters['param'];
     super.initState();
   }
 
@@ -75,7 +77,12 @@ class _Home_BannerState extends State<Home_Banner>{
                         ),
                         onPressed: (){
                           print('견적 보기');
-                          Get.toNamed('/order/true?id=$_userId');
+                          if(_isLogin == 'true'){
+                            Get.toNamed('/order/true?id=$_userId');
+                          }else{
+                            Get.snackbar('로그인 실패', '로그인 후 이용해주세요');
+                          }
+
                         }
                     ),
                   ),

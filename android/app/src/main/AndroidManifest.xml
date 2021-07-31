@@ -1,8 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.flutter_film">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="flutter_film"
         android:icon="@mipmap/ic_launcher">
+
+       <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+           <intent-filter android:label="flutter_web_auth">
+               <action android:name="android.intent.action.VIEW" />
+               <category android:name="android.intent.category.DEFAULT" />
+               <category android:name="android.intent.category.BROWSABLE" />
+               <data android:scheme= "kakaoc99170a34dc9eed524501824ea669455" android:host="oauth"/>
+           </intent-filter>
+       </activity>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
