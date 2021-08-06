@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
+import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
-import 'package:flutter_film/pages/main_page.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_film/pages/register_page.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage>{
   bool _isLogin;
   bool _isKakaoTalkInstalled = true;
 
+
   @override
   void dispose(){
     super.dispose();
@@ -38,6 +40,7 @@ class _LoginPageState extends State<LoginPage>{
   }
 
 
+
   //고객 카카오 로그인
   _initKakaoTalkInstalled() async {
     final installed = await isKakaoTalkInstalled();
@@ -50,7 +53,7 @@ class _LoginPageState extends State<LoginPage>{
     try {
       var token = await AuthApi.instance.issueAccessToken(authCode);
       AccessTokenStore.instance.toStore(token);
-      Get.toNamed('/main/true');
+      Get.toNamed('/main/true?type=customer');
     } catch (e) {
       print("error on issuing access token: $e");
     }
@@ -85,7 +88,7 @@ class _LoginPageState extends State<LoginPage>{
         setState(() {
           _isLogin = true;
           print(_isLogin);
-          Get.offNamed('/main/true?id=${idController.text}');
+          Get.offNamed('/main/true?type=pro&&id=${idController.text}');
         });
       }else{
         setState(() {

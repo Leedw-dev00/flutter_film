@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/customerCheck_data.dart';
+import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/my_page.dart';
 import 'package:flutter_film/pages/noti_page.dart';
 import 'package:flutter_film/pages/orderList_page.dart';
 import 'package:flutter_film/pages/point_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
+import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:flutter_film/widgets/banner_widget.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
@@ -20,6 +23,9 @@ class _MainPageState extends State<MainPage>{
 
   String _isLogin;
   String _userId;
+  String _userType;
+  List<Customer_Check> _customerCheck;
+  bool _isCS;
 
   @override
   void dispose(){
@@ -28,27 +34,52 @@ class _MainPageState extends State<MainPage>{
 
   @override
   void initState(){
+    _initTexts();
+    _isCS = true;
+    _customerCheck = [];
     _isLogin = Get.parameters['param'];
     _userId = Get.parameters['id'];
-    _initTexts();
+    _userType = Get.parameters['type'];
     super.initState();
+  }
+
+  //고객 회원가입 여부 조회
+  _getCustomer(){
+    if(_userType == 'customer'){
+        setState(() {
+          CustomerCheck_Data.getCustomerCheck(user_id).then((customerCheck){
+            setState(() {
+              _customerCheck = customerCheck;
+            });
+            print(user_id);
+            print(_userId);
+            print(customerCheck.length);
+            if(customerCheck.isEmpty == false){
+              setState(() {
+                _isCS = true;
+              });
+            }else{
+              setState(() {
+                _isCS = false;
+                Get.offNamed('/registerCustomer/true?id=$_userId');
+              });
+            }
+          });
+        });
+    }
   }
 
   _initTexts() async{
     final User user = await UserApi.instance.me();
-
     setState(() {
       user_id = user.kakaoAccount.email;
-      user_name = user.kakaoAccount.legalName;
-      user_birth = user.kakaoAccount.birthyear;
       _default_Image = user.kakaoAccount.profile.isDefaultImage;
       profile_image = user.kakaoAccount.profile.profileImageUrl;
-
     });
+    _getCustomer();
   }
+
   String user_id = 'None';
-  String user_name = 'None';
-  String user_birth = 'None';
   String profile_image = 'None';
   bool _default_Image = true;
 
@@ -137,11 +168,14 @@ class _MainPageState extends State<MainPage>{
                                   onPressed: (){
                                     print('견적 보기');
                                     if(_isLogin == 'true'){
-                                      Get.toNamed('/order/true?id=$_userId');
+                                      if(_userType == 'pro'){
+                                        Get.snackbar('Error', '고객 아이디로 로그인해주세요');
+                                      }else{
+                                        Get.toNamed('/order/true?id=${user_id}');
+                                      }
                                     }else{
                                       Get.snackbar('로그인 실패', '로그인 후 이용해주세요');
                                     }
-
                                   }
                               ),
                             ),
@@ -149,7 +183,6 @@ class _MainPageState extends State<MainPage>{
                           ],
                         )
                     ),
-
                   ],
                 ),
               ),
@@ -474,10 +507,26 @@ class _MainPageState extends State<MainPage>{
                       Column(
                         children: <Widget>[
                           Spacer(),
+                          _userType == 'pro'
+                          ?
                           CircleAvatar(
+                            backgroundColor: Colors.white,
                             backgroundImage: AssetImage('assets/images/pro.jpg',),
                             radius: 35,
-                          ),
+                          )
+                          :
+                            _default_Image
+                            ?
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              backgroundImage: AssetImage('assets/images/defaultImage.png',),
+                              radius: 35,
+                            )
+                            :
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(profile_image,),
+                              radius: 35,
+                            ),
                           Spacer(),
                         ],
                       ),
@@ -485,12 +534,22 @@ class _MainPageState extends State<MainPage>{
                       Column(
                         children: <Widget>[
                           Spacer(),
+                          _userType == 'pro'
+                          ?
                           Text('$_userId 님', style:
-                          TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600
-                          ),
+                            TextStyle(
+                                fontSize: 18.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600
+                            ),
+                          )
+                          :
+                          Text('$user_id 님', style:
+                            TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600
+                            ),
                           ),
                           SizedBox(height: 5.0,),
                           Text('안녕하세요', style:

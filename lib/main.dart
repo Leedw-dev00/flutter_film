@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
+import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
@@ -63,7 +64,12 @@ class MyApp extends StatelessWidget {
         GetPage(
           name:'/profilePage/:param',
           page: () => ProfilePage(),
+        ),
+        GetPage(
+          name:'/registerCustomer/:param',
+          page: () => RegisterCPage(),
         )
+
       ]
     );
   }

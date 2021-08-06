@@ -12,11 +12,13 @@ class _Home_BannerState extends State<Home_Banner>{
 
   String _userId;
   String _isLogin;
+  String _userType;
 
   @override
   void initState(){
     _userId = Get.parameters['id'];
     _isLogin = Get.parameters['param'];
+    _userType = Get.parameters['type'];
     super.initState();
   }
 
@@ -78,11 +80,14 @@ class _Home_BannerState extends State<Home_Banner>{
                         onPressed: (){
                           print('견적 보기');
                           if(_isLogin == 'true'){
-                            Get.toNamed('/order/true?id=$_userId');
+                            if(_userType == 'customer'){
+                              Get.snackbar('Error', '고객 아이디로 로그인해주세요');
+                            }else{
+                              Get.toNamed('/order/true?id=$_userId');
+                            }
                           }else{
                             Get.snackbar('로그인 실패', '로그인 후 이용해주세요');
                           }
-
                         }
                     ),
                   ),
