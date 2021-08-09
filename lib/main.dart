@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           page: () => OrderPage(),
         ),
         GetPage(
-          name: '/profilePPage',
+          name: '/profilePPage/:param',
           page: () => ProfilePPage(),
         ),
         GetPage(

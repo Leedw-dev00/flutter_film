@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/customerCheck_data.dart';
+import 'package:flutter_film/datas/pro_recom_data.dart';
 import 'package:flutter_film/models/customerCheck_model.dart';
+import 'package:flutter_film/models/pro_recom_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/my_page.dart';
 import 'package:flutter_film/pages/noti_page.dart';
@@ -24,7 +26,9 @@ class _MainPageState extends State<MainPage>{
   String _isLogin;
   String _userId;
   String _userType;
+  bool _isLoading;
   List<Customer_Check> _customerCheck;
+  List<Pro_User> _proUser;
   bool _isCS;
 
   @override
@@ -37,36 +41,53 @@ class _MainPageState extends State<MainPage>{
     _initTexts();
     _isCS = true;
     _customerCheck = [];
+    _proUser = [];
     _isLogin = Get.parameters['param'];
     _userId = Get.parameters['id'];
     _userType = Get.parameters['type'];
+    _isLoading = false;
+    _getProRecom();
     super.initState();
   }
 
   //고객 회원가입 여부 조회
   _getCustomer(){
     if(_userType == 'customer'){
-        setState(() {
-          CustomerCheck_Data.getCustomerCheck(user_id).then((customerCheck){
-            setState(() {
-              _customerCheck = customerCheck;
-            });
-            print(user_id);
-            print(_userId);
-            print(customerCheck.length);
-            if(customerCheck.isEmpty == false){
-              setState(() {
-                _isCS = true;
-              });
-            }else{
-              setState(() {
-                _isCS = false;
-                Get.offNamed('/registerCustomer/true?id=$_userId');
-              });
-            }
+      setState(() {
+        CustomerCheck_Data.getCustomerCheck(user_id).then((customerCheck){
+          setState(() {
+            _customerCheck = customerCheck;
           });
+          print(user_id);
+          print(_userId);
+          print(customerCheck.length);
+          if(customerCheck.isEmpty == false){
+            setState(() {
+              _isCS = true;
+            });
+          }else{
+            setState(() {
+              _isCS = false;
+              Get.offNamed('/registerCustomer/true?id=$_userId');
+            });
+          }
         });
+      });
     }
+  }
+
+  //전문가 추천
+  _getProRecom(){
+    ProUser_Data.getProRecom().then((proUser){
+      setState(() {
+        _proUser = proUser;
+      });
+      if(proUser.length == 0){
+        _isLoading = false;
+      }else{
+        _isLoading = true;
+      }
+    });
   }
 
   _initTexts() async{
@@ -208,229 +229,294 @@ class _MainPageState extends State<MainPage>{
                 ),
               ),
               Container(
+                padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+                height: 300.0,
+                width: Get.width,
                 color: Colors.white,
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: (){
-                        Get.to(ProfilePPage());
-                      },
-                      child: Container(
-                        color: Color(0xFFF0F0F0),
-                        padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  backgroundImage: AssetImage('assets/images/pro.jpg',),
-                                  radius: 20,
-                                ),
-                                SizedBox(width: 20.0,),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                child:
+                _isLoading
+                  ?
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: _proUser.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return Container(
+                      width: Get.width,
+                      child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed('/profilePPage/$_isLogin?id=${_proUser[index].user_id}');
+                          },
+                          child: Container(
+                            height: 60.0,
+                            margin: EdgeInsets.symmetric(vertical: 5.0),
+                            width: Get.width,
+                            child:
+                                Row(
                                   children: <Widget>[
-                                    Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                    Text('디올디 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                    Row(
+                                    CircleAvatar(
+                                      backgroundImage: AssetImage('assets/images/pro.jpg',),
+                                      radius: 20,
+                                    ),
+                                    SizedBox(width: 20.0,),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                        Text('4.7', style: TextStyle(fontSize: 12.0),)
+                                        Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                        Text('${_proUser[index].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                        Row(
+                                          children: <Widget>[
+                                            Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                            Text('4.7', style: TextStyle(fontSize: 12.0),)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                        Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
                                       ],
                                     ),
                                   ],
                                 ),
-                                Spacer(),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                    Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                  ],
-                                ),
+                           //     SizedBox(height: 10.0),
 
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-
-                    Container(
-                      color: Color(0xFFF0F0F0),
-                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro2.jpg',),
-                                radius: 20,
-                              ),
-                              SizedBox(width: 20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                  Text('한솔 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                      Text('4.2', style: TextStyle(fontSize: 12.0),)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
-
-                            ],
                           )
-                        ],
                       ),
-                    ),
-                    SizedBox(height: 10.0,),
-                    Container(
-                      color: Color(0xFFF0F0F0),
-                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro3.jpg',),
-                                radius: 20,
-                              ),
-                              SizedBox(width: 20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                  Text('대신 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                      Text('4.6', style: TextStyle(fontSize: 12.0),)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
+                    );
+                  }
+                )
 
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 10.0,),
-                    Container(
-                      color: Color(0xFFF0F0F0),
-                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro4.png',),
-                                radius: 20,
-                              ),
-                              SizedBox(width: 20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                  Text('성운 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                      Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
 
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
 
-                    SizedBox(height: 10.0,),
-                    Container(
-                      color: Color(0xFFF0F0F0),
-                      padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro5.png',),
-                                radius: 20,
-                              ),
-                              SizedBox(width: 20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize: 10.0,),),
-                                  Text('우원건업', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                  Row(
-                                    children: <Widget>[
-                                      Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                      Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                  Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
 
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
 
-                  ],
-                ),
+                // Column(
+                //   children: <Widget>[
+                //     GestureDetector(
+                //       onTap: (){
+                //         Get.to(ProfilePPage());
+                //       },
+                //       child: Container(
+                //         color: Color(0xFFF0F0F0),
+                //         padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                //         child: Column(
+                //           children: <Widget>[
+                //             Row(
+                //               children: <Widget>[
+                //                 CircleAvatar(
+                //                   backgroundImage: AssetImage('assets/images/pro.jpg',),
+                //                   radius: 20,
+                //                 ),
+                //                 SizedBox(width: 20.0,),
+                //                 Column(
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   crossAxisAlignment: CrossAxisAlignment.start,
+                //                   children: <Widget>[
+                //                     Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                //                     Text('${_proUser[0].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                //                     Row(
+                //                       children: <Widget>[
+                //                         Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                //                         Text('4.7', style: TextStyle(fontSize: 12.0),)
+                //                       ],
+                //                     ),
+                //                   ],
+                //                 ),
+                //                 Spacer(),
+                //                 Column(
+                //                   mainAxisAlignment: MainAxisAlignment.center,
+                //                   crossAxisAlignment: CrossAxisAlignment.center,
+                //                   children: <Widget>[
+                //                     Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                //                     Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                //                   ],
+                //                 ),
+                //
+                //               ],
+                //             )
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //     SizedBox(height: 10.0),
+                //
+                //     Container(
+                //       color: Color(0xFFF0F0F0),
+                //       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                //       child: Column(
+                //         children: <Widget>[
+                //           Row(
+                //             children: <Widget>[
+                //               CircleAvatar(
+                //                 backgroundImage: AssetImage('assets/images/pro2.jpg',),
+                //                 radius: 20,
+                //               ),
+                //               SizedBox(width: 20.0,),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: <Widget>[
+                //                   Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                //                   Text('한솔 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                //                   Row(
+                //                     children: <Widget>[
+                //                       Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                //                       Text('4.2', style: TextStyle(fontSize: 12.0),)
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //               Spacer(),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                //                   Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                //                 ],
+                //               ),
+                //
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //     SizedBox(height: 10.0,),
+                //     Container(
+                //       color: Color(0xFFF0F0F0),
+                //       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                //       child: Column(
+                //         children: <Widget>[
+                //           Row(
+                //             children: <Widget>[
+                //               CircleAvatar(
+                //                 backgroundImage: AssetImage('assets/images/pro3.jpg',),
+                //                 radius: 20,
+                //               ),
+                //               SizedBox(width: 20.0,),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: <Widget>[
+                //                   Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                //                   Text('대신 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                //                   Row(
+                //                     children: <Widget>[
+                //                       Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                //                       Text('4.6', style: TextStyle(fontSize: 12.0),)
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //               Spacer(),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                //                   Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                //                 ],
+                //               ),
+                //
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //     SizedBox(height: 10.0,),
+                //     Container(
+                //       color: Color(0xFFF0F0F0),
+                //       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                //       child: Column(
+                //         children: <Widget>[
+                //           Row(
+                //             children: <Widget>[
+                //               CircleAvatar(
+                //                 backgroundImage: AssetImage('assets/images/pro4.png',),
+                //                 radius: 20,
+                //               ),
+                //               SizedBox(width: 20.0,),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: <Widget>[
+                //                   Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                //                   Text('성운 컴퍼티', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                //                   Row(
+                //                     children: <Widget>[
+                //                       Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                //                       Text('4.7', style: TextStyle(fontSize: 12.0),)
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //               Spacer(),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                //                   Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                //                 ],
+                //               ),
+                //
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //
+                //     SizedBox(height: 10.0,),
+                //     Container(
+                //       color: Color(0xFFF0F0F0),
+                //       padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
+                //       child: Column(
+                //         children: <Widget>[
+                //           Row(
+                //             children: <Widget>[
+                //               CircleAvatar(
+                //                 backgroundImage: AssetImage('assets/images/pro5.png',),
+                //                 radius: 20,
+                //               ),
+                //               SizedBox(width: 20.0,),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: <Widget>[
+                //                   Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                //                   Text('우원건업', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                //                   Row(
+                //                     children: <Widget>[
+                //                       Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                //                       Text('4.7', style: TextStyle(fontSize: 12.0),)
+                //                     ],
+                //                   ),
+                //                 ],
+                //               ),
+                //               Spacer(),
+                //               Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 crossAxisAlignment: CrossAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                //                   Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                //                 ],
+                //               ),
+                //
+                //             ],
+                //           )
+                //         ],
+                //       ),
+                //     ),
+                //
+                //   ],
+                // )
+                  :CircularProgressIndicator(),
               ),
               SizedBox(height: 40.0),
               Container(
