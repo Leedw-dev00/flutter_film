@@ -1,6 +1,6 @@
 class Select_Order{
   String user_id;
-  String service_data;
+  String service_date;
   String skill;
   String service_area;
   String service_type;
@@ -12,12 +12,12 @@ class Select_Order{
   String pro_skill;
   String area1;
 
-  Select_Order({this.user_id, this.service_data, this.skill, this.service_area, this.service_type, this.service_size, this.service_detail, this.order_date, this.pro_user_id, this.com_name, this.pro_skill, this.area1});
+  Select_Order({this.user_id, this.service_date, this.skill, this.service_area, this.service_type, this.service_size, this.service_detail, this.order_date, this.pro_user_id, this.com_name, this.pro_skill, this.area1});
 
   factory Select_Order.fromJosn(Map<String, dynamic> json){
     return Select_Order(
       user_id: json['user_id'] as String,
-      service_data: json['service_data'] as String,
+      service_date: json['service_date'] as String,
       skill: json['skill'] as String,
       service_area: json['service_area'] as String,
       service_type: json['service_type'] as String,
