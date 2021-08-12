@@ -4,12 +4,13 @@ class Order_Data{
   static const ROOT = 'https://d-grab.co.kr/film_enter_order.php';
   static const _ADD_ORDER_ACTION = 'ADD_ORDER';
 
-  static Future<String> addOrder(String user_id, String service_date, String service_area, String service_type, String service_size, String service_detail) async{
+  static Future<String> addOrder(String user_id, String service_date, String skill, String service_area, String service_type, String service_size, String service_detail) async{
     try{
       var map = Map<String, dynamic>();
       map['action'] = _ADD_ORDER_ACTION;
       map['user_id'] = user_id;
       map['service_date'] = service_date;
+      map['skill'] = skill;
       map['service_area'] = service_area;
       map['service_type'] = service_type;
       map['service_size'] = service_size;

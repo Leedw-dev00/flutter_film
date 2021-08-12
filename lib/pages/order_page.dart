@@ -15,11 +15,27 @@ class _OrderPageState extends State<OrderPage>{
   final _valueList1 = ["선택","아파트", "주택", "사무실", "상가", "기타"];
   final _valueList2 = ["선택", "제곱미터", "평형", "기타"];
   final _valueList3 = ["선택", "서울", "경기", "인천", "대전", "천안", "대구", "부산", "제주", "기타"];
+  final _valueList4 = ["선택", "기공(1~3년)", "준기공(3~7년)", "조공(7년 이상)",];
   var _selectedValue1 = '선택';
   var _selectedValue2 = '선택';
   var _selectedValue3 = '선택';
+  var _selectedValue4 = '선택';
   TextEditingController sizeController;
   TextEditingController detailController;
+  String user_id;
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  void initState(){
+    sizeController = TextEditingController();
+    detailController = TextEditingController();
+    user_id = Get.parameters['id'];
+    super.initState();
+  }
 
 
   _selectDate(BuildContext context) async {
@@ -35,21 +51,9 @@ class _OrderPageState extends State<OrderPage>{
       });
   }
   
-  @override
-  void dispose(){
-    super.dispose();
-  }
-  
-  @override
-  void initState(){
-    sizeController = TextEditingController();
-    detailController = TextEditingController();
-    super.initState();
-  }
-  
   _addOrder(){
-    Order_Data.addOrder(Get.parameters['id'], _selectedDate.toLocal().toString().split(' ')[0], _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text).then((result){
-    print('success');
+    Order_Data.addOrder(user_id, _selectedDate.toLocal().toString().split(' ')[0], _selectedValue4, _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text).then((result){
+    Get.offNamed('/orderList/true?id=$user_id');
     });
   }
 
@@ -60,7 +64,7 @@ class _OrderPageState extends State<OrderPage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('${Get.parameters['id']}견적신청', style:
+        title: Text('견적신청', style:
         TextStyle(
           color: Colors.black,
           fontSize: 16.0,
@@ -130,6 +134,60 @@ class _OrderPageState extends State<OrderPage>{
                     ),
                   ],
                 ),
+              ),
+              SizedBox(height: 10.0,),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  color: Color(0xFFF0F0F0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text('숙련도')
+                        ],
+                      ),
+                      SizedBox(height: 10.0,),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 45.0,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                              borderRadius: BorderRadius.circular(3.0)
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: _selectedValue4,
+                              items: _valueList4.map(
+                                      (value){
+                                    return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value, style: TextStyle(color: Colors.black),),
+                                    );
+                                  }
+                              ).toList(),
+                              onChanged: (value){
+                                setState(() {
+                                  _selectedValue4 = value;
+                                });
+                              },
+                            ),
+                          )
+                      )
+                    ],
+                  )
               ),
               SizedBox(height: 10.0,),
               Container(
@@ -445,10 +503,10 @@ class _OrderPageState extends State<OrderPage>{
                   onPressed: (){
                     print('신청하기');
                     _addOrder();
-                    //Navigator.push(context, MaterialPageRoute(builder: (context) => MatchingPage()));
                   },
                 ),
               ),
+              SizedBox(height: 20.0,)
             ],
           ),
         ),

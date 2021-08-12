@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
-import 'package:flutter_film/pages/my_page.dart';
+import 'package:flutter_film/pages/promy_page.dart';
 import 'package:flutter_film/pages/orderList_page.dart';
 import 'package:flutter_film/pages/order_page.dart';
 import 'package:flutter_film/pages/point_page.dart';
@@ -50,15 +51,19 @@ class MyApp extends StatelessWidget {
           page: () => PointPage(),
         ),
         GetPage(
-          name: '/myPage/:param',
-          page: () => MyPage(),
+          name: '/proMyPage/:param',
+          page: () => ProMyPage(),
+        ),
+        GetPage(
+          name: '/customerMyPage/:param',
+          page: () => CustomerMyPage(),
         ),
         GetPage(
           name: '/loginPage',
           page: () => LoginPage(),
         ),
         GetPage(
-          name: '/registerProfilePage',
+          name: '/registerProfilePage/:param',
           page: () => RegisterProfilePage(),
         ),
         GetPage(
@@ -68,7 +73,12 @@ class MyApp extends StatelessWidget {
         GetPage(
           name:'/registerCustomer/:param',
           page: () => RegisterCPage(),
-        )
+        ),
+        GetPage(
+          name:'/orderList/:param',
+          page: () => OrderListPage(),
+        ),
+
 
       ]
     );

@@ -5,28 +5,46 @@ import 'package:flutter_film/pages/alarm_page.dart';
 import 'package:flutter_film/pages/profile_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 
 
-class MyPage extends StatefulWidget{
+class ProMyPage extends StatefulWidget{
   @override
-  _MyPageState createState() => _MyPageState();
+  _ProMyPageState createState() => _ProMyPageState();
 }
 
-class _MyPageState extends State<MyPage>{
+class _ProMyPageState extends State<ProMyPage>{
 
   String _userId;
+  String _userType;
   String _isLogin;
   bool _isLoading;
   List<User_Check> _user_info;
 
   @override
   void initState(){
+    _initTexts();
+    _userType = Get.parameters['user_type'];
     _userId = Get.parameters['id'];
     _isLogin = Get.parameters['param'];
     _isLoading = false;
     _getUserInfo();
     super.initState();
   }
+
+  //카카오 로그인 고객
+  _initTexts() async{
+    final User user = await UserApi.instance.me();
+    setState(() {
+      user_id = user.kakaoAccount.email;
+      _default_Image = user.kakaoAccount.profile.isDefaultImage;
+      profile_image = user.kakaoAccount.profile.profileImageUrl;
+    });
+  }
+
+  String user_id = 'None';
+  String profile_image = 'None';
+  bool _default_Image = true;
 
   _getUserInfo(){
     UserCheck_Data.getUserCheck(_userId).then((user_info){

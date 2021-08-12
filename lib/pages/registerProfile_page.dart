@@ -30,7 +30,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
   //전문가 회원 회원가입
   _addProfile(){
     RegisterProfile_Data.addProfile(Get.arguments, introduceController.text, basicController.text, comController.text).then((result){
-        Get.offAll(LoginPage());
+        Get.offNamed('/loginPage');
     });
   }
 
@@ -131,7 +131,6 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
                         ),
                       ),
                     ),
-
                     Text('서비스 가능 지역 / 연락 가능 시간', style:
                     TextStyle(
                         color: Colors.black,

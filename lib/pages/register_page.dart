@@ -29,6 +29,8 @@ class _RegisterPageState extends State<RegisterPage>{
   bool _ispwCheck = false;
   bool _ispwLength = false;
   bool _isOverlap = true;
+  final _valueList4 = ["선택", "기공(1~3년)", "준기공(3~7년)", "조공(7년 이상)",];
+  var _selectedValue4 = '선택';
   List<User_Check> _user_check;
 
   @override
@@ -73,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage>{
     }else{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
-        ProUser_Data.addProUser(idController.text, pwController.text, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
+        ProUser_Data.addProUser(idController.text, pwController.text, _selectedValue4, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
         Get.toNamed('/registerProfilePage', arguments: idController.text);
         });
         return;
@@ -245,6 +247,60 @@ class _RegisterPageState extends State<RegisterPage>{
               Text('비밀번호가 일치합니다.', style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w600),)
               :
               Text('비밀번호가 일치하지 않습니다.', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
+              SizedBox(height: 20.0,),
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  color: Color(0xFFF0F0F0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(width: 5.0,),
+                          Text('숙련도')
+                        ],
+                      ),
+                      SizedBox(height: 10.0,),
+                      Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          height: 45.0,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(width: 0.5, color: Color(0xFF636363)),
+                              borderRadius: BorderRadius.circular(3.0)
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: _selectedValue4,
+                              items: _valueList4.map(
+                                      (value){
+                                    return DropdownMenuItem(
+                                      value: value,
+                                      child: Text(value, style: TextStyle(color: Colors.black),),
+                                    );
+                                  }
+                              ).toList(),
+                              onChanged: (value){
+                                setState(() {
+                                  _selectedValue4 = value;
+                                });
+                              },
+                            ),
+                          )
+                      )
+                    ],
+                  )
+              ),
               SizedBox(height: 20.0,),
               TextField(
                 controller: emailController,
