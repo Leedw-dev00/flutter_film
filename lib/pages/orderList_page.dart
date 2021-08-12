@@ -63,81 +63,50 @@ class _OrderListPageState extends State<OrderListPage>{
           },
         ),
       ),
-
       backgroundColor: Color(0xFFf0f0f0),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+          width: Get.width,
+          height: 300.0,
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              GestureDetector(
-                onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => OrderwPage())
-                  );
-                  print('success');
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  width: 350,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.0, color: Color(0xFF398FE2),),
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffffffff),
-                  ),
-
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/pro.jpg'),
-                            radius: 30,
+          child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: _selectOrder.length,
+            itemBuilder: (BuildContext context, int index){
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                padding: EdgeInsets.all(5.0),
+                decoration: BoxDecoration(
+                    border: Border.all(width: 0.5)
+                ),
+                width: Get.width,
+                child: GestureDetector(
+                  onTap: (){},
+                  child: Container(
+                    height: 60.0,
+                    width: Get.width,
+                    margin: EdgeInsets.symmetric(vertical: 5.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text('No.${_selectOrder[index].user_id}${_selectOrder[index].order_date.split(' ')[0]}', style:
+                          TextStyle(
+                            fontSize: 13.0,
+                            color: Colors.grey,
                           ),
-                          SizedBox(width:20.0,),
-
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text('${_selectOrder[0].pro_user_id}', style: TextStyle(fontSize:10.0,)),
-                              Text('${_selectOrder[0].com_name}', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-                              Row(
-                                children: <Widget> [
-                                  Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                  Text('4.7', style: TextStyle(fontSize:12.0),),
-                                  SizedBox(width:5),
-                                  Text('(10개)', style: TextStyle(fontSize:10.0),),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Spacer(),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget> [
-                              Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                              Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                            ],
-                          ),
-                          SizedBox(width: 10.0,)
-                        ],
-                      ),
-                    ],
+                        ),
+                        Container(
+                          child: Text('${_selectOrder[index].}'),
+                        )
+                      ],
+                    )
                   ),
                 ),
-              ),
-              SizedBox(height: 20.0,),
-            ],
-          ),
+              );
+            },
+          )
         ),
       ),
     );

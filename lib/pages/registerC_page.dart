@@ -84,7 +84,7 @@ class _RegisterCPageState extends State<RegisterCPage>{
                         value: value,
                         child: Text(value, style: TextStyle(color: Colors.grey),),
                       );
-                    }
+                    },
                 ).toList(),
                 onChanged: (value){
                   setState(() {
