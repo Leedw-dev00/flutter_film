@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_film/datas/pro_recom_data.dart';
 import 'package:flutter_film/datas/pro_select_data.dart';
-import 'package:flutter_film/models/pro_recom_model.dart';
 import 'package:flutter_film/models/pro_select_model.dart';
-import 'package:flutter_film/widgets/profilePFirst_widget.dart';
 import 'package:flutter_film/widgets/profilePSecond_widget.dart';
 import 'package:flutter_film/widgets/profilePThird_widget.dart';
 import 'package:get/get.dart';
@@ -18,7 +15,6 @@ class _ProfilePPageState extends State<ProfilePPage>{
   String user_id;
   String _isLogin;
   List<Pro_Select> _proSelect;
-  List<Pro_User> _proUser;
   bool _isLoading;
 
   @override
@@ -33,7 +29,6 @@ class _ProfilePPageState extends State<ProfilePPage>{
     user_id = Get.parameters['id'];
     print('$user_id');
     _proSelect = [];
-    _proUser = [];
     _getProSelect();
     print('$user_id');
     super.initState();
@@ -53,8 +48,6 @@ class _ProfilePPageState extends State<ProfilePPage>{
       }
     });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +109,6 @@ class _ProfilePPageState extends State<ProfilePPage>{
                       ],
                     ),
                     Spacer(),
-
                     _isLogin == 'true'
                     ?
                     SizedBox(
@@ -147,8 +139,123 @@ class _ProfilePPageState extends State<ProfilePPage>{
                 ),
               ),
               SizedBox(height: 10.0,),
-              ProfileP_Second(),
               SizedBox(height: 10.0,),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+                width: MediaQuery.of(context).size.width,
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text('전문가 정보', style:
+                    TextStyle(
+                        color: Color(0XFF398FE2),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.0
+                    ),
+                    ),
+                    SizedBox(height: 3.0,),
+                    SizedBox(
+                      child: Container(
+                        width: 60.0,
+                        height: 2.0,
+                        color: Color(0XFF398FE2),
+                      ),
+                    ),
+                    SizedBox(height: 30.0,),
+                    Text('소개', style:
+                    TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0
+                    ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text('${_proSelect[0].introduce}', style:
+                    TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0
+                    ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Text('기본정보', style:
+                    TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0
+                    ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text('${_proSelect[0].basic}', style:
+                    TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0
+                    ),
+                    ),
+                    SizedBox(height: 20.0),
+                    Text('추가정보', style:
+                    TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0
+                    ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Text('${_proSelect[0].company}', style:
+                    TextStyle(
+                        color: Colors.grey,
+                        fontSize: 13.0
+                    ),
+                    ),
+
+                    SizedBox(height: 20.0),
+                    Text('사진정보', style:
+                    TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14.0
+                    ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: <Widget>[
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset('assets/images/port1.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                            ),
+                            SizedBox(width: 10.0,),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset('assets/images/port2.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                            ),
+                            SizedBox(width: 10.0,),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset('assets/images/port3.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                            ),
+                            SizedBox(width: 10.0,),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset('assets/images/port4.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                            ),
+                            SizedBox(width: 10.0,),ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset('assets/images/port5.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                            ),
+                            SizedBox(width: 10.0,),
+
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0,),
               ProfileP_Third(),
               SizedBox(height: 20.0,),
               SizedBox(
@@ -157,9 +264,9 @@ class _ProfilePPageState extends State<ProfilePPage>{
                 child: ElevatedButton(
                   child: Text('리뷰 더보기', style:
                   TextStyle(
-                    fontSize: 13.0,
-                    color: Color(0xFF398FE2),
-                    fontWeight: FontWeight.w600
+                      fontSize: 13.0,
+                      color: Color(0xFF398FE2),
+                      fontWeight: FontWeight.w600
                   ),
                     textAlign: TextAlign.center,
                   ),

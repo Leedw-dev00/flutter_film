@@ -70,7 +70,7 @@ class _OrderListPageState extends State<OrderListPage>{
           margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
           width: Get.width,
           height: Get.height,
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             itemCount: _selectOrder.length,
@@ -120,15 +120,7 @@ class _OrderListPageState extends State<OrderListPage>{
                               ),
                             ),
                             SizedBox(width: 3.0,),
-                            Container(
-                              color: Colors.blue,
-                              child: Text(_selectOrder[index].service_date, style:
-                                TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white
-                                ),
-                              ),
-                            ),
+                            Text(_selectOrder[index].service_date),
                             SizedBox(width: 10.0,),
                             Text('작업 지역', style:
                               TextStyle(
@@ -137,24 +129,30 @@ class _OrderListPageState extends State<OrderListPage>{
                               ),
                             ),
                             SizedBox(width: 3.0,),
-                            Container(
-                              color: Colors.redAccent,
-                              child: Text(_selectOrder[index].service_date, style:
-                                TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white
-                                ),
-                              ),
-                            )
+                            Text(_selectOrder[index].service_area),
                           ],
                         ),
                         SizedBox(height: 5.0,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text('작업 타입 : ${_selectOrder[index].service_type}'),
+                            Text('작업 타입', style:
+                              TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13.0
+                              ),
+                            ),
+                            SizedBox(width: 3.0,),
+                            Text('${_selectOrder[index].service_type}',
+
+                            ),
                             SizedBox(width: 10.0,),
-                            Text('작업 크기 : ${_selectOrder[index].service_size}'),
+                            Text('작업 크기 : ${_selectOrder[index].service_size}', style:
+                              TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13.0
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: 10.0,),
@@ -163,7 +161,7 @@ class _OrderListPageState extends State<OrderListPage>{
                           width: Get.width,
                           padding: EdgeInsets.all(3.0),
                           decoration: BoxDecoration(
-                            border: Border.all(width: 0.5),
+                            border: Border.all(width: 0.5, color: Colors.grey),
                           ),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.vertical,
