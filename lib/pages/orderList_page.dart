@@ -59,9 +59,17 @@ class _OrderListPageState extends State<OrderListPage>{
         leading: IconButton(
           icon: Icon(Icons.close, color: Colors.black,),
           onPressed: (){
-            Navigator.pop(context);
+            Get.back();
           },
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.wifi_protected_setup, color: Colors.black87,),
+            onPressed: (){
+              _getSelectOrder();
+            },
+          ),
+        ],
       ),
       backgroundColor: Color(0xFFf0f0f0),
       body: SingleChildScrollView(

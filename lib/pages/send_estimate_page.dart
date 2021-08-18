@@ -16,6 +16,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
   String order_date;
   String pro_id;
   String order_id;
+  bool _isLoading;
   List<Select_Estimate> _selectEstimate;
 
   @override
@@ -32,6 +33,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     order_id = '$user_id${order_date.split(' ')[0]}';
     estimateController = TextEditingController();
     _getSelectEstimate();
+    _isLoading = false;
     super.initState();
   }
 
@@ -41,6 +43,15 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
       setState(() {
         _selectEstimate = selectEstimate;
       });
+      if(selectEstimate.length == 0){
+        setState(() {
+          _isLoading = false;
+        });
+      }else{
+        setState(() {
+          _isLoading = true;
+        });
+      }
     });
   }
 
@@ -79,59 +90,13 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
             fontSize: 16.0,
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.close, color: Colors.black,),
-          onPressed: (){
-            Navigator.pop(context);
-          },
-        ),
       ),
       backgroundColor: Color(0xFFf0f0f0),
       body: SingleChildScrollView(
         child:
-          _selectEstimate.isEmpty
+          _isLoading
+          //_selectEstimate.isEmpty
           ?
-          Container(
-            height: Get.height*0.8,
-            width: Get.width,
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                height: 200.0,
-                width: Get.width,
-                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: 0.2),
-                    borderRadius: BorderRadius.circular(10.0)
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
-                    SizedBox(height: 2.0,),
-                    Text('마감 된 요청서입니다', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
-                    Spacer(),
-                    ElevatedButton(
-                      onPressed: (){
-                        _updateOrderStatus();
-                      },
-                      child:
-                      Text('     돌아가기     ', style:
-                        TextStyle(
-                            fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ),
-                    SizedBox(height: 15.0,)
-                  ],
-                ),
-              ),
-            )
-          )
-          :
           Container(
             width: Get.width,
             height: 550.0,
@@ -174,6 +139,47 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
                     child: Text('견적서 보내기 | 300pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
               ],
             ),
+          )
+          :
+          Container(
+            height: Get.height*0.8,
+            width: Get.width,
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 200.0,
+                width: Get.width,
+                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(width: 0.2),
+                    borderRadius: BorderRadius.circular(10.0)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
+                    SizedBox(height: 2.0,),
+                    Text('마감 된 요청서입니다', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
+                    Spacer(),
+                    ElevatedButton(
+                        onPressed: (){
+                          _updateOrderStatus();
+                        },
+                        child:
+                        Text('     돌아가기     ', style:
+                        TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                        )
+                    ),
+                    SizedBox(height: 15.0,)
+                  ],
+                ),
+              ),
+            )
           ),
       ),
     );
