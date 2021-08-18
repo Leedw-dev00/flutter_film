@@ -112,6 +112,7 @@ class _MainPageState extends State<MainPage>{
       _default_Image = user.kakaoAccount.profile.isDefaultImage;
       profile_image = user.kakaoAccount.profile.profileImageUrl;
     });
+    print(user_id);
     _getCustomer();
   }
 
@@ -428,7 +429,6 @@ class _MainPageState extends State<MainPage>{
                           Spacer(),
                         ],
                       ),
-
                     ],
                   ),
                 ),
@@ -439,7 +439,7 @@ class _MainPageState extends State<MainPage>{
                 child: Column(
                   children: <Widget>[
                     ListTile(
-                      title: Text('보낸 견적서', style:
+                      title: Text('받은 요청', style:
                         TextStyle(
                             fontSize: 13.0,
                             fontWeight: FontWeight.bold

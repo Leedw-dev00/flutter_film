@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
+import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
@@ -78,8 +79,10 @@ class MyApp extends StatelessWidget {
           name:'/orderList/:param',
           page: () => OrderListPage(),
         ),
-
-
+        GetPage(
+          name:'/sendEstimate/:param',
+          page: () => SendEstimate_Page(),
+        ),
       ]
     );
   }

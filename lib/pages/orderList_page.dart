@@ -173,9 +173,9 @@ class _OrderListPageState extends State<OrderListPage>{
                           alignment: Alignment.center,
                           child: ElevatedButton(
                               onPressed: (){
-                                Get.defaultDialog(middleText: "견적서를 보내시겠습니까?");
+                                Get.toNamed('/sendEstimate/true?user_id=${_selectOrder[index].user_id}&&order_date=${_selectOrder[index].order_date}&&pro_id=$user_id');
                               },
-                              child: Text('견적서 보내기 | 300포인트 차감')
+                              child: Text('견적서 보내기', style: TextStyle(fontWeight: FontWeight.bold),)
                           ),
                         )
                       ],
