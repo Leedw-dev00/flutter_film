@@ -39,6 +39,7 @@ dependencies:
   package_info:
   platform:
   shared_preferences:
+  lazy_loading_list: ^1.0.1
 
 dev_dependencies:
   flutter_test:

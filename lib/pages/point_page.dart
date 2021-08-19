@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_film/pages/deposit_page.dart';
+import 'package:flutter_film/datas/pro_point_data.dart';
+import 'package:flutter_film/models/pro_point_model.dart';
+import 'package:get/get.dart';
 
 
 class PointPage extends StatefulWidget {
@@ -9,8 +11,46 @@ class PointPage extends StatefulWidget {
 }
 
 class _PointPageState extends State<PointPage> {
+  bool _is5000 = false;
+  bool _is10000 = false;
+  bool _is30000 = false;
+  bool _is50000 = false;
+  bool _is100000 = false;
+  String _userId;
+  String point;
+  int _selectedValue;
+  bool _isLoading;
+  List<Pro_Point> _pro_point;
 
-  var _isChecked = false;
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  void initState(){
+    _isLoading = false;
+    _pro_point = [];
+    _userId = Get.parameters['id'];
+    _getProPoint();
+    super.initState();
+  }
+
+  _getProPoint(){
+    ProPoint_Data.getProPoint(_userId).then((pro_point){
+      setState(() {
+        _pro_point = pro_point;
+      });
+      if(pro_point.length == 0){
+        _isLoading = false;
+      }else{
+        setState(() {
+          _isLoading = true;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +81,17 @@ class _PointPageState extends State<PointPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              _isLoading
+              ?
               Text(
-                '1,500P',
+                '보유 포인트 : ${_pro_point[0].total_point}',
                 style:TextStyle(
-                  fontSize:37,
+                  fontSize:20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF398FE2),
                 ),
-              ),
-              Text(
-                '내 보유포인트',
-              ),
+              )
+              :CircularProgressIndicator(),
               Padding(
                 padding: const EdgeInsets.only(top:30,),
                 child: Column(
@@ -69,23 +109,29 @@ class _PointPageState extends State<PointPage> {
                         ),
                         child: Row(
                           children: <Widget>[
+
                             Checkbox(
-                              value: _isChecked,
+                              value: _is5000,
                               onChanged: (value){
                                 setState(() {
-                                  _isChecked = value;
+                                  _is5000 = value;
+                                  _selectedValue = 5000;
+                                  _is10000 = false;
+                                  _is30000 = false;
+                                  _is50000 = false;
+                                  _is100000= false;
                                 });
                               },
                             ),
                             SizedBox(width: 5.0,),
-                            Text('10000원', style:
+                            Text('5000원', style:
                               TextStyle(
                                 fontSize:20,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                             Spacer(),
-                            Text('1000P', style:
+                            Text('5000P', style:
                               TextStyle(
                                 fontSize:20,
                                 fontWeight: FontWeight.w400,
@@ -108,53 +154,20 @@ class _PointPageState extends State<PointPage> {
                         child: Row(
                           children: <Widget>[
                             Checkbox(
-                              value: _isChecked,
+                              value: _is10000,
                               onChanged: (value){
                                 setState(() {
-                                  _isChecked = value;
+                                  _is10000 = value;
+                                  _selectedValue = 10000;
+                                  _is5000 = false;
+                                  _is30000 = false;
+                                  _is50000 = false;
+                                  _is100000= false;
                                 });
                               },
                             ),
                             SizedBox(width: 5.0,),
-                            Text('50000원', style:
-                            TextStyle(
-                              fontSize:20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            ),
-                            Spacer(),
-                            Text('5000P', style:
-                            TextStyle(
-                              fontSize:20,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF398FE2),
-                            ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 15.0,),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        width: MediaQuery.of(context).size.width*0.75,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 0.5, color: Color(0xFF707070)), // 박스 테두리 만들기
-                          borderRadius: BorderRadius.circular(10), //박스 둥글게 만들기
-                        ),
-                        child: Row(
-                          children: <Widget>[
-                            Checkbox(
-                              value: _isChecked,
-                              onChanged: (value){
-                                setState(() {
-                                  _isChecked = value;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 5.0,),
-                            Text('100000원', style:
+                            Text('10000원', style:
                             TextStyle(
                               fontSize:20,
                               fontWeight: FontWeight.w400,
@@ -184,22 +197,113 @@ class _PointPageState extends State<PointPage> {
                         child: Row(
                           children: <Widget>[
                             Checkbox(
-                              value: _isChecked,
+                              value: _is30000,
                               onChanged: (value){
                                 setState(() {
-                                  _isChecked = value;
+                                  _is30000 = value;
+                                  _selectedValue = 30000;
+                                  _is5000 = false;
+                                  _is10000 = false;
+                                  _is50000 = false;
+                                  _is100000= false;
                                 });
                               },
                             ),
                             SizedBox(width: 5.0,),
-                            Text('200000원', style:
+                            Text('30000원', style:
                             TextStyle(
                               fontSize:20,
                               fontWeight: FontWeight.w400,
                             ),
                             ),
                             Spacer(),
-                            Text('20000P', style:
+                            Text('30000P', style:
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF398FE2),
+                            ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15.0,),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        width: MediaQuery.of(context).size.width*0.75,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 0.5, color: Color(0xFF707070)), // 박스 테두리 만들기
+                          borderRadius: BorderRadius.circular(10), //박스 둥글게 만들기
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Checkbox(
+                              value: _is50000,
+                              onChanged: (value){
+                                setState(() {
+                                  _is50000 = value;
+                                  _selectedValue = 50000;
+                                  _is5000 = false;
+                                  _is10000 = false;
+                                  _is30000 = false;
+                                  _is100000= false;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text('50000원', style:
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            ),
+                            Spacer(),
+                            Text('50000P', style:
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF398FE2),
+                            ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15.0,),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        width: MediaQuery.of(context).size.width*0.75,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(width: 0.5, color: Color(0xFF707070)), // 박스 테두리 만들기
+                          borderRadius: BorderRadius.circular(10), //박스 둥글게 만들기
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            Checkbox(
+                              value: _is100000,
+                              onChanged: (value){
+                                setState(() {
+                                  _is100000 = value;
+                                  _selectedValue = 100000;
+                                  _is5000 = false;
+                                  _is10000 = false;
+                                  _is30000 = false;
+                                  _is50000 = false;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 5.0,),
+                            Text('100000원', style:
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            ),
+                            Spacer(),
+                            Text('100000P', style:
                             TextStyle(
                               fontSize:20,
                               fontWeight: FontWeight.w400,
@@ -219,13 +323,17 @@ class _PointPageState extends State<PointPage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0,),
                     child: ElevatedButton(
-                        child:Text('충전하기'),
+                        child:Text(
+                          '충전하기', style: TextStyle(
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
                         onPressed: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => DepositPage()),
-
-                          );
+                          if(_is5000 || _is10000 || _is30000 || _is50000 || _is100000){
+                            Get.toNamed('/deposit/:true?price=$_selectedValue');
+                          }else{
+                            Get.defaultDialog(title: 'Note', titleStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold), middleText: '충전할 포인트를 선택하세요');
+                          }
                         }
                     ),
                   )

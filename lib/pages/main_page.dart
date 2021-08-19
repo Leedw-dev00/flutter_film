@@ -457,7 +457,7 @@ class _MainPageState extends State<MainPage>{
                       ),
                       ),
                       onTap: () {
-                        Get.to(PointPage());
+                        Get.toNamed('/pointPage/true?id=$_userId');
                       },
                     ),
                     ListTile(

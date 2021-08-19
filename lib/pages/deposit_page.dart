@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
 class DepositPage extends StatefulWidget {
@@ -8,6 +9,19 @@ class DepositPage extends StatefulWidget {
 }
 
 class _DepositPageState extends State<DepositPage> {
+
+  String price;
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  void initState(){
+    price = Get.parameters['price'];
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
