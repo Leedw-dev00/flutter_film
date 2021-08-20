@@ -3,8 +3,9 @@ class Pro_Point{
   String point_info;
   String point_detail;
   String total_point;
+  String date;
 
-  Pro_Point({this.user_id, this.point_info, this.point_detail, this.total_point});
+  Pro_Point({this.user_id, this.point_info, this.point_detail, this.total_point, this.date});
 
   factory Pro_Point.fromJson(Map<String, dynamic> json){
     return Pro_Point(
@@ -12,6 +13,7 @@ class Pro_Point{
       point_info: json['point_info'] as String,
       point_detail: json['point_detail'] as String,
       total_point: json['total_point'] as String,
+      date: json['date'] as String,
     );
   }
 }

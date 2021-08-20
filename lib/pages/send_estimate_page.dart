@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/register_estimate_data.dart';
+import 'package:flutter_film/datas/register_pointinfo_data.dart';
 import 'package:flutter_film/datas/select_estimate_data.dart';
 import 'package:flutter_film/datas/update_order_status_data.dart';
 import 'package:flutter_film/models/select_estimate_model.dart';
@@ -58,13 +59,26 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
   _addEstimate(){
     RegisterEstimate_Data.addEstimate(order_id, user_id, pro_id, estimateController.text).then((result){
       if(result == 'success'){
-        Get.back();
-        //print('addRegister success');
+        _addPointInfo();
+        print('addRegister success');
       }else{
         print('addRegister fail');
       }
     });
   }
+
+  _addPointInfo(){
+    Register_PointInfo.addPointInfo(pro_id, '-300', '견적서 차감').then((result){
+      if(result == 'success'){
+        print('addpointInfo success');
+        Get.back();
+      }else{
+        print('addpointInfo fail');
+      }
+    });
+  }
+
+
   
   _updateOrderStatus(){
     UpdateOrderStatus_Data.updateOrderStatus(user_id, order_date).then((result){

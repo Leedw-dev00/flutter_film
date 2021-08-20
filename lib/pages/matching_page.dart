@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MatchingPage extends StatefulWidget{
   @override
@@ -6,6 +7,24 @@ class MatchingPage extends StatefulWidget{
 }
 
 class _MatchingPageState extends State<MatchingPage>{
+
+  String order_date;
+  String user_id;
+  String order_id;
+
+  @override
+  void dispose(){
+    super.dispose();
+  }
+
+  @override
+  void initState(){
+    user_id = Get.parameters['id'];
+    order_date = Get.parameters['date'];
+    order_id = '$user_id$order_date';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +118,7 @@ class _MatchingPageState extends State<MatchingPage>{
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize:10.0,)),
+                                  Text('인테리어$user_id$order_date$order_id', style: TextStyle(fontSize:10.0,)),
                                   Text('한솔 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
                                   Row(
                                     children: <Widget> [

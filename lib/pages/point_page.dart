@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/pro_point_data.dart';
+import 'package:flutter_film/datas/register_pointinfo_data.dart';
 import 'package:flutter_film/models/pro_point_model.dart';
 import 'package:get/get.dart';
 
@@ -52,6 +53,18 @@ class _PointPageState extends State<PointPage> {
     });
   }
 
+  _addPointInfo(){
+    Register_PointInfo.addPointInfo(_userId, '$_selectedValue', '포인트 충전').then((result){
+      if(result == 'success'){
+        print('addpointInfo success');
+        Get.toNamed('/deposit/:true?price=$_selectedValue&&pro_id=$_userId');
+      }else{
+        print('addpointInfo fail');
+      }
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +95,7 @@ class _PointPageState extends State<PointPage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _isLoading
-              ?
+                  ?
               Text(
                 '보유 포인트 : ${_pro_point[0].total_point}',
                 style:TextStyle(
@@ -91,7 +104,7 @@ class _PointPageState extends State<PointPage> {
                   color: Color(0xFF398FE2),
                 ),
               )
-              :CircularProgressIndicator(),
+                  :CircularProgressIndicator(),
               Padding(
                 padding: const EdgeInsets.only(top:30,),
                 child: Column(
@@ -125,18 +138,18 @@ class _PointPageState extends State<PointPage> {
                             ),
                             SizedBox(width: 5.0,),
                             Text('5000원', style:
-                              TextStyle(
-                                fontSize:20,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                            ),
                             ),
                             Spacer(),
                             Text('5000P', style:
-                              TextStyle(
-                                fontSize:20,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xFF398FE2),
-                              ),
+                            TextStyle(
+                              fontSize:20,
+                              fontWeight: FontWeight.w400,
+                              color: Color(0xFF398FE2),
+                            ),
                             ),
                           ],
                         ),
@@ -326,11 +339,11 @@ class _PointPageState extends State<PointPage> {
                         child:Text(
                           '충전하기', style: TextStyle(
                             fontWeight: FontWeight.bold
-                          ),
+                        ),
                         ),
                         onPressed: (){
                           if(_is5000 || _is10000 || _is30000 || _is50000 || _is100000){
-                            Get.toNamed('/deposit/:true?price=$_selectedValue');
+                            _addPointInfo();
                           }else{
                             Get.defaultDialog(title: 'Note', titleStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold), middleText: '충전할 포인트를 선택하세요');
                           }

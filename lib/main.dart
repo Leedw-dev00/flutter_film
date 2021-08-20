@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
+import 'package:flutter_film/pages/matching_page.dart';
+import 'package:flutter_film/pages/orderList_Customer_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
@@ -88,6 +90,15 @@ class MyApp extends StatelessWidget {
           name:'/deposit/:param',
           page: () => DepositPage(),
         ),
+        GetPage(
+          name:'/customerList/:param',
+          page: () => CustomerListPage(),
+        ),
+        GetPage(
+          name:'/matching/:param',
+          page: () => MatchingPage(),
+        ),
+
 
       ]
     );

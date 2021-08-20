@@ -487,7 +487,7 @@ class _MainPageState extends State<MainPage>{
                       ),
                       ),
                       onTap: () {
-                        Get.to(OrderListPage());
+                        Get.toNamed('/customerList/true?id=$user_id');
                       },
                     ),
                     ListTile(
