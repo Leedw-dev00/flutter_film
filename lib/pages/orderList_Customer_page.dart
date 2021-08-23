@@ -7,12 +7,12 @@ import 'package:lazy_loading_list/lazy_loading_list.dart';
 import 'matching_page.dart';
 
 
-class CustomerListPage extends StatefulWidget{
+class CustomerOrderListPage extends StatefulWidget{
   @override
-  _CustomerListPageState createState() => _CustomerListPageState();
+  _CustomerOrderListPageState createState() => _CustomerOrderListPageState();
 }
 
-class _CustomerListPageState extends State<CustomerListPage>{
+class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
 
   String user_id;
   List<Customer_List> _customerList;
@@ -75,7 +75,7 @@ class _CustomerListPageState extends State<CustomerListPage>{
                     margin: EdgeInsets.only(top: 40.0, left: 15.0, right: 15.0),
                     padding: EdgeInsets.all(5.0),
                     width: Get.width,
-                    height: 220.0,
+                    height: 240.0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
@@ -90,8 +90,8 @@ class _CustomerListPageState extends State<CustomerListPage>{
                         children: <Widget>[
                           Text('서비스 희망 일자 : ${_customerList[index].service_date}', style:
                             TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w300
                             ),
                           ),
                           SizedBox(height: 10.0,),
@@ -99,32 +99,40 @@ class _CustomerListPageState extends State<CustomerListPage>{
                             children: <Widget>[
                               Text('서비스 지역 : ${_customerList[index].service_area}', style:
                                 TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w300
                                 ),
                               ),
                               SizedBox(width: 20.0,),
                               Text('서비스 크기 : ${_customerList[index].service_size}', style:
                                 TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w600
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w300
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10.0,),
+                          SizedBox(height: 5.0,),
+                          Text('서비스 내용', style:
+                            TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.redAccent
+                            ),
+                          ),
+                          SizedBox(height: 5.0,),
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                             width: Get.width,
                             height: 70.0,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(width: 0.4, color: Colors.grey)
+                              border: Border.all(width: 0.4, color: Colors.redAccent)
                             ),
-                            child: Text('서비스 내용 : ${_customerList[index].service_detail}', style:
+                            child: Text('${_customerList[index].service_detail}', style:
                               TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.w600
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black87
                               ),
                             ),
                           ),
@@ -132,16 +140,17 @@ class _CustomerListPageState extends State<CustomerListPage>{
                           Align(
                             alignment: Alignment.center,
                             child: ElevatedButton(
-                                child: Text('     견적 보기     ', style:
-                                  TextStyle(
+                                child: Text('    견적보기    ', style:
+                                TextStyle(
                                     fontWeight: FontWeight.bold
-                                  ),
+                                ),
                                 ),
                                 onPressed: (){
                                   Get.toNamed('/matching/true?id=${_customerList[index].user_id}&&date=${_customerList[index].service_date}');
                                 }
                             ),
-                          )
+                          ),
+                          SizedBox(width: 20.0,),
                         ],
                       )
                     )

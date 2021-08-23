@@ -4,6 +4,7 @@ import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
 import 'package:flutter_film/pages/orderList_Customer_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
+import 'package:flutter_film/pages/rating_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -92,12 +93,17 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name:'/customerList/:param',
-          page: () => CustomerListPage(),
+          page: () => CustomerOrderListPage(),
         ),
         GetPage(
           name:'/matching/:param',
           page: () => MatchingPage(),
         ),
+        GetPage(
+          name:'/rating/:param',
+          page: () => RatingPage(),
+        ),
+
 
 
       ]

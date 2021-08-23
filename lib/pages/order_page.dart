@@ -53,7 +53,7 @@ class _OrderPageState extends State<OrderPage>{
   
   _addOrder(){
     Order_Data.addOrder(user_id, _selectedDate.toLocal().toString().split(' ')[0], _selectedValue4, _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text).then((result){
-    Get.offNamed('/orderList/true?id=$user_id');
+    Get.offNamed('/customerList/true?id=$user_id');
     });
   }
 

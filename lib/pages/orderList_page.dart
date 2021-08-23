@@ -105,9 +105,7 @@ class _OrderListPageState extends State<OrderListPage>{
                     ],
                   ),
 
-                  child: GestureDetector(
-                    onTap: (){},
-                    child: Container(
+                  child: Container(
                       height: 200.0,
                       width: Get.width,
                       margin: EdgeInsets.symmetric(vertical: 5.0),
@@ -192,7 +190,7 @@ class _OrderListPageState extends State<OrderListPage>{
                         ],
                       )
                     ),
-                  ),
+
                 )
               );
             },

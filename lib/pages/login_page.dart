@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage>{
   Widget build(BuildContext context) {
 
     // KaKao native app key
-    KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";  //Native Key
+    KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";  //Native Key  //오류 발생 시 initState() 밑에 넣어보기
     // KaKao javascript key
     KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";  //JavaScript Key
 
@@ -130,249 +130,249 @@ class _LoginPageState extends State<LoginPage>{
       ),
       backgroundColor: Colors.white,
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _isCustomer
-            ?
-            Column(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Row(
+                _isCustomer
+                    ?
+                Column(
                   children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            TextButton(
-                              child: Text('고객 로그인'),
-                              onPressed: (){
-                                setState(() {
-                                  _isCustomer = true;
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(
-                                color: Color(0xFF398FE2),
-                              ),
-                            )
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: <Widget>[
+                                TextButton(
+                                  child: Text('고객 로그인'),
+                                  onPressed: (){
+                                    setState(() {
+                                      _isCustomer = true;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 2.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    color: Color(0xFF398FE2),
+                                  ),
+                                )
 
-                          ],
-                        )
-                    ),
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            TextButton(
-                              child: Text('전문가 로그인', style:
-                              TextStyle(
-                                  color: Color(0xFFd6d6d6)
-                              ),
-                              ),
-                              onPressed: (){
-                                setState(() {
-                                  _isCustomer = false;
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(
-                                color: Color(0xFFd6d6d6),
-                              ),
+                              ],
                             )
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: <Widget>[
+                                TextButton(
+                                  child: Text('전문가 로그인', style:
+                                  TextStyle(
+                                      color: Color(0xFFd6d6d6)
+                                  ),
+                                  ),
+                                  onPressed: (){
+                                    setState(() {
+                                      _isCustomer = false;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 2.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    color: Color(0xFFd6d6d6),
+                                  ),
+                                )
 
-                          ],
-                        )
-                    )
-                  ],
-                ),
-                SizedBox(height: 55.0,),
-                Container(
-                  color: Colors.yellow,
-                  child: FlatButton(
-                    minWidth: 130.0,
-                    child: Text('카카오톡 로그인', style:
-                      TextStyle(
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    onPressed: () => _loginWithKakao(),
-                  )
-                )
-              ],
-            )
-            :
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            TextButton(
-                              child: Text('고객 로그인', style:
-                              TextStyle(
-                                color: Color(0xFFd6d6d6),
-                              ),
-                              ),
-                              onPressed: (){
-                                setState(() {
-                                  _isCustomer = true;
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(
-                                color: Color(0xFFd6d6d6),
-                              ),
+                              ],
                             )
-
-                          ],
                         )
+                      ],
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: Column(
-                          children: <Widget>[
-                            TextButton(
-                              child: Text('전문가 로그인', style:
-                              TextStyle(
-                                color: Color(0xFF398FE2),
-                              ),
-                              ),
-                              onPressed: (){
-                                setState(() {
-                                  _isCustomer = false;
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 2.0,
-                              width: MediaQuery.of(context).size.width,
-                              child: Container(
-                                color: Color(0xFF398FE2),
-                              ),
-                            )
-                          ],
-                        )
-                    )
-                  ],
-                ),
-                SizedBox(height: 50.0,),
-                Container(
-                  width: MediaQuery.of(context).size.width*0.8,
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        controller: idController,
-                        cursorHeight: 20.0,
-                        style: TextStyle(
-                          fontSize: 13.0, height: 1.0
-                        ),
-                        decoration: InputDecoration(
-                          labelText: '아이디 (이메일)을 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      SizedBox(height: 15.0,),
-                      TextField(
-                        controller: pwController,
-                        cursorHeight: 20.0,
-                        obscureText: true,
-                        style: TextStyle(
-                            fontSize: 13.0, height: 1.0
-                        ),
-                        decoration: InputDecoration(
-                          labelText: '비밀번호를 입력해주세요',
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    Spacer(),
-                    TextButton(
-                      child: Text('프로필 설정', style:
-                      TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13.0
-                      ),
-                      ),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterProfilePage()));
-                      },
-                    ),
-                    TextButton(
-                      child: Text('아이디 찾기', style:
-                        TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13.0
-                        ),
-                      ),
-                      onPressed: (){
-                        print('아이디 찾기');
-                      },
-                    ),
-                    TextButton(
-                      child: Text('비밀번호 찾기', style:
+                    SizedBox(height: 55.0,),
+                    Container(
+                        color: Colors.yellow,
+                        child: FlatButton(
+                          minWidth: 130.0,
+                          child: Text('카카오톡 로그인', style:
                           TextStyle(
-                          color: Colors.black54,
-                          fontSize: 13.0
-                      ),
-                    ),
-                      onPressed: (){
-                        print('비밀번호 찾기');
-                      },
-                    ),
-                    TextButton(
-                      child: Text('회원가입', style:
-                    TextStyle(
-                    color: Colors.black54,
-                    fontSize: 13.0
-                    ),
-                    ),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
-                        print('회원가입');
-                      },
-                    ),
-                    SizedBox(width: 20.0,)
+                              fontWeight: FontWeight.bold
+                          ),
+                          ),
+                          onPressed: () => _loginWithKakao(),
+                        )
+                    )
                   ],
-                ),
-                SizedBox(height: 20.0,),
-                ButtonTheme(
-                  minWidth: MediaQuery.of(context).size.width*0.7,
-                  height: 45.0,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                )
+                    :
+                Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: <Widget>[
+                                TextButton(
+                                  child: Text('고객 로그인', style:
+                                  TextStyle(
+                                    color: Color(0xFFd6d6d6),
+                                  ),
+                                  ),
+                                  onPressed: (){
+                                    setState(() {
+                                      _isCustomer = true;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 2.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    color: Color(0xFFd6d6d6),
+                                  ),
+                                )
+
+                              ],
+                            )
+                        ),
+                        Expanded(
+                            flex: 1,
+                            child: Column(
+                              children: <Widget>[
+                                TextButton(
+                                  child: Text('전문가 로그인', style:
+                                  TextStyle(
+                                    color: Color(0xFF398FE2),
+                                  ),
+                                  ),
+                                  onPressed: (){
+                                    setState(() {
+                                      _isCustomer = false;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 2.0,
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Container(
+                                    color: Color(0xFF398FE2),
+                                  ),
+                                )
+                              ],
+                            )
+                        )
+                      ],
                     ),
-                    child: Text('로그인', style:
-                      TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold
+                    SizedBox(height: 50.0,),
+                    Container(
+                      width: MediaQuery.of(context).size.width*0.8,
+                      child: Column(
+                        children: <Widget>[
+                          TextField(
+                            controller: idController,
+                            cursorHeight: 20.0,
+                            style: TextStyle(
+                                fontSize: 13.0, height: 1.0
+                            ),
+                            decoration: InputDecoration(
+                              labelText: '아이디 (이메일)을 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                          SizedBox(height: 15.0,),
+                          TextField(
+                            controller: pwController,
+                            cursorHeight: 20.0,
+                            obscureText: true,
+                            style: TextStyle(
+                                fontSize: 13.0, height: 1.0
+                            ),
+                            decoration: InputDecoration(
+                              labelText: '비밀번호를 입력해주세요',
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    onPressed: (){
-                      _getLogin();
-                    }
-                  ),
+                    Row(
+                      children: <Widget>[
+                        Spacer(),
+                        TextButton(
+                          child: Text('프로필 설정', style:
+                          TextStyle(
+                              color: Colors.black54,
+                              fontSize: 13.0
+                          ),
+                          ),
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterProfilePage()));
+                          },
+                        ),
+                        TextButton(
+                          child: Text('아이디 찾기', style:
+                          TextStyle(
+                              color: Colors.black54,
+                              fontSize: 13.0
+                          ),
+                          ),
+                          onPressed: (){
+                            print('아이디 찾기');
+                          },
+                        ),
+                        TextButton(
+                          child: Text('비밀번호 찾기', style:
+                          TextStyle(
+                              color: Colors.black54,
+                              fontSize: 13.0
+                          ),
+                          ),
+                          onPressed: (){
+                            print('비밀번호 찾기');
+                          },
+                        ),
+                        TextButton(
+                          child: Text('회원가입', style:
+                          TextStyle(
+                              color: Colors.black54,
+                              fontSize: 13.0
+                          ),
+                          ),
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                            print('회원가입');
+                          },
+                        ),
+                        SizedBox(width: 20.0,)
+                      ],
+                    ),
+                    SizedBox(height: 20.0,),
+                    ButtonTheme(
+                      minWidth: MediaQuery.of(context).size.width*0.7,
+                      height: 45.0,
+                      child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Text('로그인', style:
+                          TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold
+                          ),
+                          ),
+                          onPressed: (){
+                            _getLogin();
+                          }
+                      ),
+                    )
+                  ],
                 )
-              ],
-            )
-          ]
-        )
+              ]
+          )
       ),
     );
   }

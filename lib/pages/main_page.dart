@@ -566,7 +566,11 @@ class _MainPageState extends State<MainPage>{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         ElevatedButton(
-                          child: Text('로그인'),
+                          child: Text('   로그인   ', style:
+                            TextStyle(
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
                           style: ElevatedButton.styleFrom(
                             primary: Colors.blue
                           ),

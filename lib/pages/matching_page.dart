@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/order_ProList_data.dart';
+import 'package:flutter_film/models/order_ProList_model.dart';
 import 'package:get/get.dart';
+import 'package:lazy_loading_list/lazy_loading_list.dart';
 
 class MatchingPage extends StatefulWidget{
   @override
@@ -11,6 +14,8 @@ class _MatchingPageState extends State<MatchingPage>{
   String order_date;
   String user_id;
   String order_id;
+  List<Order_ProList> _prolist;
+  bool _isLoading;
 
   @override
   void dispose(){
@@ -21,8 +26,26 @@ class _MatchingPageState extends State<MatchingPage>{
   void initState(){
     user_id = Get.parameters['id'];
     order_date = Get.parameters['date'];
-    order_id = '$user_id$order_date';
+    order_id = '${user_id}${order_date}';
+    _prolist = [];
+    _isLoading = false;
+    _getProList();
     super.initState();
+  }
+
+  _getProList(){
+    Order_ProList_Data.getOrderProList(order_id).then((prolist){
+      setState(() {
+        _prolist = prolist;
+      });
+      if(prolist.length == 0){
+        _isLoading = false;
+      }else{
+        setState(() {
+          _isLoading = true;
+        });
+      }
+    });
   }
 
   @override
@@ -41,7 +64,7 @@ class _MatchingPageState extends State<MatchingPage>{
         leading: IconButton(
           icon: Icon(Icons.close, color: Colors.black,),
           onPressed: (){
-            Navigator.pop(context);
+            Get.back();
           },
         ),
       ),
@@ -88,17 +111,21 @@ class _MatchingPageState extends State<MatchingPage>{
                   color: Colors.grey,
                 ),
               ),
+              _isLoading
+              ?
               Container(
+                height: Get.height*0.75,
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
-                child:Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: _prolist.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 15.0),
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       width: MediaQuery.of(context).size.width*0.9,
-                      height: 80.0,
+                      height: 180.0,
                       decoration: BoxDecoration(
                         border: Border.all(width: 0.5, color: Color(0xFF398FE2),),
                         borderRadius: BorderRadius.circular(10),
@@ -106,20 +133,28 @@ class _MatchingPageState extends State<MatchingPage>{
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Row(
                             children: [
                               CircleAvatar(
                                 backgroundImage: AssetImage('assets/images/pro.jpg'),
-                                radius: 30,
+                                radius: 25,
                               ),
                               SizedBox(width:20.0,),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text('인테리어$user_id$order_date$order_id', style: TextStyle(fontSize:10.0,)),
-                                  Text('한솔 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
+                                  Text('시공 전문가', style: TextStyle(fontSize:10.0,)),
+                                  Text('${_prolist[index].com_name}', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
+
+
+                                ],
+                              ),
+                              Spacer(),
+                              Column(
+                                children: <Widget>[
                                   Row(
                                     children: <Widget> [
                                       Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
@@ -128,179 +163,111 @@ class _MatchingPageState extends State<MatchingPage>{
                                       Text('(10개)', style: TextStyle(fontSize:10.0),),
                                     ],
                                   ),
+                                  SizedBox(height: 3.0,),
+                                  SizedBox(
+                                    width: 75.0,
+                                    height: 30.0,
+                                    child: ElevatedButton(
+                                      child: Text('후기작성', style:
+                                      TextStyle(
+                                          fontSize: 11.0,
+                                          color: Color(0xFF398FE2)
+                                      ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        side: BorderSide(
+                                          width: 1.0, color: Color(0xFF398FE2),
+                                        ),
+                                        elevation: 0.0,
+                                      ),
+                                      onPressed: (){
+                                        Get.toNamed('/rating/true?user_id=${_prolist[index].user_id}&&pro_id=${_prolist[index].pro_id}');
+                                      },
+                                    ),
+                                  )
                                 ],
                               ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget> [
-                                  Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                                  Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
+
                               SizedBox(width: 10.0,)
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      width: MediaQuery.of(context).size.width*0.9,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0.5, color: Color(0xFF398FE2),),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xffffffff),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro2.jpg'),
-                                radius: 30,
+                          SizedBox(height: 10.0,),
+                          Text('견적 내용', style:
+                            TextStyle(
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(height: 5.0,),
+                          Container(
+                            padding: EdgeInsets.all(5.0),
+                            height: 60.0,
+                            width: Get.width,
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 0.3, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10.0)
+                            ),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Text('${_prolist[index].estimate_detail}'),
+                            )
+                          ),
+                          SizedBox(height: 3.0,),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Text('${_prolist[index].estimate_date}', style:
+                              TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black38
                               ),
-                              SizedBox(width:20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize:10.0,)),
-                                  Text('디올디 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-                                  Row(
-                                    children: <Widget> [
-                                      Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                      Text('4.7', style: TextStyle(fontSize:12.0),),
-                                      SizedBox(width:5),
-                                      Text('(10개)', style: TextStyle(fontSize:10.0),),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget> [
-                                  Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                                  Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
-                              SizedBox(width: 10.0,)
-                            ],
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    );
+
+                  },
+                )
+
+
+
+              )
+              :
+              Container(
+                width: Get.width,
+                height: Get.height*0.6,
+                margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.error, size: 70.0, color: Colors.red,),
                     SizedBox(height: 20.0,),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      width: MediaQuery.of(context).size.width*0.9,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0.5, color: Color(0xFF398FE2),),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xffffffff),
+                    Text('아직 전문가 견적이 도착하지 않았거나 네트워크 상태를 확인 해주세요', style:
+                      TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFFe68787)
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro3.jpg'),
-                                radius: 30,
-                              ),
-                              SizedBox(width:20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize:10.0,)),
-                                  Text('대신 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-                                  Row(
-                                    children: <Widget> [
-                                      Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                      Text('4.7', style: TextStyle(fontSize:12.0),),
-                                      SizedBox(width:5),
-                                      Text('(10개)', style: TextStyle(fontSize:10.0),),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget> [
-                                  Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                                  Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
-                              SizedBox(width: 10.0,)
-                            ],
-                          ),
-                        ],
-                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20.0,),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      width: MediaQuery.of(context).size.width*0.9,
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 0.5, color: Color(0xFF398FE2),),
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color(0xffffffff),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro4.png'),
-                                radius: 30,
-                              ),
-                              SizedBox(width:20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('인테리어', style: TextStyle(fontSize:10.0,)),
-                                  Text('우원 컴퍼니', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-                                  Row(
-                                    children: <Widget> [
-                                      Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                      Text('4.7', style: TextStyle(fontSize:12.0),),
-                                      SizedBox(width:5),
-                                      Text('(10개)', style: TextStyle(fontSize:10.0),),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget> [
-                                  Text('[인테리어 필름]', style: TextStyle(fontSize: 12.0)),
-                                  Text('필름 시공 전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                ],
-                              ),
-                              SizedBox(width: 10.0,),
-                            ],
-                          ),
-                        ],
+                    Text('', style:
+                      TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.redAccent
                       ),
                     ),
                   ],
-                ),
-              ),
+                )
+              )
             ],
           ),
         ),
