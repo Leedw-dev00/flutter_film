@@ -4,7 +4,7 @@ class Order_Data{
   static const ROOT = 'https://d-grab.co.kr/film_enter_order.php';
   static const _ADD_ORDER_ACTION = 'ADD_ORDER';
 
-  static Future<String> addOrder(String user_id, String service_date, String skill, String service_area, String service_type, String service_size, String service_detail) async{
+  static Future<String> addOrder(String user_id, String service_date, String skill, String service_area, String service_type, String service_size, String service_detail, String order_type) async{
     try{
       var map = Map<String, dynamic>();
       map['action'] = _ADD_ORDER_ACTION;
@@ -15,9 +15,10 @@ class Order_Data{
       map['service_type'] = service_type;
       map['service_size'] = service_size;
       map['service_detail'] = service_detail;
+      map['order_type'] = order_type;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('addOrder Response: ${response.body}');
-      if(200 == response.body){
+      if(200 == response.statusCode){
         return response.body;
       }else{
         return "error";

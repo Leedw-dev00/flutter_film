@@ -18,6 +18,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
   String pro_id;
   String order_id;
   bool _isLoading;
+  int count;
   List<Select_Estimate> _selectEstimate;
 
   @override
@@ -27,6 +28,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
 
   @override
   void initState(){
+    count = 0;
     _selectEstimate = [];
     user_id = Get.parameters['user_id'];
     order_date = Get.parameters['order_date'];
@@ -109,9 +111,51 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
       body: SingleChildScrollView(
         child:
           _isLoading
-          //_selectEstimate.isEmpty
           ?
-          Container(
+            _selectEstimate[0].count == '5'
+            ?
+            Container(
+                height: Get.height*0.8,
+                width: Get.width,
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    height: 200.0,
+                    width: Get.width,
+                    margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(width: 0.2),
+                        borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
+                        SizedBox(height: 2.0,),
+                        Text('마감 된 요청서입니다', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
+                        Spacer(),
+                        ElevatedButton(
+                            onPressed: (){
+                              _updateOrderStatus();
+                            },
+                            child:
+                            Text('     돌아가기     ', style:
+                            TextStyle(
+                                fontWeight: FontWeight.bold
+                            ),
+                            )
+                        ),
+                        SizedBox(height: 15.0,)
+                      ],
+                    ),
+                  ),
+                )
+              )
+            :
+            Container(
             width: Get.width,
             height: 550.0,
             margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
@@ -156,45 +200,49 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
           )
           :
           Container(
-            height: Get.height*0.8,
             width: Get.width,
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                height: 200.0,
-                width: Get.width,
-                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-                padding: EdgeInsets.all(10.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: 0.2),
-                    borderRadius: BorderRadius.circular(10.0)
+            height: 550.0,
+            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+            padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              children: <Widget>[
+                Text('견적을 보낸 전문가 수 : 0 / 5', style:
+                TextStyle(
+                  fontWeight: FontWeight.bold,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
-                    SizedBox(height: 2.0,),
-                    Text('마감 된 요청서입니다', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
-                    Spacer(),
-                    ElevatedButton(
-                        onPressed: (){
-                          _updateOrderStatus();
-                        },
-                        child:
-                        Text('     돌아가기     ', style:
-                        TextStyle(
-                            fontWeight: FontWeight.bold
+                ),
+                SizedBox(height: 20.0,),
+                Container(
+                    width: Get.width,
+                    height: 400.0,
+                    color: Color(0xFFf5f5f5),
+                    child: TextField(
+                      controller: estimateController,
+                      maxLines: 20,
+                      decoration: InputDecoration(
+                        hintText: "작업 관련 내용 및 금액 등에 대한 상세한 내용을 입력해주세요",
+                        hintStyle: TextStyle(
+                            fontSize: 13.0
                         ),
-                        )
-                    ),
-                    SizedBox(height: 15.0,)
-                  ],
+                        fillColor: Color(0xFFf5f5f5),
+                        filled: true,
+                      ),
+                    )
                 ),
-              ),
-            )
-          ),
+                SizedBox(height: 15.0,),
+                ElevatedButton(
+                    onPressed: (){
+                      _addEstimate();
+                    },
+                    child: Text('견적서 보내기 | 300pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
+              ],
+            ),
+          )
+
       ),
     );
   }

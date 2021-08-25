@@ -23,6 +23,7 @@ class _OrderPageState extends State<OrderPage>{
   TextEditingController sizeController;
   TextEditingController detailController;
   String user_id;
+  String order_type;
 
   @override
   void dispose(){
@@ -34,6 +35,8 @@ class _OrderPageState extends State<OrderPage>{
     sizeController = TextEditingController();
     detailController = TextEditingController();
     user_id = Get.parameters['id'];
+    order_type = Get.parameters['type'];
+    print(order_type);
     super.initState();
   }
 
@@ -52,8 +55,15 @@ class _OrderPageState extends State<OrderPage>{
   }
   
   _addOrder(){
-    Order_Data.addOrder(user_id, _selectedDate.toLocal().toString().split(' ')[0], _selectedValue4, _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text).then((result){
-    Get.offNamed('/customerList/true?id=$user_id');
+    Order_Data.addOrder(user_id, _selectedDate.toLocal().toString().split(' ')[0], _selectedValue4, _selectedValue3, _selectedValue1, sizeController.text + _selectedValue2, detailController.text, order_type).then((result){
+
+      if(result == 'success'){
+        print("success");
+        Get.offNamed('/customerList/true?id=$user_id');
+      }else{
+        print("error");
+        Get.snackbar("ERROR", "네트워크 상태를 확인하세요");
+      }
     });
   }
 

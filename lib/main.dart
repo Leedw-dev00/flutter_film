@@ -6,6 +6,7 @@ import 'package:flutter_film/pages/orderList_Customer_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/rating_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
+import 'package:flutter_film/pages/review_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
@@ -103,7 +104,10 @@ class MyApp extends StatelessWidget {
           name:'/rating/:param',
           page: () => RatingPage(),
         ),
-
+        GetPage(
+          name:'/review/:param',
+          page: () => ReviewPage(),
+        ),
 
 
       ]

@@ -104,7 +104,6 @@ class _OrderListPageState extends State<OrderListPage>{
                       )
                     ],
                   ),
-
                   child: Container(
                       height: 200.0,
                       width: Get.width,
@@ -190,7 +189,6 @@ class _OrderListPageState extends State<OrderListPage>{
                         ],
                       )
                     ),
-
                 )
               );
             },

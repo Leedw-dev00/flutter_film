@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/enter_order_data.dart';
 import 'package:flutter_film/datas/pro_select_data.dart';
+import 'package:flutter_film/datas/select_rating_data.dart';
 import 'package:flutter_film/models/pro_select_model.dart';
-import 'package:flutter_film/widgets/profilePSecond_widget.dart';
+import 'package:flutter_film/models/select_rating_model.dart';
 import 'package:flutter_film/widgets/profilePThird_widget.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 
 class ProfilePPage extends StatefulWidget{
   @override
@@ -12,11 +15,13 @@ class ProfilePPage extends StatefulWidget{
 
 class _ProfilePPageState extends State<ProfilePPage>{
 
-  String user_id;
+  String pro_id;  //pro ID
   String _isLogin;
   List<Pro_Select> _proSelect;
+  List<Select_Rating> _ratingSelect;
   bool _isLoading;
-
+  bool _isLoading2;
+  
   @override
   void dispose(){
     super.dispose();
@@ -24,23 +29,24 @@ class _ProfilePPageState extends State<ProfilePPage>{
 
   @override
   void initState(){
+    _initTexts();
+    print(user_id);
     _isLoading = false;
+    _isLoading2 = false;
     _isLogin = Get.parameters['param'];
-    user_id = Get.parameters['id'];
-    print('$user_id');
+    pro_id = Get.parameters['id'];
     _proSelect = [];
+    _ratingSelect = [];
     _getProSelect();
-    print('$user_id');
+    _getRating();
     super.initState();
   }
 
-
   _getProSelect(){
-    ProSelect_Data.getProSelect(user_id).then((proSelect){
+    ProSelect_Data.getProSelect(pro_id).then((proSelect){
       setState(() {
         _proSelect = proSelect;
       });
-      print(proSelect.length);
       if(proSelect.length == 0){
           _isLoading = false;
       }else{
@@ -48,6 +54,30 @@ class _ProfilePPageState extends State<ProfilePPage>{
       }
     });
   }
+  
+  _getRating(){
+    SelectRating_Data.getRating(pro_id).then((ratingSelect){
+      setState(() {
+        _ratingSelect = ratingSelect;
+      });
+      if(ratingSelect.length == 0){
+        _isLoading2 = false;
+      }else{
+        _isLoading2 = true;
+      }
+    });
+  }
+
+
+  _initTexts() async{
+    final User user = await UserApi.instance.me();
+    setState(() {
+      user_id = user.kakaoAccount.email;
+    });
+    print(user_id);
+  }
+  String user_id = 'None';
+  
 
   @override
   Widget build(BuildContext context) {
@@ -96,14 +126,14 @@ class _ProfilePPageState extends State<ProfilePPage>{
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                        Text('필름 시공자', style: TextStyle(fontSize: 10.0,),),
                         SizedBox(height: 1.0,),
                         Text('${_proSelect[0].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
                         SizedBox(height: 5.0,),
                         Row(
                           children: <Widget>[
                             Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                            Text('4.7', style: TextStyle(fontSize: 12.0),)
+                            Text('${_ratingSelect.length}', style: TextStyle(fontSize: 12.0),)
                           ],
                         ),
                       ],
@@ -130,7 +160,7 @@ class _ProfilePPageState extends State<ProfilePPage>{
                           elevation: 0.0,
                         ),
                         onPressed: (){
-                          print('신청하기');
+                          Get.toNamed("/order/true?id=${user_id}&&type=dir");
                         },
                       ),
                     )
@@ -149,11 +179,11 @@ class _ProfilePPageState extends State<ProfilePPage>{
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text('전문가 정보', style:
-                    TextStyle(
-                        color: Color(0XFF398FE2),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14.0
-                    ),
+                      TextStyle(
+                          color: Color(0XFF398FE2),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14.0
+                      ),
                     ),
                     SizedBox(height: 3.0,),
                     SizedBox(
@@ -165,57 +195,57 @@ class _ProfilePPageState extends State<ProfilePPage>{
                     ),
                     SizedBox(height: 30.0,),
                     Text('소개', style:
-                    TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0
-                    ),
+                      TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0
+                      ),
                     ),
                     SizedBox(height: 10.0,),
                     Text('${_proSelect[0].introduce}', style:
-                    TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0
-                    ),
+                      TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0
+                      ),
                     ),
                     SizedBox(height: 20.0),
                     Text('기본정보', style:
-                    TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0
-                    ),
+                      TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0
+                      ),
                     ),
                     SizedBox(height: 10.0,),
                     Text('${_proSelect[0].basic}', style:
-                    TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0
-                    ),
+                      TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0
+                      ),
                     ),
                     SizedBox(height: 20.0),
                     Text('추가정보', style:
-                    TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0
-                    ),
+                      TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0
+                      ),
                     ),
                     SizedBox(height: 10.0,),
                     Text('${_proSelect[0].company}', style:
-                    TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0
-                    ),
+                      TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0
+                      ),
                     ),
 
                     SizedBox(height: 20.0),
                     Text('사진정보', style:
-                    TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0
-                    ),
+                      TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0
+                      ),
                     ),
                     SizedBox(height: 10.0,),
                     Container(
@@ -256,33 +286,166 @@ class _ProfilePPageState extends State<ProfilePPage>{
                 ),
               ),
               SizedBox(height: 20.0,),
-              ProfileP_Third(),
-              SizedBox(height: 20.0,),
-              SizedBox(
-                width: 100.0,
-                height: 40.0,
-                child: ElevatedButton(
-                  child: Text('리뷰 더보기', style:
-                  TextStyle(
-                      fontSize: 13.0,
-                      color: Color(0xFF398FE2),
-                      fontWeight: FontWeight.w600
-                  ),
-                    textAlign: TextAlign.center,
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    side: BorderSide(
-                      width: 1.0, color: Color(0xFF398FE2),
+              _isLoading2
+              ?
+              Container(
+                width: Get.width,
+                height: Get.height*0.75,
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text('리뷰', style:
+                            TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0
+                            ),
+                          ),
+                          SizedBox(height: 10.0,),
+                          Row(
+                            children: <Widget>[
+                              Icon(Icons.star, color: Color(0xFFFEC107), size: 30.0,),
+                              SizedBox(width: 5.0,),
+                              Text('${_ratingSelect.length}', style:
+                                TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20.0
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                    elevation: 0.0,
-                  ),
-                  onPressed: (){
-                    print('리뷰 더보기');
-                  },
+
+                    Spacer(),
+                    Container(
+                      height: Get.height*0.5,
+                      width: Get.width,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount:
+                        _ratingSelect.length > 5
+                          ? 5
+                          : _ratingSelect.length,
+                        itemBuilder: (BuildContext context, int index){
+                          return Container(
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: Get.width,
+                                  height: 0.3,
+                                  child: Container(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                  child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Text('${_ratingSelect[index].user_id.substring(0,5)}****', style:
+                                              TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 14.0
+                                              ),
+                                            ),
+                                            SizedBox(width: 5.0,),
+                                            Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                            SizedBox(width: 2.0,),
+                                            Text('${_ratingSelect[index].rating}', style:
+                                              TextStyle(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 13.0
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 10.0,),
+                                        Text('${_ratingSelect[index].review}', style:
+                                          TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w300,
+                                              fontSize: 13.0
+                                          ),
+                                        )
+
+                                      ]
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      ),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Align(
+                      alignment: Alignment.center,
+                      child: SizedBox(
+                        width: 100.0,
+                        height: 40.0,
+                        child: ElevatedButton(
+                          child: Text('리뷰 더보기', style:
+                          TextStyle(
+                              fontSize: 13.0,
+                              color: Color(0xFF398FE2),
+                              fontWeight: FontWeight.w600
+                          ),
+                            textAlign: TextAlign.center,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            side: BorderSide(
+                              width: 1.0, color: Color(0xFF398FE2),
+                            ),
+                            elevation: 0.0,
+                          ),
+                          onPressed: (){
+                            Get.toNamed('/review/true?id=${_proSelect[0].user_id}');
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20.0,),
+                  ],
+                ),
+              )
+              :
+              Container(
+                width: Get.width,
+                height: Get.height*0.2,
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.article, size: 50.0, color: Colors.grey,),
+                    SizedBox(height: 20.0,),
+                    Text('리뷰가 없습니다', style:
+                      TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black
+                      ),
+                    ),
+
+                  ],
                 ),
               ),
-              SizedBox(height: 40.0,),
+              SizedBox(height: 20.0,),
             ],
           ),
         )

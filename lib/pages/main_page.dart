@@ -208,7 +208,7 @@ class _MainPageState extends State<MainPage>{
                                       if(_userType == 'pro'){
                                         Get.snackbar('Error', '고객 아이디로 로그인해주세요');
                                       }else{
-                                        Get.toNamed('/order/true?id=${user_id}');
+                                        Get.toNamed("/order/true?id=${user_id}&&type=com");
                                       }
                                     }else{
                                       Get.snackbar('로그인 실패', '로그인 후 이용해주세요');

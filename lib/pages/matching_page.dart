@@ -155,15 +155,20 @@ class _MatchingPageState extends State<MatchingPage>{
                               Spacer(),
                               Column(
                                 children: <Widget>[
-                                  Row(
-                                    children: <Widget> [
-                                      Icon(Icons.star,color:Color(0xFFFEC107), size:13.0),
-                                      Text('4.7', style: TextStyle(fontSize:12.0),),
-                                      SizedBox(width:5),
-                                      Text('(10개)', style: TextStyle(fontSize:10.0),),
-                                    ],
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.toNamed('/profilePPage/true?id=${_prolist[index].pro_id}');
+                                    },
+                                    child: Row(
+                                      children: <Widget> [
+                                        Icon(Icons.star,color:Color(0xFFFEC107), size:16.0),
+                                        Text('4.7', style: TextStyle(fontSize:15.0),),
+                                        SizedBox(width:5),
+                                        Text('(10개)', style: TextStyle(fontSize:12.0),),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 3.0,),
+                                  SizedBox(height: 5.0,),
                                   SizedBox(
                                     width: 75.0,
                                     height: 30.0,
