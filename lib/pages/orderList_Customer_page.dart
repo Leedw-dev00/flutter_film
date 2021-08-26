@@ -192,6 +192,7 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                             fontWeight: FontWeight.w300
                                         ),
                                       ),
+                                      SizedBox(width: 20.0,),
                                       _isFin == "진행중"
                                       ?
                                       TextButton(
@@ -204,7 +205,11 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                           print(user_id);
                                           _updateOrderStatus();
                                         },
-                                        child: Text('완료하기')
+                                        child: Text('완료하기', style:
+                                          TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       )
                                       :
                                       TextButton(

@@ -92,6 +92,7 @@ class _OrderListPageState extends State<OrderListPage>{
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(width: _selectOrder[index].order_type == 'dir' ? 2.0 : 0.0, color: _selectOrder[index].order_type == 'dir' ? Colors.redAccent: Colors.white),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -121,7 +122,7 @@ class _OrderListPageState extends State<OrderListPage>{
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text('작업 희망일', style:
+                              Text('작업 희망일${_selectOrder[index].order_type}', style:
                                 TextStyle(
                                   fontSize: 13.0,
                                   fontWeight: FontWeight.w600
