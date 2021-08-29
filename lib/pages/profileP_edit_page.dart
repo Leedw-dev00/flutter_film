@@ -478,11 +478,17 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
 
                     SizedBox(height: 20.0),
                     Text('사진정보', style:
-                    TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14.0
+                      TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14.0
+                      ),
                     ),
+                    Text('(이미지의 크기가 3MB 이상이면 관리자에 의해 임의로 삭제될 수 있습니다)', style:
+                      TextStyle(
+                          color: Colors.grey,
+                          fontSize: 11.0
+                      ),
                     ),
                     SizedBox(height: 10.0,),
                     Container(
