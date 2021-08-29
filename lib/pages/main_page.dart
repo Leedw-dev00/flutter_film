@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/pro_profile_data.dart';
 import 'package:flutter_film/datas/pro_recom_data.dart';
+import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/customerCheck_model.dart';
-import 'package:flutter_film/models/pro_profile_model.dart';
 import 'package:flutter_film/models/pro_recom_model.dart';
+import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
-import 'package:flutter_film/pages/promy_page.dart';
 import 'package:flutter_film/pages/noti_page.dart';
-import 'package:flutter_film/pages/orderList_page.dart';
-import 'package:flutter_film/pages/point_page.dart';
-import 'package:flutter_film/pages/profileP_page.dart';
-import 'package:flutter_film/pages/registerC_page.dart';
-import 'package:flutter_film/widgets/banner_widget.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'kakao_alarm.dart';
 
 
 
@@ -32,7 +28,7 @@ class _MainPageState extends State<MainPage>{
   List<Customer_Check> _customerCheck;
   List<Pro_User> _proUser;
   bool _isCS;
-  List<Pro_Profile> _pro_profile;
+  List<User_Check> _pro_profile;
   String skill;
 
   @override
@@ -96,7 +92,7 @@ class _MainPageState extends State<MainPage>{
 
   //전문가 프로필 불러오기
   _getProProfile(){
-    ProProfile_Data.getProProfile(_userId).then((pro_profile){
+    UserCheck_Data.getUserCheck(_userId).then((pro_profile){
       setState(() {
         _pro_profile = pro_profile;
       });
@@ -133,10 +129,11 @@ class _MainPageState extends State<MainPage>{
           IconButton(
             icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
             onPressed: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotiPage())
-              );
+              Get.to(NotiPage());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => NotiPage())
+              // );
             }
           )
         ],
@@ -150,8 +147,8 @@ class _MainPageState extends State<MainPage>{
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height*0.4,
+                width: Get.width,
+                height: Get.height*0.4,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
@@ -165,21 +162,29 @@ class _MainPageState extends State<MainPage>{
                   children: <Widget>[
                     Align(
                       alignment: Alignment.center,
-                      child: Image.asset('assets/images/rec.png', fit: BoxFit.cover,),
+                      child: Container(
+                        width: Get.width*0.9,
+                        height: Get.width*0.5,
+                        decoration: BoxDecoration(
+                            border: Border.all(width:0.5)
+                        ),
+                      ),
+                      // Image.asset('assets/images/rec.png', fit: BoxFit.cover,),
                     ),
+
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: Column(
                           children: <Widget>[
                             Spacer(),
                             SizedBox(height: 30.0,),
-                            Text('인테리어 전문가로 배정 해드립니다', style:
+                            Text('우리동네 필름반장에서 전문가를 만나보세요', style:
                             TextStyle(
-                                fontSize: 18.0,
+                                fontSize: 17.0,
                                 fontWeight: FontWeight.w700
                             ),
                             ),
-                            Text('한 번의 견적으로 5명의 전문가를 추천해드려요', style:
+                            Text('실명제로 책임감있게 다년간의 기술과 경험으로 \n정직 시공해드립니다', textAlign: TextAlign.center,  style:
                             TextStyle(
                                 fontSize: 12.0,
                                 color: Colors.black54,
@@ -204,6 +209,13 @@ class _MainPageState extends State<MainPage>{
                                   ),
                                   onPressed: (){
                                     print('견적 보기');
+                                    // KakaoShareManager().isKakaotalkInstalled().then((installed) {
+                                    //   if (installed) {
+                                    //     KakaoShareManager().shareMyCode();
+                                    //   } else {
+                                    //     // show alert
+                                    //   }
+                                    // });
                                     if(_isLogin == 'true'){
                                       if(_userType == 'pro'){
                                         Get.snackbar('Error', '고객 아이디로 로그인해주세요');
@@ -246,13 +258,14 @@ class _MainPageState extends State<MainPage>{
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
-                height: 300.0,
+                height: 350.0,
                 width: Get.width,
                 color: Colors.white,
                 child:
                 _isLoading
                   ?
                 ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   itemCount: _proUser.length,
                   itemBuilder: (BuildContext context, int index){
@@ -270,15 +283,16 @@ class _MainPageState extends State<MainPage>{
                                 Row(
                                   children: <Widget>[
                                     CircleAvatar(
-                                      backgroundImage: AssetImage('assets/images/pro.jpg',),
+                                      backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_proUser[index].profile_img}',),
                                       radius: 20,
+                                      backgroundColor: Colors.white,
                                     ),
                                     SizedBox(width: 20.0,),
                                     Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Text('인테리어', style: TextStyle(fontSize: 10.0,),),
+                                        Text('${_proUser[index].skill}', style: TextStyle(fontSize: 10.0,),),
                                         Text('${_proUser[index].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
                                         Row(
                                           children: <Widget>[
@@ -387,8 +401,7 @@ class _MainPageState extends State<MainPage>{
                           ?
                           CircleAvatar(
                             backgroundColor: Colors.white,
-                            backgroundImage: AssetImage('assets/images/pro.jpg',),
-                            radius: 35,
+                            radius: 0,
                           )
                           :
                           CircleAvatar(
@@ -450,7 +463,7 @@ class _MainPageState extends State<MainPage>{
                       },
                     ),
                     ListTile(
-                      title: Text('포인트', style:
+                      title: Text('포인트 충전', style:
                       TextStyle(
                           fontSize: 13.0,
                           fontWeight: FontWeight.bold

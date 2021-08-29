@@ -13,7 +13,7 @@ class DepositPage extends StatefulWidget {
 
 class _DepositPageState extends State<DepositPage> {
 
-  String price;
+
   String _userId;
 
   List<Pro_Point> _pro_point;
@@ -27,7 +27,6 @@ class _DepositPageState extends State<DepositPage> {
   @override
   void initState(){
     _pro_point = [];
-    price = Get.parameters['price'];
     _userId = Get.parameters['pro_id'];
     _getProPoint();
     _isLoading = false;

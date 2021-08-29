@@ -57,7 +57,7 @@ class _PointPageState extends State<PointPage> {
     Register_PointInfo.addPointInfo(_userId, '$_selectedValue', '포인트 충전').then((result){
       if(result == 'success'){
         print('addpointInfo success');
-        Get.toNamed('/deposit/:true?price=$_selectedValue&&pro_id=$_userId');
+        Get.offNamed('/deposit/:true?pro_id=$_userId');
       }else{
         print('addpointInfo fail');
       }
@@ -336,10 +336,10 @@ class _PointPageState extends State<PointPage> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.0,),
                     child: ElevatedButton(
-                        child:Text(
-                          '충전하기', style: TextStyle(
-                            fontWeight: FontWeight.bold
-                        ),
+                        child:Text('충전하기', style:
+                          TextStyle(
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
                         onPressed: (){
                           if(_is5000 || _is10000 || _is30000 || _is50000 || _is100000){

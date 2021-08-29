@@ -76,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage>{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
         ProUser_Data.addProUser(idController.text, pwController.text, _selectedValue4, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
-        Get.toNamed('/registerProfilePage', arguments: idController.text);
+        Get.toNamed('/registerProfilePage/true?id=${idController.text}');
         });
         return;
       }else{
@@ -249,33 +249,20 @@ class _RegisterPageState extends State<RegisterPage>{
               Text('비밀번호가 일치하지 않습니다.', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600),),
               SizedBox(height: 20.0,),
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                  padding: EdgeInsets.symmetric(vertical: 20.0),
                   color: Color(0xFFF0F0F0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(width: 3.0, color: Color(0xFF398FE2)),
-                              shape: BoxShape.circle,
-                            ),
-                          ),
-                          SizedBox(width: 5.0,),
-                          Text('숙련도')
-                        ],
-                      ),
+                      Text('숙련도 (향후 인증 절차 필요)'),
                       SizedBox(height: 10.0,),
                       Container(
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
                           height: 45.0,
-                          width: MediaQuery.of(context).size.width,
+                          width: Get.width,
                           decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Color(0xFFF8F8F8),
                               border: Border.all(width: 0.5, color: Color(0xFF636363)),
                               borderRadius: BorderRadius.circular(3.0)
                           ),
@@ -311,7 +298,7 @@ class _RegisterPageState extends State<RegisterPage>{
                 decoration: InputDecoration(
                   fillColor: Color(0xFFF8F8F8),
                   filled: true,
-                  labelText: '이메일을 입력해주세',
+                  labelText: '이메일을 입력해주세요',
                   labelStyle: TextStyle(fontSize: 11.0),
                   border: OutlineInputBorder(),
                 ),

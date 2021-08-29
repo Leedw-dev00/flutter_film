@@ -23,7 +23,6 @@ class _ProMyPageState extends State<ProMyPage>{
 
   @override
   void initState(){
-    _initTexts();
     _userType = Get.parameters['user_type'];
     _userId = Get.parameters['id'];
     _isLogin = Get.parameters['param'];
@@ -31,20 +30,6 @@ class _ProMyPageState extends State<ProMyPage>{
     _getUserInfo();
     super.initState();
   }
-
-  //카카오 로그인 고객
-  _initTexts() async{
-    final User user = await UserApi.instance.me();
-    setState(() {
-      user_id = user.kakaoAccount.email;
-      _default_Image = user.kakaoAccount.profile.isDefaultImage;
-      profile_image = user.kakaoAccount.profile.profileImageUrl;
-    });
-  }
-
-  String user_id = 'None';
-  String profile_image = 'None';
-  bool _default_Image = true;
 
   _getUserInfo(){
     UserCheck_Data.getUserCheck(_userId).then((user_info){
@@ -83,6 +68,12 @@ class _ProMyPageState extends State<ProMyPage>{
             Navigator.pop(context);
           },
         ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.settings, color: Colors.black54, size: 25.0,),
+              onPressed: (){Get.toNamed('/profilePage/$_isLogin?id=$_userId');}
+          )
+        ],
       ),
       backgroundColor: Color(0xFFf0f0f0),
       body: SingleChildScrollView(
@@ -108,7 +99,8 @@ class _ProMyPageState extends State<ProMyPage>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            backgroundImage: AssetImage('assets/images/pro.jpg',),
+                            backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_user_info[0].profile_img}',),
+                            backgroundColor: Colors.white,
                             radius: 45,
                           ),
                         ],
@@ -125,14 +117,14 @@ class _ProMyPageState extends State<ProMyPage>{
                             ),
                           ),
                           SizedBox(height:5),
-                          Text('${Get.parameters['id']}'),
+                          Text('$_userId'),
                         ],
                       ),
                       SizedBox(width:10),
                       IconButton(
                           icon: Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 25.0,),
                           onPressed: (){
-                            Get.toNamed('/profilePage/$_isLogin?id=$_userId');
+                            Get.toNamed('/profilePEditPage/$_isLogin?id=$_userId');
                           }
                       ),
                     ],
@@ -154,7 +146,7 @@ class _ProMyPageState extends State<ProMyPage>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '안전거래',
+                            '사용자 이력',
                             style: TextStyle(
                               fontSize:16,
                             ),
@@ -166,10 +158,7 @@ class _ProMyPageState extends State<ProMyPage>{
                 ),
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RequestPage())
-                    );
+                    Get.toNamed('/request/true?id=$_userId');
                     print('success');
                   },
 
@@ -189,7 +178,7 @@ class _ProMyPageState extends State<ProMyPage>{
                             Icon(Icons.list_alt_outlined, color: Color(0xFF707070), size: 20.0,),
                             SizedBox(width:10),
                             Text(
-                              '의뢰내역',
+                              '보낸 견적서',
                               style: TextStyle(
                                 fontSize:15,
                               ),
@@ -208,10 +197,7 @@ class _ProMyPageState extends State<ProMyPage>{
 
                 GestureDetector(
                   onTap: (){
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RequestPage())
-                    );
+                    Get.toNamed('/deposit/:true?pro_id=$_userId');
                     print('success');
                   },
 

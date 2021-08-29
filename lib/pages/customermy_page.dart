@@ -24,6 +24,7 @@ class _CustomerMyPageState extends State<CustomerMyPage>{
   @override
   void initState(){
     _initTexts();
+    print(user_id);
     _userType = Get.parameters['user_type'];
     _isLogin = Get.parameters['param'];
     _isLoading = false;
@@ -54,15 +55,15 @@ class _CustomerMyPageState extends State<CustomerMyPage>{
         centerTitle: true,
         elevation: 0.0,
         title: Text('마이페이지', style:
-        TextStyle(
-          color: Colors.black,
-          fontSize: 16.0,
-        ),
+          TextStyle(
+            color: Colors.black,
+            fontSize: 16.0,
+          ),
         ),
         leading: IconButton(
           icon: Icon(Icons.close, color: Colors.black,),
           onPressed: (){
-            Navigator.pop(context);
+            Get.back();
           },
         ),
       ),
@@ -140,10 +141,7 @@ class _CustomerMyPageState extends State<CustomerMyPage>{
               ),
               GestureDetector(
                 onTap: (){
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RequestPage())
-                  );
+                  Get.toNamed('/customerList/true?id=$user_id');
                   print('success');
                 },
 
@@ -163,8 +161,8 @@ class _CustomerMyPageState extends State<CustomerMyPage>{
                           Icon(Icons.list_alt_outlined, color: Color(0xFF707070), size: 20.0,),
                           SizedBox(width:10),
                           Text(
-                            '받은 견적서',
-                            style: TextStyle(
+                            '받은 견적서', style:
+                            TextStyle(
                               fontSize:15,
                             ),
                           ),

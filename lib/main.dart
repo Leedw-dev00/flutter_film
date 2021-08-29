@@ -3,9 +3,11 @@ import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
 import 'package:flutter_film/pages/orderList_Customer_page.dart';
+import 'package:flutter_film/pages/profileP_edit_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/rating_page.dart';
 import 'package:flutter_film/pages/registerC_page.dart';
+import 'package:flutter_film/pages/request_page.dart';
 import 'package:flutter_film/pages/review_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -38,7 +40,6 @@ class MyApp extends StatelessWidget {
           name: '/main/:param',
           page: () => MainPage()
         ),
-
         //MainPage
         GetPage(
           name: '/order/:param',
@@ -47,6 +48,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/profilePPage/:param',
           page: () => ProfilePPage(),
+        ),
+        GetPage(
+          name: '/profilePEditPage/:param',
+          page: () => ProfileP_EditPage(),
         ),
         GetPage(
           name: '/orderListPage',
@@ -108,6 +113,11 @@ class MyApp extends StatelessWidget {
           name:'/review/:param',
           page: () => ReviewPage(),
         ),
+        GetPage(
+          name:'/request/:param',
+          page: () => RequestPage(),
+        ),
+
 
 
       ]

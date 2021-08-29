@@ -303,17 +303,6 @@ class _LoginPageState extends State<LoginPage>{
                       children: <Widget>[
                         Spacer(),
                         TextButton(
-                          child: Text('프로필 설정', style:
-                          TextStyle(
-                              color: Colors.black54,
-                              fontSize: 13.0
-                          ),
-                          ),
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterProfilePage()));
-                          },
-                        ),
-                        TextButton(
                           child: Text('아이디 찾기', style:
                           TextStyle(
                               color: Colors.black54,
@@ -324,6 +313,7 @@ class _LoginPageState extends State<LoginPage>{
                             print('아이디 찾기');
                           },
                         ),
+                        Text('|'),
                         TextButton(
                           child: Text('비밀번호 찾기', style:
                           TextStyle(
@@ -335,6 +325,7 @@ class _LoginPageState extends State<LoginPage>{
                             print('비밀번호 찾기');
                           },
                         ),
+                        Text('|'),
                         TextButton(
                           child: Text('회원가입', style:
                           TextStyle(

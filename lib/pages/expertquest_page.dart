@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
-import 'package:flutter_film/pages/expertmy_page.dart';
 
 
 class ExpertquestPage extends StatefulWidget {
@@ -174,10 +173,7 @@ class _ExpertquestPageState extends State<ExpertquestPage> {
                                   child: ElevatedButton(
                                       child:Text('후기 확인하기'),
                                       onPressed: (){
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => ExpertmyPage()),
-                                        );
+
                                       }
                                   ),
                                 ),

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:get/get.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:async/async.dart';
+import 'package:path/path.dart';
+
 
 
 class ProfilePage extends StatefulWidget{
@@ -15,6 +21,7 @@ class _ProfilePageState extends State<ProfilePage>{
   String _isLogin;
   bool _isLoading;
   List<User_Check> _user_info;
+  PickedFile _image;
 
   @override
   void dispose(){
@@ -48,6 +55,34 @@ class _ProfilePageState extends State<ProfilePage>{
     });
   }
 
+  Future getImageGallery() async{
+    var imageFile = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = imageFile;
+    });
+    print('getImageGallery Success');
+  }
+
+  Future upload(File imageFile) async{
+    var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
+    var length = await imageFile.length();
+    var uri = Uri.parse("https://d-grab.co.kr/film_pro_profile.php");
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
+
+    request.files.add(multipartFile);
+    request.fields['pro_id'] = _userId;
+
+    var response = await request.send();
+
+    if(response.statusCode == 200){
+      print('Image Uploaded');
+    }else{
+      print('Upload Failed');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +111,6 @@ class _ProfilePageState extends State<ProfilePage>{
           width: Get.width,
           child: _isLoading
             ?
-
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -96,7 +130,13 @@ class _ProfilePageState extends State<ProfilePage>{
                             //mainAxisAlignment: MainAxisAlignment.center,
                             child:
                             CircleAvatar(
-                              backgroundImage: AssetImage('assets/images/pro3.jpg',),
+                              backgroundImage:
+                              _image == null
+                              ?
+                              NetworkImage('https://d-grab.co.kr/film_pro_profile/${_user_info[0].profile_img}',)
+                              :
+                              FileImage(File(_image.path)),
+                              backgroundColor: Colors.white,
                               radius: 75,
                             ),
                           ),
@@ -107,7 +147,10 @@ class _ProfilePageState extends State<ProfilePage>{
                               child:
                               IconButton(
                                 icon: Icon(Icons.camera_alt, size:30.0, color: Colors.black,),
-                                onPressed: (){print('프로필 이미지 변경');},
+                                onPressed: (){
+                                  print('프로필 이미지 변경');
+                                  getImageGallery();
+                                },
                               )
                           ),
                         ],
@@ -205,7 +248,6 @@ class _ProfilePageState extends State<ProfilePage>{
                       TextButton(
                         child: Text('변경하기'),
                         onPressed: (){
-                          //Get.to();
                           print('핸드폰 변경');
                         },
                       )
@@ -213,8 +255,26 @@ class _ProfilePageState extends State<ProfilePage>{
                     ],
                   ),
                 ),
-                SizedBox(height: 30.0,),
+                SizedBox(height: 20.0,),
+                ElevatedButton(
+                  onPressed: (){
+                    upload(File(_image.path));
+                  },
+                  child: Text('   저장하기   ', style:
+                    TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
 
+                    side: BorderSide(
+                      width: 1.0, color: Color(0xDEDEDE),
+                    ),
+                    elevation: 3.0,
+                  ),
+                ),
+                SizedBox(height: 30.0,),
                 Column(
                   children: <Widget>[
                     GestureDetector(
@@ -258,6 +318,7 @@ class _ProfilePageState extends State<ProfilePage>{
                     ),
                   ],
                 ),
+                SizedBox(height: 20.0,)
               ],
             )
             :

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/order_ProList_data.dart';
+import 'package:flutter_film/datas/select_rating_data.dart';
 import 'package:flutter_film/models/order_ProList_model.dart';
 import 'package:get/get.dart';
 import 'package:lazy_loading_list/lazy_loading_list.dart';
@@ -14,6 +15,7 @@ class _MatchingPageState extends State<MatchingPage>{
   String order_date;
   String user_id;
   String order_id;
+  String pro_id;
   List<Order_ProList> _prolist;
   bool _isLoading;
 
@@ -135,69 +137,61 @@ class _MatchingPageState extends State<MatchingPage>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: AssetImage('assets/images/pro.jpg'),
-                                radius: 25,
-                              ),
-                              SizedBox(width:20.0,),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text('시공 전문가', style: TextStyle(fontSize:10.0,)),
-                                  Text('${_prolist[index].com_name}', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
-
-
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onTap: (){
-                                      Get.toNamed('/profilePPage/true?id=${_prolist[index].pro_id}');
-                                    },
-                                    child: Row(
-                                      children: <Widget> [
-                                        Icon(Icons.star,color:Color(0xFFFEC107), size:16.0),
-                                        Text('4.7', style: TextStyle(fontSize:15.0),),
-                                        SizedBox(width:5),
-                                        Text('(10개)', style: TextStyle(fontSize:12.0),),
-                                      ],
-                                    ),
+                          GestureDetector(
+                              onTap: (){
+                                Get.toNamed('/profilePPage/true?id=${_prolist[index].pro_id}');
+                              },
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_prolist[index].profile_img}',),
+                                    radius: 25,
                                   ),
-                                  SizedBox(height: 5.0,),
-                                  SizedBox(
-                                    width: 75.0,
-                                    height: 30.0,
-                                    child: ElevatedButton(
-                                      child: Text('후기작성', style:
-                                      TextStyle(
-                                          fontSize: 11.0,
-                                          color: Color(0xFF398FE2)
-                                      ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.white,
-                                        side: BorderSide(
-                                          width: 1.0, color: Color(0xFF398FE2),
+                                  SizedBox(width:20.0,),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('시공 전문가', style: TextStyle(fontSize:10.0,)),
+                                      Text('${_prolist[index].com_name}', style: TextStyle(fontSize:14.0, fontWeight: FontWeight.w700)),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    children: <Widget>[
+                                      SizedBox(height: 5.0,),
+                                      SizedBox(
+                                        width: 75.0,
+                                        height: 30.0,
+                                        child: ElevatedButton(
+                                          child: Text('후기작성', style:
+                                          TextStyle(
+                                              fontSize: 11.0,
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFF398FE2)
+                                          ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.white,
+                                            side: BorderSide(
+                                              width: 1.0, color: Color(0xFF398FE2),
+                                            ),
+                                            elevation: 0.0,
+                                          ),
+                                          onPressed: (){
+                                            Get.toNamed('/rating/true?user_id=${_prolist[index].user_id}&&pro_id=${_prolist[index].pro_id}');
+                                          },
                                         ),
-                                        elevation: 0.0,
-                                      ),
-                                      onPressed: (){
-                                        Get.toNamed('/rating/true?user_id=${_prolist[index].user_id}&&pro_id=${_prolist[index].pro_id}');
-                                      },
-                                    ),
-                                  )
+                                      )
+                                    ],
+                                  ),
+
+                                  SizedBox(width: 10.0,)
                                 ],
                               ),
-
-                              SizedBox(width: 10.0,)
-                            ],
                           ),
+
                           SizedBox(height: 10.0,),
                           Text('견적 내용', style:
                             TextStyle(

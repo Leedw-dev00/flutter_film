@@ -9,8 +9,9 @@ class Pro_Select{
   String img4;
   String img5;
   String com_name;
+  String profile_img;
 
-  Pro_Select({this.user_id, this.introduce, this.basic, this.company, this.img1, this.img2, this.img3, this.img4, this.img5, this.com_name});
+  Pro_Select({this.user_id, this.introduce, this.basic, this.company, this.img1, this.img2, this.img3, this.img4, this.img5, this.com_name, this.profile_img});
 
   factory Pro_Select.fromJson(Map<String, dynamic> json){
     return Pro_Select(
@@ -24,6 +25,7 @@ class Pro_Select{
       img4: json['img4'] as String,
       img5: json['img5'] as String,
       com_name: json['com_name'] as String,
+      profile_img: json['profile_img'] as String,
     );
   }
 }

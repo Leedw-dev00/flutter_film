@@ -197,13 +197,53 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                       ?
                                       TextButton(
                                         onPressed: (){
-                                          setState(() {
-                                            order_date = "${_customerList[index].order_date}";
-                                            _isFin = "종료";
-                                          });
-                                          print(order_date);
-                                          print(user_id);
-                                          _updateOrderStatus();
+                                          Get.defaultDialog(
+                                            title: '작업 완료', titleStyle: TextStyle(fontSize: 15.0, color: Colors.red, fontWeight: FontWeight.bold),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Text('작업이 완료된 경우, 완료하기를 클릭하여 전문가 후기를 작성해주세요.',style:
+                                                  TextStyle(
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.black54
+                                                  ),
+                                                ),
+                                                SizedBox(height: 20.0,),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: ElevatedButton(
+                                                        onPressed: (){
+                                                          print('Cancel');
+                                                          Get.back();
+                                                        },
+                                                        child: Text('Cancel'),
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 10.0,),
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: ElevatedButton(
+                                                        onPressed: (){
+                                                          setState(() {
+                                                            order_date = "${_customerList[index].order_date}";
+                                                            _isFin = "종료";
+                                                          });
+                                                          print(order_date);
+                                                          print(user_id);
+                                                          _updateOrderStatus();
+                                                          Get.back();
+                                                        },
+                                                        child: Text('Next'),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            )
+                                          );
                                         },
                                         child: Text('완료하기', style:
                                           TextStyle(
@@ -220,15 +260,6 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
 
                                     ],
                                   ),
-
-
-
-
-
-
-
-
-
                                   Row(
                                     children: <Widget>[
                                       Text('서비스 지역 : ${_customerList[index].service_area}', style:
@@ -271,10 +302,26 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                     ),
                                   ),
                                   SizedBox(height: 10.0,),
+                                  _isFin == "진행중"
+                                  ?
                                   Align(
                                     alignment: Alignment.center,
                                     child: ElevatedButton(
                                         child: Text('    견적보기    ', style:
+                                        TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                        ),
+                                        onPressed: (){
+                                          Get.toNamed('/matching/true?id=${_customerList[index].user_id}&&date=${_customerList[index].service_date}');
+                                        }
+                                    ),
+                                  )
+                                  :
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: ElevatedButton(
+                                        child: Text('    후기작성    ', style:
                                         TextStyle(
                                             fontWeight: FontWeight.bold
                                         ),

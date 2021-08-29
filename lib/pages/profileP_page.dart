@@ -4,7 +4,6 @@ import 'package:flutter_film/datas/pro_select_data.dart';
 import 'package:flutter_film/datas/select_rating_data.dart';
 import 'package:flutter_film/models/pro_select_model.dart';
 import 'package:flutter_film/models/select_rating_model.dart';
-import 'package:flutter_film/widgets/profilePThird_widget.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
@@ -119,7 +118,7 @@ class _ProfilePPageState extends State<ProfilePPage>{
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      child: Image.asset('assets/images/pro.jpg', height: 65.0, width: 65.0, fit: BoxFit.cover,),
+                      child: Image.network('https://d-grab.co.kr/film_pro_profile/${_proSelect[0].profile_img}', height: 65.0, width: 65.0, fit: BoxFit.cover,),
                     ),
                     SizedBox(width: 20.0,),
                     Column(
@@ -255,26 +254,26 @@ class _ProfilePPageState extends State<ProfilePPage>{
                           children: <Widget>[
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset('assets/images/port1.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                              child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img1}', width: 130.0, height: 130.0, fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10.0,),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset('assets/images/port2.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                              child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img2}', width: 130.0, height: 130.0, fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10.0,),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset('assets/images/port3.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                              child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img3}', width: 130.0, height: 130.0, fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10.0,),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset('assets/images/port4.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                              child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img4}', width: 130.0, height: 130.0, fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10.0,),ClipRRect(
                               borderRadius: BorderRadius.circular(15.0),
-                              child: Image.asset('assets/images/port5.jpg', width: 80.0, height: 80.0, fit: BoxFit.cover,),
+                              child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img5}', width: 130.0, height: 130.0, fit: BoxFit.cover,),
                             ),
                             SizedBox(width: 10.0,),
 
@@ -302,10 +301,18 @@ class _ProfilePPageState extends State<ProfilePPage>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text('리뷰', style:
-                            TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0
+                          TextStyle(
+                              color: Color(0XFF398FE2),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14.0
+                          ),
+                          ),
+                          SizedBox(height: 3.0,),
+                          SizedBox(
+                            child: Container(
+                              width: 20.0,
+                              height: 2.0,
+                              color: Color(0XFF398FE2),
                             ),
                           ),
                           SizedBox(height: 10.0,),
@@ -313,11 +320,11 @@ class _ProfilePPageState extends State<ProfilePPage>{
                             children: <Widget>[
                               Icon(Icons.star, color: Color(0xFFFEC107), size: 30.0,),
                               SizedBox(width: 5.0,),
-                              Text('${_ratingSelect.length}', style:
+                              Text('[${_ratingSelect.length}]', style:
                                 TextStyle(
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 20.0
+                                    fontWeight: FontWeight.w200,
+                                    fontSize: 17.0
                                 ),
                               ),
                             ],
@@ -449,7 +456,47 @@ class _ProfilePPageState extends State<ProfilePPage>{
             ],
           ),
         )
-        :CircularProgressIndicator(),
+        :
+        Container(
+            height: Get.height*0.8,
+            width: Get.width,
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: 200.0,
+                width: Get.width,
+                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(width: 0.2),
+                    borderRadius: BorderRadius.circular(10.0)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.warning_outlined, size: 60.0, color: Colors.red,),
+                    SizedBox(height: 2.0,),
+                    Text('해당 전문가의 정보가 존재하지 않습니다. \n관리자에게 문의 또는 네트워크 상태를 확인하세요', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),),
+                    Spacer(),
+                    ElevatedButton(
+                        onPressed: (){
+                          Get.back();
+                        },
+                        child:
+                        Text('     돌아가기     ', style:
+                          TextStyle(
+                              fontWeight: FontWeight.bold
+                          ),
+                        )
+                    ),
+                    SizedBox(height: 15.0,)
+                  ],
+                ),
+              ),
+            )
+        ),
       ),
     );
   }

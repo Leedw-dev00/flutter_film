@@ -5,8 +5,11 @@ class Pro_Profile{
   String area1;
   String area2;
   String area3;
+  String profile_img;
 
-  Pro_Profile({this.user_id, this.skill, this.com_name, this.area1, this.area2, this.area3});
+
+
+  Pro_Profile({this.user_id, this.skill, this.com_name, this.area1, this.area2, this.area3, this.profile_img});
 
   factory Pro_Profile.fromJson(Map<String, dynamic> json){
     return Pro_Profile(
@@ -16,6 +19,7 @@ class Pro_Profile{
       area1: json['area1'] as String,
       area2: json['area2'] as String,
       area3: json['area3'] as String,
+      profile_img: json['profile_img'] as String,
     );
   }
 }

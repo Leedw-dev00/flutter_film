@@ -13,12 +13,14 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
   TextEditingController introduceController;
   TextEditingController basicController;
   TextEditingController comController;
+  String pro_id;
 
   @override
   void initState(){
     introduceController = TextEditingController();
     basicController = TextEditingController();
     comController = TextEditingController();
+    pro_id = Get.parameters['id'];
     super.initState();
   }
 
@@ -29,7 +31,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
 
   //전문가 회원 회원가입
   _addProfile(){
-    RegisterProfile_Data.addProfile(Get.arguments, introduceController.text, basicController.text, comController.text).then((result){
+    RegisterProfile_Data.addProfile(pro_id, introduceController.text, basicController.text, comController.text).then((result){
         Get.offNamed('/loginPage');
     });
   }
@@ -225,31 +227,27 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
                 ),
               ),
               SizedBox(height: 20.0,),
-              Row(
-                children: <Widget>[
-                  Spacer(),
-                  SizedBox(
-                    width: 120,
-                    child: ElevatedButton(
-                      child: Text('프로필 저장', style:
-                      TextStyle(
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: 120,
+                  child: ElevatedButton(
+                    child: Text('프로필 저장', style:
+                    TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.bold
-                      ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF398FE2)
-                      ),
-                      onPressed: (){
-                        _addProfile();
-                      },
                     ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF398FE2)
+                    ),
+                    onPressed: (){
+                      _addProfile();
+                    },
                   ),
-                  Spacer(),
-                ],
+                ),
               ),
               SizedBox(height: 50.0,),
-
             ],
           ),
         ),
