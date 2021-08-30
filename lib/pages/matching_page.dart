@@ -23,6 +23,13 @@ class _MatchingPageState extends State<MatchingPage>{
   bool _isLoading;
 
 
+
+  //sms
+  String _message, body;
+  String _canSendSMSMessage = 'Check is not run.';
+  List<String> people = [];
+
+
   @override
   void dispose(){
     super.dispose();
@@ -53,6 +60,61 @@ class _MatchingPageState extends State<MatchingPage>{
         });
       }
     });
+  }
+
+  //sms
+  Future<void> _sendSMS(List<String> recipients) async {
+    try {
+      String _result = await sendSMS(
+          message: '전문가에게 견적을 보냅니', recipients: recipients);
+      setState(() => _message = _result);
+    } catch (error) {
+      setState(() => _message = error.toString());
+    }
+  }
+
+  //sms
+  Future<bool> _canSendSMS() async {
+    bool _result = await canSendSMS();
+    setState(() => _canSendSMSMessage =
+    _result ? 'This unit can send SMS' : 'This unit cannot send SMS');
+    return _result;
+  }
+
+  //sms
+  Widget _phoneTile(String name) {
+    return Padding(
+      padding: const EdgeInsets.all(3),
+      child: Container(
+          decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Colors.grey.shade300),
+                top: BorderSide(color: Colors.grey.shade300),
+                left: BorderSide(color: Colors.grey.shade300),
+                right: BorderSide(color: Colors.grey.shade300),
+              )),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => setState(() => people.remove(name)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(0),
+                  child: Text(
+                    name,
+                    textScaleFactor: 1,
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                )
+              ],
+            ),
+          )),
+    );
   }
 
   @override
@@ -111,6 +173,7 @@ class _MatchingPageState extends State<MatchingPage>{
                 )
               ),
               SizedBox(height: 3.0,),
+              TextButton(onPressed: (){}, child: Text('문자 전송')),
               Text('전문가의 견적서를 확인해보세요', style:
                 TextStyle(
                   fontSize: 14.0,
@@ -216,7 +279,9 @@ class _MatchingPageState extends State<MatchingPage>{
                                                     Align(
                                                       alignment: Alignment.center,
                                                       child: TextButton(
-                                                          onPressed: (){},
+                                                          onPressed: (){
+                                                            _send();
+                                                          },
                                                           child: Text('동의하고 SMS 보내기', style:
                                                             TextStyle(
                                                               fontWeight: FontWeight.bold,
@@ -342,4 +407,9 @@ class _MatchingPageState extends State<MatchingPage>{
       ),
     );
   }
+
+  void _send(){
+    _sendSMS(["01027060514"]);
+  }
+
 }
