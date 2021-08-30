@@ -1,9 +1,11 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/order_ProList_data.dart';
-import 'package:flutter_film/datas/select_rating_data.dart';
 import 'package:flutter_film/models/order_ProList_model.dart';
 import 'package:get/get.dart';
-import 'package:lazy_loading_list/lazy_loading_list.dart';
+import 'dart:async';
+import 'package:flutter_sms/flutter_sms.dart';
+
 
 class MatchingPage extends StatefulWidget{
   @override
@@ -16,8 +18,10 @@ class _MatchingPageState extends State<MatchingPage>{
   String user_id;
   String order_id;
   String pro_id;
+  String _isFin;
   List<Order_ProList> _prolist;
   bool _isLoading;
+
 
   @override
   void dispose(){
@@ -28,6 +32,7 @@ class _MatchingPageState extends State<MatchingPage>{
   void initState(){
     user_id = Get.parameters['id'];
     order_date = Get.parameters['date'];
+    _isFin = Get.parameters['_isFin'];
     order_id = '${user_id}${order_date}';
     _prolist = [];
     _isLoading = false;
@@ -145,6 +150,7 @@ class _MatchingPageState extends State<MatchingPage>{
                                 children: [
                                   CircleAvatar(
                                     backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_prolist[index].profile_img}',),
+                                    backgroundColor: Colors.white,
                                     radius: 25,
                                   ),
                                   SizedBox(width:20.0,),
@@ -163,13 +169,77 @@ class _MatchingPageState extends State<MatchingPage>{
                                       SizedBox(
                                         width: 75.0,
                                         height: 30.0,
-                                        child: ElevatedButton(
-                                          child: Text('후기작성', style:
-                                          TextStyle(
-                                              fontSize: 11.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Color(0xFF398FE2)
+                                        child:
+                                        _isFin == '진행중'
+                                            ?
+                                        ElevatedButton(
+                                          child:Text('의뢰하기', style:
+                                            TextStyle(
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.w600,
+                                            color: Color(0xFF398FE2)
+                                            ),
+                                          textAlign: TextAlign.center,
                                           ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.white,
+                                            side: BorderSide(
+                                              width: 1.0, color: Color(0xFF398FE2),
+                                            ),
+                                            elevation: 0.0,
+                                          ),
+                                          onPressed: (){
+                                             Get.defaultDialog(
+                                                title: '', titleStyle: TextStyle(fontSize: 0.0),
+                                                content: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    IconButton(icon: Icon(Icons.close), onPressed: (){Get.back();}),
+                                                    SizedBox(height: 20.0,),
+                                                    Text('자세한 견적은 해당 전문가와 SMS 상담을 통해 \n진행할 수 있습니다', textAlign: TextAlign.center, style:
+                                                    TextStyle(
+                                                        fontSize: 15.0,
+                                                        fontWeight: FontWeight.w600,
+                                                        color: Colors.black,
+                                                    ),
+                                                    ),
+                                                    SizedBox(height: 20.0,),
+                                                    ExpandablePanel(
+                                                      theme: const ExpandableThemeData(
+                                                        headerAlignment: ExpandablePanelHeaderAlignment.center,
+                                                      ),
+                                                      header: Text('- 개인정보 이용약관 [필수]', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: Colors.redAccent)),
+                                                      expanded: Text('개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부', style: TextStyle(fontSize: 11.0, color: Colors.grey), ),
+                                                    ),
+                                                    SizedBox(height: 20.0,),
+                                                    Align(
+                                                      alignment: Alignment.center,
+                                                      child: TextButton(
+                                                          onPressed: (){},
+                                                          child: Text('동의하고 SMS 보내기', style:
+                                                            TextStyle(
+                                                              fontWeight: FontWeight.bold,
+                                                              fontSize: 15.0
+                                                            ),
+                                                          )
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 10.0,),
+                                                  ],
+                                                )
+                                            );
+                                          },
+                                        )
+
+                                        :
+                                        ElevatedButton(
+                                          child: Text('후기작성', style:
+                                            TextStyle(
+                                                fontSize: 11.0,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xFF398FE2)
+                                            ),
                                             textAlign: TextAlign.center,
                                           ),
                                           style: ElevatedButton.styleFrom(
@@ -182,11 +252,10 @@ class _MatchingPageState extends State<MatchingPage>{
                                           onPressed: (){
                                             Get.toNamed('/rating/true?user_id=${_prolist[index].user_id}&&pro_id=${_prolist[index].pro_id}');
                                           },
-                                        ),
-                                      )
+                                        )
+                                      ),
                                     ],
                                   ),
-
                                   SizedBox(width: 10.0,)
                                 ],
                               ),

@@ -313,7 +313,7 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                         ),
                                         ),
                                         onPressed: (){
-                                          Get.toNamed('/matching/true?id=${_customerList[index].user_id}&&date=${_customerList[index].service_date}');
+                                          Get.toNamed('/matching/true?id=${_customerList[index].user_id}&&date=${_customerList[index].service_date}&&_isFin=$_isFin');
                                         }
                                     ),
                                   )

@@ -200,15 +200,15 @@ class _MainPageState extends State<MainPage>{
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(3.0),
                                   ),
-                                  child: Text('견적요청', style:
+                                  child: Text('비교견적', style:
                                   TextStyle(
                                       fontSize: 14.0,
                                       color: Colors.white,
-                                      fontWeight: FontWeight.w500
+                                      fontWeight: FontWeight.bold
                                   ),
                                   ),
                                   onPressed: (){
-                                    print('견적 보기');
+                                    print('비교견적');
                                     // KakaoShareManager().isKakaotalkInstalled().then((installed) {
                                     //   if (installed) {
                                     //     KakaoShareManager().shareMyCode();

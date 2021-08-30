@@ -60,6 +60,7 @@ class _ProfilePageState extends State<ProfilePage>{
     setState(() {
       _image = imageFile;
     });
+    upload(File(_image.path));
     print('getImageGallery Success');
   }
 
@@ -253,25 +254,6 @@ class _ProfilePageState extends State<ProfilePage>{
                       )
 
                     ],
-                  ),
-                ),
-                SizedBox(height: 20.0,),
-                ElevatedButton(
-                  onPressed: (){
-                    upload(File(_image.path));
-                  },
-                  child: Text('   저장하기   ', style:
-                    TextStyle(
-                      fontSize: 15.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-
-                    side: BorderSide(
-                      width: 1.0, color: Color(0xDEDEDE),
-                    ),
-                    elevation: 3.0,
                   ),
                 ),
                 SizedBox(height: 30.0,),
