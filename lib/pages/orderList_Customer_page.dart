@@ -202,7 +202,7 @@ class _CustomerOrderListPageState extends State<CustomerOrderListPage>{
                                             content: Column(
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
-                                                Text('작업이 완료된 경우, 완료하기를 클릭하여 전문가 후기를 작성해주세요.',style:
+                                                Text('작업이 완료된 경우, 완료하기를 클릭하여 전문가 후기를 작성해주세요',style:
                                                   TextStyle(
                                                     fontSize: 13.0,
                                                     fontWeight: FontWeight.w600,

@@ -114,7 +114,7 @@ class _OrderPageState extends State<OrderPage>{
                           ),
                         ),
                         SizedBox(width: 5.0,),
-                        Text('날짜 선택')
+                        Text('시공 희망 날짜')
                       ],
                     ),
                     SizedBox(height: 10.0,),
@@ -436,7 +436,7 @@ class _OrderPageState extends State<OrderPage>{
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
-                          labelText: '대략적인 내용을 입력해주세요',
+                          labelText: '1. 도어(방문 / 욕실 / 창고)\n2. 샤시창(거실 / 안방 / 작은방 / 기타)\n3. 몰딩(가구 / 기타)\n4. 싱크대(싱크대 상하부장, 냉장고 장, 기타)\n',
                           labelStyle: TextStyle(fontSize: 11.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xFF636363), width: 0.5),

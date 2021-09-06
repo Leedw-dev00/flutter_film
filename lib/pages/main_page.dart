@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/datas/ad_data.dart';
 import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/pro_profile_data.dart';
 import 'package:flutter_film/datas/pro_recom_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
+import 'package:flutter_film/models/ad_model.dart';
 import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/pro_recom_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/noti_page.dart';
+import 'package:flutter_film/widgets/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'kakao_alarm.dart';
@@ -27,6 +30,7 @@ class _MainPageState extends State<MainPage>{
   bool _isLoading;
   List<Customer_Check> _customerCheck;
   List<Pro_User> _proUser;
+  List<Ad> _ad;
   bool _isCS;
   List<User_Check> _pro_profile;
   String skill;
@@ -47,6 +51,8 @@ class _MainPageState extends State<MainPage>{
     _userType = Get.parameters['type'];
     _isLoading = false;
     _getProRecom();
+    _ad = [];
+    _getBanner();
     super.initState();
   }
 
@@ -101,6 +107,20 @@ class _MainPageState extends State<MainPage>{
     });
   }
 
+  _getBanner(){
+    Ad_Data.getAd().then((ad){
+      setState(() {
+        _ad = ad;
+      });
+      if(ad.length == 0){
+        _isLoading = false;
+      }else{
+        _isLoading = true;
+      }
+    });
+  }
+
+
   _initTexts() async{
     final User user = await UserApi.instance.me();
     setState(() {
@@ -124,7 +144,7 @@ class _MainPageState extends State<MainPage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Image.asset('assets/images/logo.jpeg', width: 170.0, fit: BoxFit.cover,),
+        title: Image.asset('assets/images/logo_maini.png', width: 150.0, fit: BoxFit.cover,),
         actions: [
           IconButton(
             icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
@@ -152,10 +172,10 @@ class _MainPageState extends State<MainPage>{
                 decoration: BoxDecoration(
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                          Colors.black.withOpacity(0.5), BlendMode.dstATop
-                      ),
-                      image: AssetImage('assets/images/back.png'),
+                      // colorFilter: ColorFilter.mode(
+                      //     Colors.black.withOpacity(0.5), BlendMode.dstATop
+                      // ),
+                      image: AssetImage('assets/images/interior4.jpg',),
                     )
                 ),
                 child: Stack(
@@ -178,18 +198,31 @@ class _MainPageState extends State<MainPage>{
                           children: <Widget>[
                             Spacer(),
                             SizedBox(height: 30.0,),
-                            Text('우리동네 필름반장에서 전문가를 만나보세요', style:
-                            TextStyle(
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.w700
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text('인테리어필름 ', style:
+                                TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFFEA316F)
+                                ),
+                                ),
+                                Text('시공 전문가를 만나보세요', style:
+                                TextStyle(
+                                    fontSize: 17.0,
+                                    fontWeight: FontWeight.w700
+                                ),
+                                ),
+                              ],
                             ),
-                            ),
-                            Text('실명제로 책임감있게 다년간의 기술과 경험으로 \n정직 시공해드립니다', textAlign: TextAlign.center,  style:
-                            TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w700
-                            ),
+
+                            Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
+                              TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700
+                              ),
                             ),
                             SizedBox(height: 25.0,),
                             ButtonTheme(
@@ -200,7 +233,7 @@ class _MainPageState extends State<MainPage>{
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(3.0),
                                   ),
-                                  child: Text('비교견적', style:
+                                  child: Text('견적요청', style:
                                   TextStyle(
                                       fontSize: 14.0,
                                       color: Colors.white,
@@ -209,13 +242,6 @@ class _MainPageState extends State<MainPage>{
                                   ),
                                   onPressed: (){
                                     print('비교견적');
-                                    // KakaoShareManager().isKakaotalkInstalled().then((installed) {
-                                    //   if (installed) {
-                                    //     KakaoShareManager().shareMyCode();
-                                    //   } else {
-                                    //     // show alert
-                                    //   }
-                                    // });
                                     if(_isLogin == 'true'){
                                       if(_userType == 'pro'){
                                         Get.snackbar('Error', '고객 아이디로 로그인해주세요');
@@ -236,8 +262,13 @@ class _MainPageState extends State<MainPage>{
                 ),
               ),
               SizedBox(height: 20.0,),
+              SizedBox(
+                height: 120.0,
+                width: Get.width,
+                child: CarouselAd(),
+              ),
               Container(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0, bottom: 10.0),
+                padding: EdgeInsets.only(left: 10.0, right: 10.0, bottom: 10.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +351,7 @@ class _MainPageState extends State<MainPage>{
                     );
                   }
                 )
-                :CircularProgressIndicator(),
+                :Container(),
               ),
               SizedBox(height: 40.0),
               Container(
@@ -351,9 +382,20 @@ class _MainPageState extends State<MainPage>{
                   children: <Widget>[
                     Container(
                       height: 80.0,
+                      width: Get.width*0.9,
                       decoration: BoxDecoration(
                           border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
                       ),
+                      child: Image.asset('assets/images/logo.jpeg', width: Get.width*0.9, fit: BoxFit.fitWidth,),
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      height: 80.0,
+                      width: Get.width*0.9,
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
+                      ),
+                      child: Image.network('${_ad[0].ad_img}', width: Get.width*0.9, fit: BoxFit.fitWidth,),
                     ),
                     SizedBox(height: 10.0,),
                     Container(
@@ -361,13 +403,7 @@ class _MainPageState extends State<MainPage>{
                       decoration: BoxDecoration(
                           border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
                       ),
-                    ),
-                    SizedBox(height: 10.0,),
-                    Container(
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                      ),
+                      child: Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitWidth,),
                     ),
                   ],
                 ),

@@ -296,7 +296,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                                             onPressed: (){
                                               _updateIntro();
                                             },
-                                            child: Text('Next'),
+                                            child: Text('Edit'),
                                           ),
                                         ),
                                       ],
@@ -375,7 +375,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                                               onPressed: (){
                                                 _updateBasic();
                                               },
-                                              child: Text('Next'),
+                                              child: Text('Edit'),
                                             ),
                                           ),
                                         ],
@@ -401,79 +401,79 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                     Row(
                       children: <Widget>[
                         Text('추가정보', style:
-                        TextStyle(
+                          TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                             fontSize: 14.0
-                        ),
+                          ),
                         ),
                         Spacer(),
                         TextButton(
-                            onPressed: (){
-                              Get.defaultDialog(
-                                  title: 'Edit', titleStyle: TextStyle(fontSize: 15.0, color: Colors.red, fontWeight: FontWeight.bold),
-                                  content: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Text('내용을 수정해주세요',style:
-                                      TextStyle(
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.black54
+                          onPressed: (){
+                            Get.defaultDialog(
+                              title: 'Edit', titleStyle: TextStyle(fontSize: 15.0, color: Colors.red, fontWeight: FontWeight.bold),
+                              content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Text('내용을 수정해주세요',style:
+                                    TextStyle(
+                                        fontSize: 13.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black54
+                                    ),
+                                    ),
+                                    SizedBox(height: 20.0,),
+                                    Container(
+                                      width: Get.width,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(width: 0.5, color: Colors.grey),
+                                          borderRadius: BorderRadius.circular(10.0)
                                       ),
+                                      child: TextField(
+                                        controller: comController,
+                                        maxLines: 5,
+                                        maxLength: 200,
                                       ),
-                                      SizedBox(height: 20.0,),
-                                      Container(
-                                        width: Get.width,
-                                        height: 150.0,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(width: 0.5, color: Colors.grey),
-                                            borderRadius: BorderRadius.circular(10.0)
-                                        ),
-                                        child: TextField(
-                                          controller: comController,
-                                          maxLines: 5,
-                                          maxLength: 200,
-                                        ),
-                                      ),
-                                      SizedBox(height: 20.0,),
-                                      Row(
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 1,
-                                            child: ElevatedButton(
-                                              onPressed: (){
-                                                Get.back();
-                                              },
-                                              child: Text('Cancel'),
-                                            ),
+                                    ),
+                                    SizedBox(height: 20.0,),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 1,
+                                          child: ElevatedButton(
+                                            onPressed: (){
+                                              Get.back();
+                                            },
+                                            child: Text('Cancel'),
                                           ),
-                                          SizedBox(width: 10.0,),
-                                          Expanded(
-                                            flex: 1,
-                                            child: ElevatedButton(
-                                              onPressed: (){
-                                                _updateCom();
-                                              },
-                                              child: Text('Save'),
-                                            ),
+                                        ),
+                                        SizedBox(width: 10.0,),
+                                        Expanded(
+                                          flex: 1,
+                                          child: ElevatedButton(
+                                            onPressed: (){
+                                              _updateCom();
+                                            },
+                                            child: Text('Edit'),
                                           ),
-                                        ],
-                                      )
-                                    ],
-                                  )
-                              );
-                            },
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                )
+                            );
+                          },
                             child: Text('수정')
                         ),
                       ],
                     ),
 
                     Text('${_proSelect[0].company}', style:
-                    TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13.0
-                    ),
+                      TextStyle(
+                          color: Colors.grey,
+                          fontSize: 13.0
+                      ),
                     ),
 
                     SizedBox(height: 20.0),

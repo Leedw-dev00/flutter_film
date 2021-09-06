@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_film/datas/register_Pro_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
-import 'package:flutter_film/pages/registerProfile_page.dart';
-import 'package:flutter_sms/flutter_sms.dart';
 import 'package:get/get.dart';
 
 
@@ -21,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage>{
   TextEditingController comNameController;
   TextEditingController comNoController;
   TextEditingController emailController;
+  TextEditingController authController;
   DateTime _selectedDate = DateTime.now();
   final _valueList = ["선택","서울", "인천", "경기", "대전"];
   var _selectedValue1 = '선택';
@@ -33,6 +33,12 @@ class _RegisterPageState extends State<RegisterPage>{
   var _selectedValue4 = '선택';
   List<User_Check> _user_check;
 
+  //firebase auth
+  bool authOk = false;
+  bool requestedAuth = false;
+  String verificationId;
+  bool showLoading = false;
+
   @override
   void initState(){
     _user_check = [];
@@ -41,6 +47,7 @@ class _RegisterPageState extends State<RegisterPage>{
     checkController = TextEditingController();
     emailController = TextEditingController();
     phoneController = TextEditingController();
+    authController = TextEditingController();
     comNameController = TextEditingController();
     comNoController = TextEditingController();
     super.initState();
@@ -50,6 +57,51 @@ class _RegisterPageState extends State<RegisterPage>{
   void dispose(){
     _selectDate;
     super.dispose();
+  }
+
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async{
+    setState(() {
+      showLoading = false;
+    });
+    try {
+      final authCredential = await _auth.signInWithCredential(phoneAuthCredential);
+      setState(() {
+        showLoading = false;
+      });
+      if(authCredential?.user != null){
+        setState(() {
+          print("인증완료 및 로그인성공");
+          authOk=true;
+          requestedAuth=false;
+        });
+        await _auth.currentUser.delete();
+        print("auth정보삭제");
+        _auth.signOut();
+        print("phone로그인된것 로그아웃");
+      }
+
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        print("인증실패..로그인실패");
+        showLoading = false;
+      });
+
+      await Get.snackbar(
+        "error",
+        e.message
+      );
+
+      // await Fluttertoast.showToast(
+      //     msg: e.message,
+      //     toastLength: Toast.LENGTH_SHORT,
+      //     timeInSecForIosWeb: 1,
+      //     backgroundColor: Colors.red,
+      //     fontSize: 16.0
+      // );
+
+    }
   }
 
 
@@ -318,6 +370,7 @@ class _RegisterPageState extends State<RegisterPage>{
                     child: TextField(
                       controller: phoneController,
                       cursorHeight: 20.0,
+                      enabled: authOk?false:true,
                       style: TextStyle(
                           fontSize: 13.0, height: 0.5
                       ),
@@ -350,12 +403,89 @@ class _RegisterPageState extends State<RegisterPage>{
                   )
                 ],
               ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+              authOk?ElevatedButton(
+                  child:Text("인증완료")
+              ):
+                  phoneController.text.length >= 0
+              ?
+              ElevatedButton(
+                  onPressed: ()async{
+                    setState(() {
+                      showLoading = true;
+                    });
+                    await _auth.verifyPhoneNumber(
+                      timeout: const Duration(seconds: 60),
+                      codeAutoRetrievalTimeout: (String verificationId) {
+                        // Auto-resolution timed out...
+                      },
+                      phoneNumber: "+821044785303",
+                      verificationCompleted: (phoneAuthCredential) async {
+                        print("otp 문자옴");
+                      },
+                      verificationFailed: (verificationFailed) async {
+                        print(verificationFailed.code);
+
+                        print("코드발송실패");
+                        setState(() {
+                          showLoading = false;
+                        });
+                      },
+                      codeSent: (verificationId, resendingToken) async {
+                        print("코드보냄");
+                        Get.snackbar(
+                            'Success',
+                            '010-4478-5303으로 인증코드를 발송하였습니다'
+                        );
+
+                        setState(() {
+                          requestedAuth=true;
+                          showLoading = false;
+                          this.verificationId = verificationId;
+                        });
+                      },
+                    );
+
+                  },
+                  child:Text("인증요청")
+              )
+              :ElevatedButton(
+              child:Text("인증요청")
+              ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               SizedBox(height: 8.0,),
               Row(
                 children: <Widget>[
                   Expanded(
                     flex: 3,
                     child: TextField(
+                      controller: authController,
                       cursorHeight: 20.0,
                       style: TextStyle(
                           fontSize: 13.0, height: 0.5

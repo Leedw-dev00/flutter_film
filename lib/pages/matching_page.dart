@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/order_ProList_data.dart';
 import 'package:flutter_film/models/order_ProList_model.dart';
 import 'package:get/get.dart';
-import 'dart:async';
-import 'package:flutter_sms/flutter_sms.dart';
+
 
 
 class MatchingPage extends StatefulWidget{
@@ -21,13 +20,6 @@ class _MatchingPageState extends State<MatchingPage>{
   String _isFin;
   List<Order_ProList> _prolist;
   bool _isLoading;
-
-
-
-  //sms
-  String _message, body;
-  String _canSendSMSMessage = 'Check is not run.';
-  List<String> people = [];
 
 
   @override
@@ -62,60 +54,8 @@ class _MatchingPageState extends State<MatchingPage>{
     });
   }
 
-  //sms
-  Future<void> _sendSMS(List<String> recipients) async {
-    try {
-      String _result = await sendSMS(
-          message: '전문가에게 견적을 보냅니', recipients: recipients);
-      setState(() => _message = _result);
-    } catch (error) {
-      setState(() => _message = error.toString());
-    }
-  }
 
-  //sms
-  Future<bool> _canSendSMS() async {
-    bool _result = await canSendSMS();
-    setState(() => _canSendSMSMessage =
-    _result ? 'This unit can send SMS' : 'This unit cannot send SMS');
-    return _result;
-  }
 
-  //sms
-  Widget _phoneTile(String name) {
-    return Padding(
-      padding: const EdgeInsets.all(3),
-      child: Container(
-          decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.grey.shade300),
-                top: BorderSide(color: Colors.grey.shade300),
-                left: BorderSide(color: Colors.grey.shade300),
-                right: BorderSide(color: Colors.grey.shade300),
-              )),
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => setState(() => people.remove(name)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(0),
-                  child: Text(
-                    name,
-                    textScaleFactor: 1,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                )
-              ],
-            ),
-          )),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +113,6 @@ class _MatchingPageState extends State<MatchingPage>{
                 )
               ),
               SizedBox(height: 3.0,),
-              TextButton(onPressed: (){}, child: Text('문자 전송')),
               Text('전문가의 견적서를 확인해보세요', style:
                 TextStyle(
                   fontSize: 14.0,
@@ -252,48 +191,8 @@ class _MatchingPageState extends State<MatchingPage>{
                                             elevation: 0.0,
                                           ),
                                           onPressed: (){
-                                             Get.defaultDialog(
-                                                title: '', titleStyle: TextStyle(fontSize: 0.0),
-                                                content: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    IconButton(icon: Icon(Icons.close), onPressed: (){Get.back();}),
-                                                    SizedBox(height: 20.0,),
-                                                    Text('자세한 견적은 해당 전문가와 SMS 상담을 통해 \n진행할 수 있습니다', textAlign: TextAlign.center, style:
-                                                    TextStyle(
-                                                        fontSize: 15.0,
-                                                        fontWeight: FontWeight.w600,
-                                                        color: Colors.black,
-                                                    ),
-                                                    ),
-                                                    SizedBox(height: 20.0,),
-                                                    ExpandablePanel(
-                                                      theme: const ExpandableThemeData(
-                                                        headerAlignment: ExpandablePanelHeaderAlignment.center,
-                                                      ),
-                                                      header: Text('- 개인정보 이용약관 [필수]', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.w500, color: Colors.redAccent)),
-                                                      expanded: Text('개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부', style: TextStyle(fontSize: 11.0, color: Colors.grey), ),
-                                                    ),
-                                                    SizedBox(height: 20.0,),
-                                                    Align(
-                                                      alignment: Alignment.center,
-                                                      child: TextButton(
-                                                          onPressed: (){
-                                                            _send();
-                                                          },
-                                                          child: Text('동의하고 SMS 보내기', style:
-                                                            TextStyle(
-                                                              fontWeight: FontWeight.bold,
-                                                              fontSize: 15.0
-                                                            ),
-                                                          )
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10.0,),
-                                                  ],
-                                                )
-                                            );
+                                            Get.toNamed('/sms/true?id=${_prolist[index].pro_id}&&order_id=$order_id&&user_id=$user_id');
+
                                           },
                                         )
 
@@ -364,9 +263,6 @@ class _MatchingPageState extends State<MatchingPage>{
 
                   },
                 )
-
-
-
               )
               :
               Container(
@@ -407,9 +303,4 @@ class _MatchingPageState extends State<MatchingPage>{
       ),
     );
   }
-
-  void _send(){
-    _sendSMS(["01027060514"]);
-  }
-
 }

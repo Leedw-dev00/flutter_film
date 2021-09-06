@@ -10,6 +10,7 @@ import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
 import 'package:flutter_film/pages/review_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
+import 'package:flutter_film/pages/sms_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
@@ -117,7 +118,10 @@ class MyApp extends StatelessWidget {
           name:'/request/:param',
           page: () => RequestPage(),
         ),
-
+        GetPage(
+          name:'/sms/:param',
+          page: () => SmsPage(),
+        ),
 
 
       ]

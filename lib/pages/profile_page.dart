@@ -238,7 +238,7 @@ class _ProfilePageState extends State<ProfilePage>{
                           ),
                           SizedBox(height:5),
                           Text(
-                            '010-5555-4444',
+                            '${_user_info[0].phone_number}',
                             style: TextStyle(
                               color: Colors.grey,
                               fontSize:14,
