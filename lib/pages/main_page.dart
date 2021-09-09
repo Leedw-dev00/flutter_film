@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/ad_data.dart';
 import 'package:flutter_film/datas/customerCheck_data.dart';
-import 'package:flutter_film/datas/pro_profile_data.dart';
 import 'package:flutter_film/datas/pro_recom_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/ad_model.dart';
@@ -13,7 +12,7 @@ import 'package:flutter_film/pages/noti_page.dart';
 import 'package:flutter_film/widgets/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
-import 'kakao_alarm.dart';
+
 
 
 
@@ -145,18 +144,18 @@ class _MainPageState extends State<MainPage>{
         centerTitle: true,
         elevation: 0.0,
         title: Image.asset('assets/images/logo_maini.png', width: 150.0, fit: BoxFit.cover,),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
-            onPressed: (){
-              Get.to(NotiPage());
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => NotiPage())
-              // );
-            }
-          )
-        ],
+        // actions: [
+        //   IconButton(
+        //       icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
+        //       onPressed: (){
+        //         Get.to(NotiPage());
+        //         // Navigator.push(
+        //         //   context,
+        //         //   MaterialPageRoute(builder: (context) => NotiPage())
+        //         // );
+        //       }
+        //   )
+        // ],
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -175,7 +174,7 @@ class _MainPageState extends State<MainPage>{
                       // colorFilter: ColorFilter.mode(
                       //     Colors.black.withOpacity(0.5), BlendMode.dstATop
                       // ),
-                      image: AssetImage('assets/images/interior4.jpg',),
+                      image: AssetImage('assets/images/interior5.jpg',),
                     )
                 ),
                 child: Stack(
@@ -203,9 +202,9 @@ class _MainPageState extends State<MainPage>{
                               children: <Widget>[
                                 Text('인테리어필름 ', style:
                                 TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: Color(0xFFEA316F)
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFFEA316F)
                                 ),
                                 ),
                                 Text('시공 전문가를 만나보세요', style:
@@ -218,11 +217,11 @@ class _MainPageState extends State<MainPage>{
                             ),
 
                             Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
-                              TextStyle(
-                                  fontSize: 13.0,
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700
-                              ),
+                            TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w700
+                            ),
                             ),
                             SizedBox(height: 25.0,),
                             ButtonTheme(
@@ -279,10 +278,10 @@ class _MainPageState extends State<MainPage>{
                       color: Color(0xFF398FE2),
                     ),
                     Text('전문가 추천', style:
-                      TextStyle(
+                    TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13.0
-                      ),
+                    ),
                     ),
                   ],
                 ),
@@ -294,64 +293,64 @@ class _MainPageState extends State<MainPage>{
                 color: Colors.white,
                 child:
                 _isLoading
-                  ?
+                    ?
                 ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: _proUser.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return Container(
-                      width: Get.width,
-                      child: GestureDetector(
-                          onTap: (){
-                            Get.toNamed('/profilePPage/$_isLogin?id=${_proUser[index].user_id}');
-                          },
-                          child: Container(
-                            height: 60.0,
-                            margin: EdgeInsets.symmetric(vertical: 5.0),
-                            width: Get.width,
-                            child:
-                                Row(
-                                  children: <Widget>[
-                                    CircleAvatar(
-                                      backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_proUser[index].profile_img}',),
-                                      radius: 20,
-                                      backgroundColor: Colors.white,
-                                    ),
-                                    SizedBox(width: 20.0,),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text('${_proUser[index].skill}', style: TextStyle(fontSize: 10.0,),),
-                                        Text('${_proUser[index].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                        Row(
-                                          children: <Widget>[
-                                            Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                            Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Spacer(),
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                        Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                           //     SizedBox(height: 10.0),
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: _proUser.length,
+                    itemBuilder: (BuildContext context, int index){
+                      return Container(
+                        width: Get.width,
+                        child: GestureDetector(
+                            onTap: (){
+                              Get.toNamed('/profilePPage/$_isLogin?id=${_proUser[index].user_id}');
+                            },
+                            child: Container(
+                              height: 60.0,
+                              margin: EdgeInsets.symmetric(vertical: 5.0),
+                              width: Get.width,
+                              child:
+                              Row(
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_proUser[index].profile_img}',),
+                                    radius: 20,
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  SizedBox(width: 20.0,),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text('${_proUser[index].skill}', style: TextStyle(fontSize: 10.0,),),
+                                      Text('${_proUser[index].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
+                                      Row(
+                                        children: <Widget>[
+                                          Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
+                                          Text('4.7', style: TextStyle(fontSize: 12.0),)
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
+                                      Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              //     SizedBox(height: 10.0),
 
-                          )
-                      ),
-                    );
-                  }
+                            )
+                        ),
+                      );
+                    }
                 )
-                :Container(),
+                    :Container(),
               ),
               SizedBox(height: 40.0),
               Container(
@@ -374,6 +373,8 @@ class _MainPageState extends State<MainPage>{
                   ],
                 ),
               ),
+              _isLoading
+                  ?
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 width: MediaQuery.of(context).size.width,
@@ -381,258 +382,315 @@ class _MainPageState extends State<MainPage>{
                 child: Column(
                   children: <Widget>[
                     Container(
-                      height: 80.0,
-                      width: Get.width*0.9,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                      ),
-                      child: Image.asset('assets/images/logo.jpeg', width: Get.width*0.9, fit: BoxFit.fitWidth,),
+                        height: 50.0,
+                        width: Get.width*0.9,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
+                        ),
+                        child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed('/ad/true?ad_id=${_ad[0].ad_id}');
+                          },
+                          child: Image.asset('assets/images/space_interior.png', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                        )
                     ),
-                    SizedBox(height: 10.0,),
+                    SizedBox(height: 15.0,),
                     Container(
-                      height: 80.0,
-                      width: Get.width*0.9,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                      ),
-                      child: Image.network('${_ad[0].ad_img}', width: Get.width*0.9, fit: BoxFit.fitWidth,),
+                        height: 50.0,
+                        width: Get.width*0.9,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
+                        ),
+                        child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed('/ad/true?ad_id=${_ad[1].ad_id}');
+                          },
+                          child: Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                        )
                     ),
-                    SizedBox(height: 10.0,),
+                    SizedBox(height: 15.0,),
                     Container(
-                      height: 80.0,
-                      decoration: BoxDecoration(
-                          border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
-                      ),
-                      child: Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitWidth,),
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
+                        ),
+                        child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed('/ad/true?ad_id=${_ad[2].ad_id}');
+                          },
+                          child: Image.network('${_ad[2].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                        )
+                    ),
+                    SizedBox(height: 15.0,),
+                    Container(
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(width: 0.5, color: Color(0xFFd4d4d4))
+                        ),
+                        child: GestureDetector(
+                          onTap: (){
+                            Get.toNamed('/ad/true?ad_id=${_ad[3].ad_id}');
+                          },
+                          child: Image.network('${_ad[3].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                        )
                     ),
                   ],
                 ),
-              ),
+              )
+                  :Container(child: Text(''),),
               SizedBox(height: 80.0,),
+              Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 13.0),),
+              SizedBox(height: 30.0,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                width: Get.width,
+                height: 300,
+                color: Color(0xFFf0f0f0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('사업자 정보', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 17.0),),
+                    SizedBox(height: 15.0,),
+                    Text('상호 : 공간 인테리어', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('대표 : 김진도', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('주소 : 서울특별시 구로구 경인로 89, 2', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('사업자등록번호 : 133-11-85339', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('통신판매번호 : ', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    SizedBox(height: 10.0,),
+                    Text('펙스:02-2625-3878 / 고객문의 대표 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('이메일 : gowjr0771@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    SizedBox(height: 10.0,),
+                    Text('호스팅 서비스 사업자 : Cafe24 주식회사', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+
+
+                  ],
+                )
+              )
             ],
           ),
         ),
       ),
       drawer: Drawer(
-        child: Container(
-          color: Colors.white,
-          child:
-          _isLogin == 'true'
-              ?
-          ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 10.0,),
-                      Column(
-                        children: <Widget>[
-                          Spacer(),
-                          _userType == 'pro'
-                          ?
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 0,
-                          )
-                          :
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(profile_image),
-                            radius: 35,
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                      SizedBox(width: 25.0,),
-                      Column(
-                        children: <Widget>[
-                          Spacer(),
-                          _userType == 'pro'
-                          ?
-                          Text('$_userId 님', style:
+          child: Container(
+            color: Colors.white,
+            child:
+            _isLogin == 'true'
+                ?
+            ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Container(
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(width: 10.0,),
+                        Column(
+                          children: <Widget>[
+                            Spacer(),
+                            _userType == 'pro'
+                                ?
+                            CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 0,
+                            )
+                                :
+                            CircleAvatar(
+                              backgroundImage: NetworkImage(profile_image),
+                              radius: 35,
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                        SizedBox(width: 25.0,),
+                        Column(
+                          children: <Widget>[
+                            Spacer(),
+                            _userType == 'pro'
+                                ?
+                            Text('$_userId 님', style:
                             TextStyle(
                                 fontSize: 18.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600
                             ),
-                          )
-                          :
-                          Text('$user_id 님', style:
+                            )
+                                :
+                            Text('$user_id 님', style:
                             TextStyle(
                                 fontSize: 13.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600
                             ),
-                          ),
-                          SizedBox(height: 5.0,),
-                          Text('안녕하세요', style:
-                          TextStyle(
-                            fontSize: 13.0,
-                            color: Colors.grey,
-                          ),
-                          ),
-                          Spacer(),
-                        ],
-                      ),
-                    ],
+                            ),
+                            SizedBox(height: 5.0,),
+                            Text('안녕하세요', style:
+                            TextStyle(
+                              fontSize: 13.0,
+                              color: Colors.grey,
+                            ),
+                            ),
+                            Spacer(),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              _userType == 'pro'
-              ?
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text('받은 요청', style:
+                _userType == 'pro'
+                    ?
+                Container(
+                  child: Column(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text('받은 요청', style:
                         TextStyle(
                             fontSize: 13.0,
                             fontWeight: FontWeight.bold
                         ),
+                        ),
+                        onTap: () {
+                          _getProProfile();
+                        },
                       ),
-                      onTap: () {
-                        _getProProfile();
-                      },
-                    ),
-                    ListTile(
-                      title: Text('포인트 충전', style:
-                      TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.bold
+                      ListTile(
+                        title: Text('포인트 충전', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/pointPage/true?id=$_userId');
+                        },
                       ),
+                      ListTile(
+                        title: Text('마이페이지', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/proMyPage/$_isLogin?$_userType&&id=$_userId');
+                        },
                       ),
-                      onTap: () {
-                        Get.toNamed('/pointPage/true?id=$_userId');
-                      },
-                    ),
-                    ListTile(
-                      title: Text('마이페이지', style:
-                      TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.bold
-                      ),
-                      ),
-                      onTap: () {
-                        Get.toNamed('/proMyPage/$_isLogin?$_userType&&id=$_userId');
-                      },
-                    ),
-                    SizedBox(height: 100.0,),
-                  ],
-                ),
-              )
-              :
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: Text('받은 견적서', style:
-                      TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.bold
-                      ),
-                      ),
-                      onTap: () {
-                        Get.toNamed('/customerList/true?id=$user_id');
-                      },
-                    ),
-                    ListTile(
-                      title: Text('마이페이지', style:
-                      TextStyle(
-                          fontSize: 13.0,
-                          fontWeight: FontWeight.bold
-                      ),
-                      ),
-                      onTap: () {
-                        Get.toNamed('/customerMyPage/$_isLogin?user_type=$_userType&&id=$user_id');
-                      },
-                    ),
-                    SizedBox(height: 100.0,),
-                  ],
-                ),
-              ),
-
-              Row(
-                children: <Widget>[
-                  Spacer(),
-                  TextButton(
-                    child: Text('로그아웃'),
-                    onPressed: (){
-                      print('로그아웃');
-                      setState(() {
-                        _isLogin = 'false';
-                        _userId = 'null';
-                      });
-                    },
-                  )
-                ],
-              ),
-            ],
-          )
-              :
-          ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                      SizedBox(height: 100.0,),
+                    ],
+                  ),
+                )
+                    :
+                Container(
+                  child: Column(
                     children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          Spacer(),
-                          Text('로그인해주세요', style:
-                          TextStyle(
-                              fontSize: 18.0,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600
-                          ),
-                          ),
-                          SizedBox(height: 5.0,),
-                          Text('안녕하세요', style:
-                            TextStyle(
-                                fontSize: 13.0,
-                                color: Colors.grey,
-                            ),
-                          ),
-                        ],
+                      ListTile(
+                        title: Text('받은 견적서', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/customerList/true?id=$user_id');
+                        },
                       ),
+                      ListTile(
+                        title: Text('마이페이지', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/customerMyPage/$_isLogin?user_type=$_userType&&id=$user_id');
+                        },
+                      ),
+                      SizedBox(height: 100.0,),
                     ],
                   ),
                 ),
-              ),
-              Container(
-                  height: Get.height*0.4,
-                  child: Column(
+
+                Row(
+                  children: <Widget>[
+                    Spacer(),
+                    TextButton(
+                      child: Text('로그아웃'),
+                      onPressed: (){
+                        print('로그아웃');
+                        setState(() {
+                          _isLogin = 'false';
+                          _userId = 'null';
+                        });
+                      },
+                    )
+                  ],
+                ),
+              ],
+            )
+                :
+            ListView(
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Container(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
-                          child: Text('   로그인   ', style:
+                        Column(
+                          children: <Widget>[
+                            Spacer(),
+                            Text('로그인해주세요', style:
                             TextStyle(
-                              fontWeight: FontWeight.bold
+                                fontSize: 18.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600
                             ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue
-                          ),
-                          onPressed: (){
-                            Get.to(LoginPage());
-                          },
-                        )
-                      ]
-                  )
-              ),
-            ],
-          ),
-        )
+                            ),
+                            SizedBox(height: 5.0,),
+                            Text('안녕하세요', style:
+                            TextStyle(
+                              fontSize: 13.0,
+                              color: Colors.grey,
+                            ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                    height: Get.height*0.4,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          ElevatedButton(
+                            child: Text('   로그인   ', style:
+                            TextStyle(
+                                fontWeight: FontWeight.bold
+                            ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.blue
+                            ),
+                            onPressed: (){
+                              Get.to(LoginPage());
+                            },
+                          )
+                        ]
+                    )
+                ),
+              ],
+            ),
+          )
       ),
     );
   }

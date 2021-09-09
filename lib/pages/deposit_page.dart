@@ -79,7 +79,7 @@ class _DepositPageState extends State<DepositPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -94,31 +94,46 @@ class _DepositPageState extends State<DepositPage> {
                       ),
                       Container(
                         padding:const EdgeInsets.only(left:20),
-                        margin:const EdgeInsets.only(top:15),
-                        width: 350,
-                        height: 80,
+                        margin:const EdgeInsets.symmetric(vertical: 10.0),
+                        width: Get.width,
+                        height: 150,
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 0.5, color: Color(0xFF707070)), // 박스 테두리 만들기
+                          color: Color(0xFF38334f),
+                          border: Border.all(width: 3.0, color: Color(0xFF140a45)), // 박스 테두리 만들기
                           borderRadius: BorderRadius.circular(10), //박스 둥글게 만들기
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
+                            SizedBox(height: 20.0,),
                             Text(
-                              '계좌번호 (우리은행 / 한솔 컴퍼니)',
+                              '계좌번호 (우리은행 / 공간 인테리어)',
                               style: TextStyle(
-                                fontSize:16,
+                                fontSize:18,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
                             SizedBox(height:10),
                             Text(
-                              '1002-076-0170501',
+                              '1005-504-180971',
                               style: TextStyle(
                                 fontSize:16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
+                            Spacer(),
+                            Text(
+                              '입금 확인은 영업일 기준 최대 3시간이 소요됩니다.',
+                              style: TextStyle(
+                                  fontSize:14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            SizedBox(height:10),
                           ],
                         ),
                       ),
@@ -128,7 +143,7 @@ class _DepositPageState extends State<DepositPage> {
               ),
 
               Expanded(
-                  flex: 8,
+                  flex: 7,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,7 +158,7 @@ class _DepositPageState extends State<DepositPage> {
                       SizedBox(height: 15.0,),
                       Container(
                           width: Get.width,
-                          height: 400.0,
+                          height: Get.height*0.5,
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             itemCount: _pro_point.length,

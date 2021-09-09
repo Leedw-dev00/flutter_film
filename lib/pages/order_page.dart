@@ -15,7 +15,7 @@ class _OrderPageState extends State<OrderPage>{
   final _valueList1 = ["선택","아파트", "주택", "사무실", "상가", "기타"];
   final _valueList2 = ["선택", "제곱미터", "평형", "기타"];
   final _valueList3 = ["선택", "서울", "경기", "인천", "대전", "천안", "대구", "부산", "제주", "기타"];
-  final _valueList4 = ["선택", "기공(1~3년)", "준기공(3~7년)", "조공(7년 이상)",];
+  final _valueList4 = ["선택", "조공(3개월 ~ 2년 미만)", "준기공(2년~5년 미만)", "조공(3년 이상)",];
   var _selectedValue1 = '선택';
   var _selectedValue2 = '선택';
   var _selectedValue3 = '선택';

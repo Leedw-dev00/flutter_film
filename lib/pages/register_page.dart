@@ -29,15 +29,9 @@ class _RegisterPageState extends State<RegisterPage>{
   bool _ispwCheck = false;
   bool _ispwLength = false;
   bool _isOverlap = true;
-  final _valueList4 = ["선택", "기공(1~3년)", "준기공(3~7년)", "조공(7년 이상)",];
+  final _valueList4 = ["선택", "조공(3개월 ~ 2년 미만)", "준기공(2년~5년 미만)", "조공(3년 이상)",];
   var _selectedValue4 = '선택';
   List<User_Check> _user_check;
-
-  //firebase auth
-  bool authOk = false;
-  bool requestedAuth = false;
-  String verificationId;
-  bool showLoading = false;
 
   @override
   void initState(){
@@ -60,49 +54,7 @@ class _RegisterPageState extends State<RegisterPage>{
   }
 
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async{
-    setState(() {
-      showLoading = false;
-    });
-    try {
-      final authCredential = await _auth.signInWithCredential(phoneAuthCredential);
-      setState(() {
-        showLoading = false;
-      });
-      if(authCredential?.user != null){
-        setState(() {
-          print("인증완료 및 로그인성공");
-          authOk=true;
-          requestedAuth=false;
-        });
-        await _auth.currentUser.delete();
-        print("auth정보삭제");
-        _auth.signOut();
-        print("phone로그인된것 로그아웃");
-      }
 
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        print("인증실패..로그인실패");
-        showLoading = false;
-      });
-
-      await Get.snackbar(
-        "error",
-        e.message
-      );
-
-      // await Fluttertoast.showToast(
-      //     msg: e.message,
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     timeInSecForIosWeb: 1,
-      //     backgroundColor: Colors.red,
-      //     fontSize: 16.0
-      // );
-
-    }
-  }
 
 
   _selectDate(BuildContext context) async {
@@ -128,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage>{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
         ProUser_Data.addProUser(idController.text, pwController.text, _selectedValue4, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
-        Get.toNamed('/registerProfilePage/true?id=${idController.text}');
+        Get.offNamed('/registerProfilePage/true?id=${idController.text}');
         });
         return;
       }else{
@@ -370,7 +322,6 @@ class _RegisterPageState extends State<RegisterPage>{
                     child: TextField(
                       controller: phoneController,
                       cursorHeight: 20.0,
-                      enabled: authOk?false:true,
                       style: TextStyle(
                           fontSize: 13.0, height: 0.5
                       ),
@@ -403,82 +354,6 @@ class _RegisterPageState extends State<RegisterPage>{
                   )
                 ],
               ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-              authOk?ElevatedButton(
-                  child:Text("인증완료")
-              ):
-                  phoneController.text.length >= 0
-              ?
-              ElevatedButton(
-                  onPressed: ()async{
-                    setState(() {
-                      showLoading = true;
-                    });
-                    await _auth.verifyPhoneNumber(
-                      timeout: const Duration(seconds: 60),
-                      codeAutoRetrievalTimeout: (String verificationId) {
-                        // Auto-resolution timed out...
-                      },
-                      phoneNumber: "+821044785303",
-                      verificationCompleted: (phoneAuthCredential) async {
-                        print("otp 문자옴");
-                      },
-                      verificationFailed: (verificationFailed) async {
-                        print(verificationFailed.code);
-
-                        print("코드발송실패");
-                        setState(() {
-                          showLoading = false;
-                        });
-                      },
-                      codeSent: (verificationId, resendingToken) async {
-                        print("코드보냄");
-                        Get.snackbar(
-                            'Success',
-                            '010-4478-5303으로 인증코드를 발송하였습니다'
-                        );
-
-                        setState(() {
-                          requestedAuth=true;
-                          showLoading = false;
-                          this.verificationId = verificationId;
-                        });
-                      },
-                    );
-
-                  },
-                  child:Text("인증요청")
-              )
-              :ElevatedButton(
-              child:Text("인증요청")
-              ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
               SizedBox(height: 8.0,),
               Row(
                 children: <Widget>[

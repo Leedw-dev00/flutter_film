@@ -45,7 +45,8 @@ class _CarouselAdState extends State<CarouselAd>{
   Widget build(BuildContext context){
     Widget imageSliders = new Container(
       height: 120.0,
-      child: Column(
+      child: _isLoading?
+      Column(
         children: <Widget>[
           CarouselSlider(
             options: CarouselOptions(
@@ -74,32 +75,6 @@ class _CarouselAdState extends State<CarouselAd>{
                                   print('Ad No: ${item.banner_id} Selected');
                                 },
                               ),
-                              // Positioned(
-                              //   bottom: 0.0,
-                              //   left: 0.0,
-                              //   right: 0.0,
-                              //   child: Container(
-                              //     decoration: BoxDecoration(
-                              //       gradient: LinearGradient(
-                              //         colors: [
-                              //           Color.fromARGB(200, 0, 0, 0),
-                              //           Color.fromARGB(220, 0, 0, 0)
-                              //         ],
-                              //         begin: Alignment.bottomCenter,
-                              //         end: Alignment.topCenter,
-                              //       ),
-                              //     ),
-                              //     padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                              //     child: Text(
-                              //       item.main_text,
-                              //       style: TextStyle(
-                              //         color: Colors.pink,
-                              //         fontSize: 15.0,
-                              //         fontWeight: FontWeight.bold,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
                         )
@@ -128,7 +103,7 @@ class _CarouselAdState extends State<CarouselAd>{
             })?.toList() ?? [],
           )
         ],
-      ),
+      ):Container(child: Text(''),),
     );
     return Container(
       child: Column(

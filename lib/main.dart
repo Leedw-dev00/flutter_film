@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_film/pages/ad_page.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
@@ -121,6 +122,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name:'/sms/:param',
           page: () => SmsPage(),
+        ),
+        GetPage(
+          name:'/ad/:param',
+          page: () => AdPage(),
         ),
 
 

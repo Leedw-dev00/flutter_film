@@ -43,7 +43,7 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
         backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 0.0,
-        title: Text('${Get.arguments} 프로필 등록', style:
+        title: Text('$pro_id 프로필 등록', style:
         TextStyle(
           color: Colors.black,
           fontSize: 16.0,
@@ -65,17 +65,13 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
                 color: Colors.white,
                 child: Column(
                   children: <Widget>[
+                    SizedBox(height: 15.0,),
                     CircleAvatar(
                       backgroundImage: AssetImage('assets/images/defaultImage.png'),
                       backgroundColor: Colors.white,
                       radius: 60.0,
                     ),
-                    TextButton(
-                      child: Text('프로필 등록 및 변경'),
-                      onPressed: (){
-                        print('프로필 설정');
-                      },
-                    ),
+                    SizedBox(height: 15.0,),
                   ],
                 ),
               ),
@@ -194,35 +190,16 @@ class _RegisterProfilePageState extends State<RegisterProfilePage>{
                         ),
                       ),
                     ),
-                    Text('작업 사진 등록(최대 5장)', style:
+                    Text('프로필사진 변경 및 포트폴리오 등록은 로그인 후 설정 페이지에서 이용할 수 있습니다', style:
                       TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                           fontSize: 14.0
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 15.0,),
-                    Container(
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          width: 80.0,
-                          height: 80.0,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10.0),
-                            border: Border.all(width: 0.5, color: Color(0xFFd1d1d1),),
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.camera_alt_outlined, color: Color(0xFFd1d1d1),),
-                            onPressed: (){
-                              _addProfile();
-                              print('image 등록');
-                            },
-                          ),
-                        ),
-                      ),
-                    )
+
                   ],
                 ),
               ),
