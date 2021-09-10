@@ -14,8 +14,8 @@ class _OrderPageState extends State<OrderPage>{
   DateTime _selectedDate = DateTime.now();
   final _valueList1 = ["선택","아파트", "주택", "사무실", "상가", "기타"];
   final _valueList2 = ["선택", "제곱미터", "평형", "기타"];
-  final _valueList3 = ["선택", "서울", "경기", "인천", "대전", "천안", "대구", "부산", "제주", "기타"];
-  final _valueList4 = ["선택", "조공(3개월 ~ 2년 미만)", "준기공(2년~5년 미만)", "조공(3년 이상)",];
+  final _valueList3 = ["선택","서울", "경기", "인천", "부산", "대구", "광주", "대전", "울산", "세종", "강원", "경남", "경북", "전남", "전북", "충남", "충북", "제주"];
+  final _valueList4 = ["선택", "조공(3개월 ~ 2년 미만)", "준기공(2년~5년 미만)", "조공(3년 이상)", "실장", "팀장"];
   var _selectedValue1 = '선택';
   var _selectedValue2 = '선택';
   var _selectedValue3 = '선택';
@@ -424,20 +424,22 @@ class _OrderPageState extends State<OrderPage>{
                     ),
                     SizedBox(height: 15.0,),
                     Container(
-                      height: 80.0,
+                      height: 100.0,
                       child: TextField(
                         controller: detailController,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         cursorHeight: 20.0,
                         style: TextStyle(
-                            fontSize: 13.0, height: 1.0
+                            fontSize: 13.0, height: 1.0, color: Colors.black
                         ),
                         decoration: InputDecoration(
+
+
                           fillColor: Colors.white,
                           filled: true,
-                          labelText: '1. 도어(방문 / 욕실 / 창고)\n2. 샤시창(거실 / 안방 / 작은방 / 기타)\n3. 몰딩(가구 / 기타)\n4. 싱크대(싱크대 상하부장, 냉장고 장, 기타)\n',
-                          labelStyle: TextStyle(fontSize: 11.0),
+                          hintText: '1. 도어(방문 / 욕실 / 창고)\n2. 샤시창(거실 / 안방 / 작은방 / 기타)\n3. 몰딩(가구 / 기타)\n4. 싱크대(싱크대 상하부장, 냉장고 장, 기타)\n',
+                          hintStyle: TextStyle(fontSize: 11.0),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xFF636363), width: 0.5),
                           ),

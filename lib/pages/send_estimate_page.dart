@@ -33,7 +33,7 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     user_id = Get.parameters['user_id'];
     order_date = Get.parameters['order_date'];
     pro_id = Get.parameters['pro_id'];
-    order_id = '$user_id${order_date.split(' ')[0]}';
+    order_id = '$user_id${order_date}';
     estimateController = TextEditingController();
     _getSelectEstimate();
     _isLoading = false;

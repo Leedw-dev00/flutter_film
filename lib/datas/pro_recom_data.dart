@@ -6,10 +6,11 @@ class ProUser_Data{
   static const ROOT = 'https://d-grab.co.kr/pro_recom.php';
   static const _GET_PRO_RECOM = 'PRO_RECOM';
 
-  static Future<List<Pro_User>> getProRecom() async {
+  static Future<List<Pro_User>> getProRecom(String area) async {
     try{
       var map = Map<String, dynamic>();
       map['action'] = _GET_PRO_RECOM;
+      map['area'] = area;
       final response = await http.post(Uri.parse(ROOT), body: map);
       print('getProRecom Response: ${response.body}');
       if(200 == response.statusCode){

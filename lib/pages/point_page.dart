@@ -93,6 +93,7 @@ class _PointPageState extends State<PointPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: 50.0,),
               _isLoading
                   ?
               Text(
@@ -103,7 +104,15 @@ class _PointPageState extends State<PointPage> {
                   color: Color(0xFF398FE2),
                 ),
               )
-                  :CircularProgressIndicator(),
+                  :
+              Text(
+                '보유 포인트 : 0',
+                style:TextStyle(
+                  fontSize:20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF398FE2),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top:30,),
                 child: Column(

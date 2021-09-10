@@ -8,10 +8,10 @@ import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/pro_recom_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
-import 'package:flutter_film/pages/noti_page.dart';
 import 'package:flutter_film/widgets/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:select_form_field/select_form_field.dart';
 
 
 
@@ -33,6 +33,22 @@ class _MainPageState extends State<MainPage>{
   bool _isCS;
   List<User_Check> _pro_profile;
   String skill;
+  String selected = '서울';
+
+  final List<Map<String, dynamic>> _items = [
+    {
+      'value': '서울',
+      'label': '서울',
+    },
+    {
+      'value': '경기',
+      'label': '경기',
+    },
+    {
+      'value': '인천',
+      'label': '인천',
+    },
+  ];
 
   @override
   void dispose(){
@@ -83,7 +99,7 @@ class _MainPageState extends State<MainPage>{
 
   //전문가 추천
   _getProRecom(){
-    ProUser_Data.getProRecom().then((proUser){
+    ProUser_Data.getProRecom(selected).then((proUser){
       setState(() {
         _proUser = proUser;
       });
@@ -277,12 +293,37 @@ class _MainPageState extends State<MainPage>{
                       height: 3.0,
                       color: Color(0xFF398FE2),
                     ),
-                    Text('전문가 추천', style:
-                    TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13.0
-                    ),
-                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('전문가 추천', style:
+                        TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.0
+                        ),
+                        ),
+                        SizedBox(
+                          height: 40.0,
+                          width: 70.0,
+                          child: SelectFormField(
+                            type: SelectFormFieldType.dropdown, // or can be dialog
+                            initialValue: '서울',
+                            style: TextStyle(fontSize: 12.0),
+                            items: _items,
+                            onChanged: (val)
+                              {
+                                setState(() {
+                                  selected = val;
+                                });
+                                _getProRecom();
+                                print('asd : $selected');
+                              },
+                            //onSaved: (val) => print(val),
+                          ),
+                        )
+
+                      ],
+                    )
                   ],
                 ),
               ),
@@ -324,12 +365,6 @@ class _MainPageState extends State<MainPage>{
                                     children: <Widget>[
                                       Text('${_proUser[index].skill}', style: TextStyle(fontSize: 10.0,),),
                                       Text('${_proUser[index].com_name}', style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.w700),),
-                                      Row(
-                                        children: <Widget>[
-                                          Icon(Icons.star, color: Color(0xFFFEC107), size: 13.0,),
-                                          Text('4.7', style: TextStyle(fontSize: 12.0),)
-                                        ],
-                                      ),
                                     ],
                                   ),
                                   Spacer(),
@@ -337,8 +372,8 @@ class _MainPageState extends State<MainPage>{
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: <Widget>[
-                                      Text('[실크벽지]', style: TextStyle(fontSize: 10.0),),
-                                      Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
+                                      Text('[전문가 인증]', style: TextStyle(fontSize: 10.0, color: Colors.grey),),
+                                      //Text('친환경 벽지 시공전문', style: TextStyle(fontSize: 11.0, fontWeight: FontWeight.w500),)
                                     ],
                                   ),
                                 ],
@@ -438,9 +473,7 @@ class _MainPageState extends State<MainPage>{
                 ),
               )
                   :Container(child: Text(''),),
-              SizedBox(height: 80.0,),
-              Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 13.0),),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 150.0,),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 width: Get.width,
@@ -450,18 +483,20 @@ class _MainPageState extends State<MainPage>{
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text('사업자 정보', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 17.0),),
+                    Text('사업자 정보', style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 16.0),),
                     SizedBox(height: 15.0,),
-                    Text('상호 : 공간 인테리어', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
-                    Text('대표 : 김진도', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
-                    Text('주소 : 서울특별시 구로구 경인로 89, 2', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
-                    Text('사업자등록번호 : 133-11-85339', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
-                    Text('통신판매번호 : ', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('상호 : 공간 인테리어', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('대표 : 김진도', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('주소 : 서울특별시 구로구 경인로 89, 2', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('사업자등록번호 : 133-11-85339', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('통신판매번호 : ', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     SizedBox(height: 10.0,),
-                    Text('펙스:02-2625-3878 / 고객문의 대표 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
-                    Text('이메일 : gowjr0771@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    Text('펙스:02-2625-3878 / 고객문의 대표 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('이메일 : gowjr0771@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    SizedBox(height: 20.0,),
+                    Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 12.0),),
                     SizedBox(height: 10.0,),
-                    Text('호스팅 서비스 사업자 : Cafe24 주식회사', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 15.0),),
+                    //Text('호스팅 서비스 사업자 : Cafe24 주식회사', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 11.0),),
 
 
                   ],

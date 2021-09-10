@@ -112,7 +112,7 @@ class _OrderListPageState extends State<OrderListPage>{
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('No.${_selectOrder[index].user_id}${_selectOrder[index].order_date.split(' ')[0]}', style:
+                          Text('No.${_selectOrder[index].user_id}${_selectOrder[index].order_date}', style:
                             TextStyle(
                               fontSize: 13.0,
                               color: Colors.grey,
