@@ -33,6 +33,7 @@ class _MatchingPageState extends State<MatchingPage>{
     order_date = Get.parameters['date'];
     _isFin = Get.parameters['_isFin'];
     order_id = '${user_id}${order_date}';
+    print(order_id);
     _prolist = [];
     _isLoading = false;
     _getProList();

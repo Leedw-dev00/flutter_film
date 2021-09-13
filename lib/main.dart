@@ -3,6 +3,7 @@ import 'package:flutter_film/pages/ad_page.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
+import 'package:flutter_film/pages/notice_page.dart';
 import 'package:flutter_film/pages/orderList_Customer_page.dart';
 import 'package:flutter_film/pages/profileP_edit_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
@@ -127,6 +128,10 @@ class MyApp extends StatelessWidget {
           name:'/ad/:param',
           page: () => AdPage(),
         ),
+        GetPage(
+          name:'/notice/:param',
+          page: () => NoticePage(),
+        ),
 
 
       ]
@@ -147,8 +152,8 @@ class _SplashPageState extends State<SplashPage>{
       backgroundColor: Colors.white,
       body: SplashScreenView(
         home: MainPage(),
-        duration: 5000,
-        imageSize: 50,
+        duration: 3000,
+        imageSize: 70,
         imageSrc: 'assets/images/logo.gif',
         backgroundColor: Colors.white,
       )

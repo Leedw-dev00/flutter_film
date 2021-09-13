@@ -13,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:select_form_field/select_form_field.dart';
 
+import 'notice_page.dart';
+
 
 
 
@@ -160,18 +162,6 @@ class _MainPageState extends State<MainPage>{
         centerTitle: true,
         elevation: 0.0,
         title: Image.asset('assets/images/logo_maini.png', width: 150.0, fit: BoxFit.cover,),
-        // actions: [
-        //   IconButton(
-        //       icon: Icon(Icons.notifications_none_sharp, color: Colors.grey, size: 25.0,),
-        //       onPressed: (){
-        //         Get.to(NotiPage());
-        //         // Navigator.push(
-        //         //   context,
-        //         //   MaterialPageRoute(builder: (context) => NotiPage())
-        //         // );
-        //       }
-        //   )
-        // ],
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -233,15 +223,22 @@ class _MainPageState extends State<MainPage>{
                             ),
 
                             Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
-                            TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.black54,
-                                fontWeight: FontWeight.w700
+                              TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w700
+                              ),
                             ),
+                            Text('(3명 이상의 시공자가 바로 견적 보내드립니다)', textAlign: TextAlign.center,  style:
+                              TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w700
+                              ),
                             ),
                             SizedBox(height: 25.0,),
                             ButtonTheme(
-                              minWidth: 120,
+                              minWidth: Get.width*0.4,
                               height: 35.0,
                               child: RaisedButton(
                                   color: Color(0xFF398FE2),
@@ -250,7 +247,7 @@ class _MainPageState extends State<MainPage>{
                                   ),
                                   child: Text('견적요청', style:
                                   TextStyle(
-                                      fontSize: 14.0,
+                                      fontSize: 15.0,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold
                                   ),
@@ -259,12 +256,12 @@ class _MainPageState extends State<MainPage>{
                                     print('비교견적');
                                     if(_isLogin == 'true'){
                                       if(_userType == 'pro'){
-                                        Get.snackbar('Error', '고객 아이디로 로그인해주세요');
+                                        Get.snackbar('Error', '전문가는 견적요청을 할 수 없습니다\n고객 전환 후 이용해주세요');
                                       }else{
                                         Get.toNamed("/order/true?id=${user_id}&&type=com");
                                       }
                                     }else{
-                                      Get.snackbar('로그인 실패', '로그인 후 이용해주세요');
+                                      Get.to(LoginPage());
                                     }
                                   }
                               ),
@@ -296,7 +293,7 @@ class _MainPageState extends State<MainPage>{
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text('전문가 추천', style:
+                        Text('전문가 추천 (시공사전예약)', style:
                         TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 13.0
@@ -477,7 +474,7 @@ class _MainPageState extends State<MainPage>{
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 width: Get.width,
-                height: 300,
+                height: Get.height*0.4,
                 color: Color(0xFFf0f0f0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -491,8 +488,9 @@ class _MainPageState extends State<MainPage>{
                     Text('사업자등록번호 : 133-11-85339', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     Text('통신판매번호 : ', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     SizedBox(height: 10.0,),
-                    Text('펙스:02-2625-3878 / 고객문의 대표 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
-                    Text('이메일 : gowjr0771@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('고객문의 대표전화 : 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('펙스 : 02-2625-3878', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('이메일 : apt9785@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     SizedBox(height: 20.0,),
                     Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 12.0),),
                     SizedBox(height: 10.0,),
@@ -563,10 +561,10 @@ class _MainPageState extends State<MainPage>{
                             ),
                             SizedBox(height: 5.0,),
                             Text('안녕하세요', style:
-                            TextStyle(
-                              fontSize: 13.0,
-                              color: Colors.grey,
-                            ),
+                              TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.grey,
+                              ),
                             ),
                             Spacer(),
                           ],
@@ -689,11 +687,12 @@ class _MainPageState extends State<MainPage>{
                             ),
                             ),
                             SizedBox(height: 5.0,),
-                            Text('안녕하세요', style:
-                            TextStyle(
-                              fontSize: 13.0,
-                              color: Colors.grey,
-                            ),
+                            Text('안녕하세요\n신뢰와 믿음 안전을 위한 간편 로그인', style:
+                              TextStyle(
+                                fontSize: 13.0,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         ),
@@ -702,11 +701,12 @@ class _MainPageState extends State<MainPage>{
                   ),
                 ),
                 Container(
-                    height: Get.height*0.4,
+                    height: Get.height*0.65,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
+                          SizedBox(height: Get.height*0.15),
                           ElevatedButton(
                             child: Text('   로그인   ', style:
                             TextStyle(
@@ -719,7 +719,34 @@ class _MainPageState extends State<MainPage>{
                             onPressed: (){
                               Get.to(LoginPage());
                             },
-                          )
+                          ),
+                          Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              TextButton(
+                                onPressed: (){
+                                  Get.toNamed('/notice/true?sub=이용방법');
+                                },
+                                child: Text('이용방법', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                              ),
+                              Text('|', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                              TextButton(
+                                onPressed: (){
+                                  Get.toNamed('/notice/true?sub=개인정보이용방침');
+                                },
+                                child: Text('개인정보이용방침', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                              ),
+                              Text('|', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                              TextButton(
+                                onPressed: (){
+                                  Get.toNamed('/notice/true?sub=이용약관');
+                                },
+                                child: Text('이용약관', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 30.0,)
                         ]
                     )
                 ),
