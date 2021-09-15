@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_film/datas/register_Pro_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';

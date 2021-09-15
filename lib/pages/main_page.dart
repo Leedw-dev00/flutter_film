@@ -486,7 +486,8 @@ class _MainPageState extends State<MainPage>{
                     Text('대표 : 김진도', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     Text('주소 : 서울특별시 구로구 경인로 89, 2', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     Text('사업자등록번호 : 133-11-85339', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
-                    Text('통신판매번호 : ', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('통신판매업 : 2021-서울구로-2289', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
+                    Text('호스팅사업자 : 주식화사Cafe24', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     SizedBox(height: 10.0,),
                     Text('고객문의 대표전화 : 02-2625-3868', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     Text('펙스 : 02-2625-3878', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
@@ -495,8 +496,6 @@ class _MainPageState extends State<MainPage>{
                     Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 12.0),),
                     SizedBox(height: 10.0,),
                     //Text('호스팅 서비스 사업자 : Cafe24 주식회사', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 11.0),),
-
-
                   ],
                 )
               )
@@ -576,6 +575,7 @@ class _MainPageState extends State<MainPage>{
                 _userType == 'pro'
                     ?
                 Container(
+                  height: Get.height*0.5,
                   child: Column(
                     children: <Widget>[
                       ListTile(
@@ -659,6 +659,31 @@ class _MainPageState extends State<MainPage>{
                         });
                       },
                     )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: (){
+                        Get.toNamed('/notice/true?sub=이용방법');
+                      },
+                      child: Text('이용방법', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                    ),
+                    Text('|', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                    TextButton(
+                      onPressed: (){
+                        Get.toNamed('/notice/true?sub=개인정보이용방침');
+                      },
+                      child: Text('개인정보이용방침', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                    ),
+                    Text('|', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                    TextButton(
+                      onPressed: (){
+                        Get.toNamed('/notice/true?sub=이용약관');
+                      },
+                      child: Text('이용약관', style: TextStyle(fontSize: 13.0, color: Colors.grey),),
+                    ),
                   ],
                 ),
               ],

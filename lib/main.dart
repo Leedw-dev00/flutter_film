@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/ad_page.dart';
+import 'package:flutter_film/pages/agree_apge.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
@@ -131,6 +132,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name:'/notice/:param',
           page: () => NoticePage(),
+        ),
+        GetPage(
+          name:'/agree/:param',
+          page: () => AgreePage(),
         ),
 
 

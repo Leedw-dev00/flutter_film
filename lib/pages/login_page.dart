@@ -3,6 +3,7 @@ import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
 import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
+import 'package:flutter_film/pages/agree_apge.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:flutter_film/pages/register_page.dart';
 import 'package:get/get.dart';
@@ -30,13 +31,13 @@ class _LoginPageState extends State<LoginPage>{
 
   @override
   void initState(){
+    super.initState();
     _initKakaoTalkInstalled();
     _isLogin = false;
     _user_login = [];
     idController = TextEditingController();
     pwController = TextEditingController();
     //_getLogin();
-    super.initState();
   }
 
 
@@ -49,20 +50,31 @@ class _LoginPageState extends State<LoginPage>{
     });
   }
 
-  _issueAccessToken(String authCode) async {
-    try {
-      var token = await AuthApi.instance.issueAccessToken(authCode);
-      AccessTokenStore.instance.toStore(token);
+  _issueAccessToken() async {
+    var token = await TokenManager.instance.getToken();
+    debugPrint(token.toString());
+    if (token.refreshToken == null) {
+      Get.toNamed('/main/false');
+    } else {
       Get.toNamed('/main/true?type=customer');
-    } catch (e) {
-      print("error on issuing access token: $e");
     }
   }
+
+  // _issueAccessToken(String authCode) async {
+  //   try {
+  //     var token = await AuthApi.instance.issueAccessToken(authCode);
+  //     TokenManager.instance.toStore(token);
+  //     Get.toNamed('/main/true?type=customer');
+  //   } catch (e) {
+  //     print("error on issuing access token: $e");
+  //   }
+  // }
 
   _loginWithKakao() async {
     try {
       var code = await AuthCodeClient.instance.request();
-      await _issueAccessToken(code);
+      await _issueAccessToken();
+      // await _issueAccessToken(code);
     } catch (e) {
       print(e);
     }
@@ -71,7 +83,8 @@ class _LoginPageState extends State<LoginPage>{
   _loginWithTalk() async{
     try{
       var code = await AuthCodeClient.instance.requestWithTalk();
-      await _issueAccessToken(code);
+      await _issueAccessToken();
+      // await _issueAccessToken(code);
     }catch(e){
       print(e.toString());
     }
@@ -437,7 +450,8 @@ class _LoginPageState extends State<LoginPage>{
                             ),
                             ),
                             onPressed: (){
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                              //Get.to(RegisterPage());
+                              Get.to(AgreePage());
                               print('회원가입');
                             },
                           ),
