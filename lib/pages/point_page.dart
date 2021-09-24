@@ -1,8 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/pro_point_data.dart';
 import 'package:flutter_film/datas/register_pointinfo_data.dart';
+import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/pro_point_model.dart';
+import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:get/get.dart';
+/* 아임포트 결제 모듈을 불러옵니다. */
+import 'package:iamport_flutter/iamport_payment.dart';
+/* 아임포트 결제 데이터 모델을 불러옵니다. */
+import 'package:iamport_flutter/model/payment_data.dart';
 
 
 class PointPage extends StatefulWidget {
@@ -21,6 +29,7 @@ class _PointPageState extends State<PointPage> {
   int _selectedValue;
   bool _isLoading;
   List<Pro_Point> _pro_point;
+  List<User_Check> _user_info;
 
 
   @override
@@ -30,11 +39,13 @@ class _PointPageState extends State<PointPage> {
 
   @override
   void initState(){
-    _isLoading = false;
-    _pro_point = [];
-    _userId = Get.parameters['id'];
-    _getProPoint();
     super.initState();
+    _isLoading = false;
+    _userId = Get.parameters['id'];
+    _pro_point = [];
+    _user_info = [];
+    _getProPoint();
+    _getUserInfo();
   }
 
   _getProPoint(){
@@ -52,21 +63,29 @@ class _PointPageState extends State<PointPage> {
     });
   }
 
-  _addPointInfo(){
-    Register_PointInfo.addPointInfo(_userId, '$_selectedValue', '포인트 충전').then((result){
-      if(result == 'success'){
-        print('addpointInfo success');
-        Get.offNamed('/deposit/:true?pro_id=$_userId');
+  _getUserInfo(){
+    UserCheck_Data.getUserCheck(_userId).then((user_info){
+      setState(() {
+        _user_info = user_info;
+      });
+      if(user_info.length == 0){
+        setState(() {
+          _isLoading = false;
+        });
       }else{
-        print('addpointInfo fail');
+        setState(() {
+          _isLoading = true;
+        });
       }
     });
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: true,
@@ -85,6 +104,7 @@ class _PointPageState extends State<PointPage> {
         ),
       ),
       backgroundColor: Color(0xFFF0F0F0),
+      resizeToAvoidBottomInset : false,
       body:SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
@@ -293,29 +313,395 @@ class _PointPageState extends State<PointPage> {
               ),
               SizedBox(height:30,),
               SizedBox(
-                  width: 200.0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0,),
-                    child: ElevatedButton(
-                        child:Text('충전하기', style:
-                          TextStyle(
-                            fontWeight: FontWeight.bold
-                          ),
+                width: 200.0,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0,),
+                  child: ElevatedButton(
+                      child:Text('충전하기', style:
+                        TextStyle(
+                          fontWeight: FontWeight.bold
                         ),
-                        onPressed: (){
-                          if(_is5000 || _is10000 || _is30000 || _is50000){
-                            _addPointInfo();
-                          }else{
-                            Get.defaultDialog(title: 'Note', titleStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold), middleText: '충전할 포인트를 선택하세요');
-                          }
+                      ),
+                      onPressed: (){
+                        if(_is5000 || _is10000 || _is30000 || _is50000){
+                          // _addPointInfo();
+                          Get.defaultDialog(
+
+                            title: '결제하기',
+                            titleStyle: TextStyle(
+                              fontSize: 13.0,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold
+                            ),
+                            content: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                                width: Get.width*0.9,
+                                height: Get.height*0.5,
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.redAccent
+                                              ),
+                                              child: Center(
+                                                child: Text('결제일', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Text(DateTime.now().toString().substring(0, DateTime.now().toString().lastIndexOf(" ")), style:
+                                                TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.redAccent
+                                              ),
+                                              child: Center(
+                                                child: Text('금액', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Text('$_selectedValue 원', style:
+                                                TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.redAccent
+                                              ),
+                                              child: Center(
+                                                child: Text('사용자', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Text('$_userId', style:
+                                                TextStyle(
+                                                  fontSize: 15.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.redAccent
+                                              ),
+                                              child: Center(
+                                                child: Text('전화번호', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.white
+                                              ),
+                                              child: Center(
+                                                  child: Text('${_user_info[0].phone_number}', style:
+                                              TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.grey,
+                                              ),
+                                              ),
+                                              )
+                                          ),
+                                        )
+
+                                      ],
+                                    ),
+                                    SizedBox(height: 5.0,),
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          flex: 2,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.redAccent
+                                              ),
+                                              child: Center(
+                                                child: Text('이메일', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        ),
+                                        SizedBox(width: 5.0,),
+                                        Expanded(
+                                          flex: 5,
+                                          child: Container(
+                                              width: 100.0,
+                                              height: 35.0,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
+                                                  color: Colors.white
+                                              ),
+                                              child: Center(
+                                                child: Text('${_user_info[0].user_email}', style:
+                                                TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.grey,
+                                                ),
+                                                ),
+                                              )
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(height: 50.0,),
+                                    ElevatedButton(
+                                      child:Text('충전하기', style:
+                                        TextStyle(
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      onPressed: (){
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) => Payment(
+                                                    pay: _selectedValue,
+                                                    users: Users(
+                                                      userId: _userId,
+                                                      userPH: _user_info[0].phone_number,
+                                                      userEM: _user_info[0].user_email,
+                                                    )
+                                                )
+                                            )
+                                        );
+                                      }
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          );
+                        }else{
+                          Get.defaultDialog(title: 'Note', titleStyle: TextStyle(color: Colors.red, fontWeight: FontWeight.bold), middleText: '충전할 포인트를 선택하세요');
                         }
-                    ),
-                  )
+                      }
+                  ),
+                )
+              ),
+              TextButton(
+                onPressed: (){
+                  Get.toNamed('/notice/true?sub=이용약관');
+                },
+                child: Text('이용약관', style:
+                  TextStyle(
+                    color: Colors.grey
+                  ),
+                )
               )
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class Users{
+  String userId;
+  String userPH;
+  String userEM;
+
+  Users({this.userId, this.userPH, this.userEM});
+}
+
+class Payment extends StatelessWidget {
+
+  Payment({@required this.pay, @required this.users});
+  int pay;
+  Users users;
+
+  _addPointInfo(){
+    Register_PointInfo.addPointInfo(users.userId, this.pay.toString(), '포인트 충전').then((result){
+      if(result == 'success'){
+        print('addpointInfo success');
+        //Get.offNamed('/deposit/:true?pro_id=$_userId');
+      }else{
+        print('addpointInfo fail');
+      }
+    });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return IamportPayment(
+      appBar: new AppBar(
+        title: new Text('결제하기'),
+      ),
+      initialChild: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                child: Text('잠시만 기다려 주세요'),
+              ),
+            ],
+          )
+        )
+      ),
+      userCode: 'imp89727560',
+      data: PaymentData.fromJson({
+        'pg': 'html5_inicis',                                          // PG사
+        'payMethod': 'card',                                           // 결제수단
+        'name': '아임포트 결제데이터 분석',                                  // 주문명
+        'merchantUid': 'mid_${DateTime.now().millisecondsSinceEpoch}', // 주문번호
+        'amount': this.pay,                                               // 결제금액
+        'buyerName': users.userId,                                           // 구매자 이름
+        'buyerTel': users.userPH,                                     // 구매자 연락처
+        'buyerEmail': users.userEM,                             // 구매자 이메일
+        'buyerAddr': '서울시 송파구 오금로 40길 40 402',                         // 구매자 주소
+        'buyerPostcode': '05822',                                      // 구매자 우편번호
+        'appScheme': 'example',                                        // 앱 URL scheme
+        'display': {
+          'cardQuota' : [2,3]                                          //결제창 UI 내 할부개월수 제한
+        }
+      }),
+        callback: (Map<String, String> result) {
+          print('결과다결과');
+          print(result['imp_success']);
+          if(result['imp_success'] == "false"){
+            _addPointInfo();
+            Get.back();
+          }else{
+            Get.offNamed(
+              '/deposit/:true?pro_id=${users.userId}&&result=$result',
+            );
+          }
+
+
+        },
     );
   }
 }

@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage>{
 
   //전문가로그인
   _getLogin(){
-    Login_Data.getLogin(idController.text, pwController.text).then((user_login){
+    Login_Data.getLogin(idController.text.trim(), pwController.text.trim()).then((user_login){
       setState(() {
         _user_login = user_login;
       });
@@ -243,7 +243,7 @@ class _LoginPageState extends State<LoginPage>{
                                 width: Get.width,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10.0),
-                                  color: Color(0xFFe8f4ff),
+                                  color: Color(0xFFFFF2D4),
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -317,7 +317,8 @@ class _LoginPageState extends State<LoginPage>{
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
+                              SizedBox(height: 50.0,)
                             ],
                           )
                       )
@@ -426,6 +427,7 @@ class _LoginPageState extends State<LoginPage>{
                             ),
                             ),
                             onPressed: (){
+                              Get.toNamed('/searchidpw/true?content=ID');
                               print('아이디 찾기');
                             },
                           ),
@@ -438,6 +440,7 @@ class _LoginPageState extends State<LoginPage>{
                             ),
                             ),
                             onPressed: (){
+                              Get.toNamed('/searchidpw/true?content=비밀번호');
                               print('비밀번호 찾기');
                             },
                           ),

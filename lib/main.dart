@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/ad_page.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
+import 'package:flutter_film/pages/changephone_page.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_film/pages/orderList_Customer_page.dart';
 import 'package:flutter_film/pages/profileP_edit_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/rating_page.dart';
-import 'package:flutter_film/pages/registerC_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
 import 'package:flutter_film/pages/review_page.dart';
+import 'package:flutter_film/pages/search_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:flutter_film/pages/sms_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -85,10 +86,10 @@ class MyApp extends StatelessWidget {
           name:'/profilePage/:param',
           page: () => ProfilePage(),
         ),
-        GetPage(
-          name:'/registerCustomer/:param',
-          page: () => RegisterCPage(),
-        ),
+        // GetPage(
+        //   name:'/registerCustomer/:param',
+        //   page: () => RegisterCPage(),
+        // ),
         GetPage(
           name:'/orderList/:param',
           page: () => OrderListPage(),
@@ -137,6 +138,15 @@ class MyApp extends StatelessWidget {
           name:'/agree/:param',
           page: () => AgreePage(),
         ),
+        GetPage(
+          name:'/changeph/:param',
+          page: () => ChangePage(),
+        ),
+        GetPage(
+          name:'/searchidpw/:param',
+          page: () => SearchPage(),
+        ),
+
 
 
       ]

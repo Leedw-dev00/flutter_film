@@ -8,6 +8,7 @@ import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/pro_recom_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
+import 'package:flutter_film/pages/prolist_page.dart';
 import 'package:flutter_film/widgets/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
@@ -59,18 +60,19 @@ class _MainPageState extends State<MainPage>{
 
   @override
   void initState(){
+    super.initState();
     _initTexts();
     _isCS = true;
     _customerCheck = [];
     _proUser = [];
     _isLogin = Get.parameters['param'];
+    print('Is login = $_isLogin');
     _userId = Get.parameters['id'];
     _userType = Get.parameters['type'];
     _isLoading = false;
     _getProRecom();
     _ad = [];
     _getBanner();
-    super.initState();
   }
 
   //고객 회원가입 여부 조회
@@ -237,11 +239,43 @@ class _MainPageState extends State<MainPage>{
                               ),
                             ),
                             SizedBox(height: 25.0,),
+                            _userType == 'customer'
+                            ?
                             ButtonTheme(
                               minWidth: Get.width*0.4,
                               height: 35.0,
                               child: RaisedButton(
                                   color: Color(0xFF398FE2),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(3.0),
+                                  ),
+                                  child: Text('견적요청', style:
+                                  TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                  ),
+                                  onPressed: (){
+                                    print('비교견적');
+                                    if(_isLogin == 'true'){
+                                      if(_userType == 'pro'){
+                                        Get.snackbar('Error', '전문가는 견적요청을 할 수 없습니다\n고객 전환 후 이용해주세요');
+                                      }else{
+                                        Get.toNamed("/order/true?id=${user_id}&&type=com");
+                                      }
+                                    }else{
+                                      Get.to(LoginPage());
+                                    }
+                                  }
+                              ),
+                            )
+                            :
+                            ButtonTheme(
+                              minWidth: Get.width*0.4,
+                              height: 35.0,
+                              child: RaisedButton(
+                                  color: Color(0xFFe23963),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(3.0),
                                   ),
@@ -274,6 +308,12 @@ class _MainPageState extends State<MainPage>{
                 ),
               ),
               SizedBox(height: 20.0,),
+              CarouselAd().isNull?
+              SizedBox(
+                height: 10.0,
+                child: Text(""),
+              )
+              :
               SizedBox(
                 height: 120.0,
                 width: Get.width,
@@ -300,8 +340,8 @@ class _MainPageState extends State<MainPage>{
                         ),
                         ),
                         SizedBox(
-                          height: 40.0,
-                          width: 70.0,
+                          height: 50.0,
+                          width: 100.0,
                           child: SelectFormField(
                             type: SelectFormFieldType.dropdown, // or can be dialog
                             initialValue: '서울',
@@ -384,7 +424,17 @@ class _MainPageState extends State<MainPage>{
                 )
                     :Container(),
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 10.0),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  child: Text('전체보기'),
+                  onPressed: (){
+                    Get.to(ProListPage());
+                  },
+                ),
+              ),
+              SizedBox(height: 20.0),
               Container(
                 padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 20.0, bottom: 10.0),
                 child: Column(
@@ -474,7 +524,7 @@ class _MainPageState extends State<MainPage>{
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
                 width: Get.width,
-                height: Get.height*0.4,
+                height: Get.height*0.5,
                 color: Color(0xFFf0f0f0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -493,7 +543,7 @@ class _MainPageState extends State<MainPage>{
                     Text('펙스 : 02-2625-3878', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     Text('이메일 : apt9785@naver.com', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 14.0),),
                     SizedBox(height: 20.0,),
-                    Text('우리동네 필름반장에서는 통신판매중가자 역할로 인테리어 필름견적, 시공 당사자가 아니며, 시공 전문가가 제공하는 견적비용 및 공사 시공 서비스에 대해 일체 책임을 지지 않습니다.', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 12.0),),
+                    Text('우리동네필름반장에서는 통신판매중개자 역할로 인테리어필름견적, 시공당사자가 아니며, 시공전문가가 제공하는 견적비용 및 공사시공 서비스에대해 일체 책임을 지지 않습니다', textAlign: TextAlign.center, style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 12.0),),
                     SizedBox(height: 10.0,),
                     //Text('호스팅 서비스 사업자 : Cafe24 주식회사', style: TextStyle(color: Colors.black38, fontWeight: FontWeight.w600, fontSize: 11.0),),
                   ],

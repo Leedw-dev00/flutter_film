@@ -3,6 +3,8 @@ import 'package:flutter_film/datas/register_Pro_data.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:get/get.dart';
+import 'package:iamport_flutter/Iamport_certification.dart';
+import 'package:iamport_flutter/model/certification_data.dart';
 
 
 class RegisterPage extends StatefulWidget{
@@ -69,13 +71,13 @@ class _RegisterPageState extends State<RegisterPage>{
 
   //전문가 회원 회원가입
   _addProUser(){
-    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || emailController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty){
+    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || emailController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || _selectedValue1 == '선택' || _selectedValue2 == '선택'){
       Get.snackbar('회원가입 실패', '값이 입력되지 않았습니다.\n확인 후 회원가입을 완료해주세요');
       return;
     }else{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
-        ProUser_Data.addProUser(idController.text, pwController.text, _selectedValue4, emailController.text, phoneController.text, comNameController.text, comNoController.text, _selectedValue1, _selectedValue2, _selectedValue3).then((result){
+        ProUser_Data.addProUser(idController.text.trim(), pwController.text.trim(), _selectedValue4, emailController.text.trim(), phoneController.text.trim(), comNameController.text.trim(), comNoController.text.trim(), _selectedValue1, _selectedValue2, _selectedValue3).then((result){
         Get.offNamed('/registerProfilePage/true?id=${idController.text}');
         });
         return;
@@ -335,23 +337,29 @@ class _RegisterPageState extends State<RegisterPage>{
                       ),
                     ),
                     SizedBox(width: 5.0,),
-                    // Expanded(
-                    //   flex: 1,
-                    //   child: ElevatedButton(
-                    //     child: Text('전송', style:
-                    //       TextStyle(
-                    //         fontSize: 13.0
-                    //       ),
-                    //     ),
-                    //     style: ElevatedButton.styleFrom(
-                    //       primary: Color(0xFF398FE2)
-                    //     ),
-                    //     onPressed: (){
-                    //       // Navigator.push(context, MaterialPageRoute(builder: (context) => ))
-                    //       print('인증 번호 전송');
-                    //     },
-                    //   ),
-                    // )
+                    Expanded(
+                      flex: 1,
+                      child: ElevatedButton(
+                        child: Text('본인인증', style:
+                          TextStyle(
+                            fontSize: 13.0
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF398FE2)
+                        ),
+                        onPressed: (){
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => Certification(
+                                phone: phoneController.text
+                              )
+                            )
+                          );
+                          print('본인인증');
+                        },
+                      ),
+                    )
                   ],
                 ),
                 SizedBox(height: 8.0,),
@@ -542,4 +550,48 @@ class _RegisterPageState extends State<RegisterPage>{
   }
 }
 
+class Certification extends StatelessWidget {
+  String phone;
+  Certification({@required this.phone});
 
+  @override
+  Widget build(BuildContext context) {
+    return IamportCertification(
+      appBar: new AppBar(
+        title: new Text('아임포트 본인인증'),
+      ),
+      /* 웹뷰 로딩 컴포넌트 */
+      initialChild: Container(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                child: Text('잠시만 기다려주세요...', style: TextStyle(fontSize: 20.0)),
+              ),
+            ],
+          ),
+        ),
+      ),
+      /* [필수입력] 가맹점 식별코드 */
+      userCode: 'imp89727560',
+      /* [필수입력] 본인인증 데이터 */
+      data: CertificationData.fromJson({
+        'merchantUid': 'mid_${DateTime.now().millisecondsSinceEpoch}',  // 주문번호
+        'company': '아임포트',                                            // 회사명 또는 URL
+        'carrier': 'SKT',                                               // 통신사
+        'name': '홍길동',                                                 // 이름
+        'phone': '01012341234',                                         // 전화번호
+      }),
+      /* [필수입력] 콜백 함수 */
+      callback: (Map<String, String> result) {
+        Navigator.pushReplacementNamed(
+          context,
+          '/main',
+          arguments: result,
+        );
+      },
+    );
+  }
+}

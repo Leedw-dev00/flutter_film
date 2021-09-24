@@ -46,7 +46,7 @@ dependencies:
   path_provider: ^2.0.2
   path: ^1.8.0
   expandable:
-#  iamport_flutter: ^0.9.15
+  iamport_flutter: ^0.9.15
   telephony: ^0.1.4
   carousel_slider: ^4.0.0
   select_form_field: ^2.2.0

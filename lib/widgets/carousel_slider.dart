@@ -13,8 +13,8 @@ class _CarouselAdState extends State<CarouselAd>{
 
   List<Bbanner> _banner;
   bool _isLoading;
-  int _current = 0;
-  final CarouselController _controller = CarouselController();
+  // int _current = 0;
+  // final CarouselController _controller = CarouselController();
 
   @override
   void initState(){
@@ -54,13 +54,13 @@ class _CarouselAdState extends State<CarouselAd>{
                 autoPlay: false,
                 aspectRatio: 2.0,
                 enlargeCenterPage: true,
-                onPageChanged: (index, reason){
-                  setState(() {
-                    _current = index;
-                  });
-                }
+                // onPageChanged: (index, reason){
+                //   setState(() {
+                //     _current = index;
+                //   });
+                // }
             ),
-            carouselController: _controller,
+            // carouselController: _controller,
             items: _banner?.map((item) {
               return Builder(
                   builder: (BuildContext context) {
@@ -83,25 +83,25 @@ class _CarouselAdState extends State<CarouselAd>{
               );
             })?.toList() ?? [],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: _banner?.asMap()?.entries?.map((entry){
-              return GestureDetector(
-                onTap: () => _controller.animateToPage(entry.key),
-                child: Container(
-                  width: 8.0,
-                  height: 8.0,
-                  margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: (Theme.of(context).brightness == Brightness.dark
-                          ? Colors.grey
-                          : Colors.black54)
-                          .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-                ),
-              );
-            })?.toList() ?? [],
-          )
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: _banner?.asMap()?.entries?.map((entry){
+          //     return GestureDetector(
+          //       onTap: () => _controller.animateToPage(entry.key),
+          //       child: Container(
+          //         width: 8.0,
+          //         height: 8.0,
+          //         margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+          //         decoration: BoxDecoration(
+          //             shape: BoxShape.circle,
+          //             color: (Theme.of(context).brightness == Brightness.dark
+          //                 ? Colors.grey
+          //                 : Colors.black54)
+          //                 .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+          //       ),
+          //     );
+          //   })?.toList() ?? [],
+          // )
         ],
       ):Container(child: Text(''),),
     );

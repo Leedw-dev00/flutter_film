@@ -146,13 +146,20 @@ class _ProfilePageState extends State<ProfilePage>{
                               right:1,
                               //mainAxisAlignment: MainAxisAlignment.center,
                               child:
-                              IconButton(
-                                icon: Icon(Icons.camera_alt, size:30.0, color: Colors.black,),
-                                onPressed: (){
-                                  print('프로필 이미지 변경');
-                                  getImageGallery();
-                                },
+                              Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white
+                                ),
+                                child: IconButton(
+                                  icon: Icon(Icons.camera_alt, size:30.0, color: Colors.black,),
+                                  onPressed: (){
+                                    print('프로필 이미지 변경');
+                                    getImageGallery();
+                                  },
+                                ),
                               )
+
                           ),
                         ],
                       ),
@@ -249,6 +256,7 @@ class _ProfilePageState extends State<ProfilePage>{
                       TextButton(
                         child: Text('변경하기'),
                         onPressed: (){
+                          Get.offNamed('/changeph/true?id=$_userId&&ph=${_user_info[0].phone_number}');
                           print('핸드폰 변경');
                         },
                       )
