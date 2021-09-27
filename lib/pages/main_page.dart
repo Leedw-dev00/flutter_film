@@ -446,7 +446,7 @@ class _MainPageState extends State<MainPage>{
                       height: 3.0,
                       color: Color(0xFF398FE2),
                     ),
-                    Text('공간 인텐리어', style:
+                    Text('공간 인테리어', style:
                     TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13.0
