@@ -4,7 +4,7 @@ import '../models/banner_model.dart';
 
 
 class Banner_Data{
-  static const ROOT = 'https://d-grab.co.kr/film_banner.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/film_banner.php';
   static const _GET_BANNER_ACTION = 'GET_BANNER';
 
   static Future<List<Bbanner>> getBanner() async {

@@ -131,7 +131,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
   Future upload(File imageFile) async{
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("https://d-grab.co.kr/film_info_img$no.php");
+    var uri = Uri.parse("http://gowjr0771.cafe24.com/film_pro_profile/film_info_img$no.php");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
@@ -190,7 +190,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network('https://d-grab.co.kr/film_pro_profile/${_proSelect[0].profile_img}', height: 65.0, width: 65.0, fit: BoxFit.cover,),
+                      child: Image.network('http://gowjr0771.cafe24.com/film_pro_profile/${_proSelect[0].profile_img}', height: 65.0, width: 65.0, fit: BoxFit.cover,),
                     ),
                     SizedBox(width: 20.0,),
                     Column(
@@ -506,7 +506,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                                 },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img1}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
+                                child: Image.network('http://gowjr0771.cafe24.com/film_pro_info/${_proSelect[0].img1}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
                               ),
                             ),
                             SizedBox(width: 10.0,),
@@ -520,7 +520,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img2}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
+                                child: Image.network('http://gowjr0771.cafe24.com/film_pro_info/${_proSelect[0].img2}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
                               ),
                             ),
                             SizedBox(width: 10.0,),
@@ -534,7 +534,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img3}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
+                                child: Image.network('http://gowjr0771.cafe24.com/film_pro_info/${_proSelect[0].img3}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
                               ),
                             ),
                             SizedBox(width: 10.0,),
@@ -548,7 +548,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img4}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
+                                child: Image.network('http://gowjr0771.cafe24.com/film_pro_info/${_proSelect[0].img4}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
                               ),
                             ),
 
@@ -563,7 +563,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
                               },
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15.0),
-                                child: Image.network('https://d-grab.co.kr/film_pro_info/${_proSelect[0].img5}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
+                                child: Image.network('http://gowjr0771.cafe24.com/film_pro_info/${_proSelect[0].img5}', width: 120.0, height: 120.0, fit: BoxFit.cover,),
                               ),
                             ),
 

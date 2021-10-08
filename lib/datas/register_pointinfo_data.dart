@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Register_PointInfo{
-  static const ROOT = "https://www.d-grab.co.kr/film_register_pointinfo.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_register_pointinfo.php";
   static const _ADD_POINITINFO_ACTION = "ADD_POINTINFO";
 
   static Future<String> addPointInfo(String user_id, String point_info, String point_detail) async {

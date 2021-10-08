@@ -7,13 +7,14 @@ class Select_Order{
   String service_size;
   String service_detail;
   String order_type;
+  String dir_pro_id;
   String order_date;
   String pro_user_id;
   String com_name;
   String pro_skill;
   String area1;
 
-  Select_Order({this.user_id, this.service_date, this.skill, this.service_area, this.service_type, this.service_size, this.service_detail, this.order_type, this.order_date, this.pro_user_id, this.com_name, this.pro_skill, this.area1});
+  Select_Order({this.user_id, this.service_date, this.skill, this.service_area, this.service_type, this.service_size, this.service_detail, this.order_type, this.dir_pro_id, this.order_date, this.pro_user_id, this.com_name, this.pro_skill, this.area1});
 
   factory Select_Order.fromJosn(Map<String, dynamic> json){
     return Select_Order(
@@ -25,6 +26,7 @@ class Select_Order{
       service_size: json['service_size'] as String,
       service_detail: json['service_detail'] as String,
       order_type: json['order_type'] as String,
+      dir_pro_id: json['dir_pro_id'] as String,
       order_date: json['order_date'] as String,
       pro_user_id: json['pro_user_id'] as String,
       com_name: json['com_name'] as String,

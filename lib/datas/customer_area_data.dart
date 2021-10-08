@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Area_Data{
-  static const ROOT = 'https://www.d-grab.co.kr/customer_area.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/customer_area.php';
   static const _ADD_AREA_ACTION = 'ADD_AREA';
 
   static Future<String> addArea(String user_id, String area) async {

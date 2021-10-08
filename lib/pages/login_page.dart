@@ -54,9 +54,9 @@ class _LoginPageState extends State<LoginPage>{
     var token = await TokenManager.instance.getToken();
     debugPrint(token.toString());
     if (token.refreshToken == null) {
-      Get.toNamed('/main/false');
+      Get.offAllNamed('/main/false');
     } else {
-      Get.toNamed('/main/true?type=customer');
+      Get.offAllNamed('/main/true?type=customer');
     }
   }
 
@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage>{
         setState(() {
           _isLogin = true;
           print(_isLogin);
-          Get.offNamed('/main/true?type=pro&&id=${idController.text}');
+          Get.offAllNamed('/main/true?type=pro&&id=${idController.text}');
         });
       }else{
         setState(() {
@@ -427,7 +427,7 @@ class _LoginPageState extends State<LoginPage>{
                             ),
                             ),
                             onPressed: (){
-                              Get.toNamed('/searchidpw/true?content=ID');
+                              Get.toNamed('/searchid/true?content=ID');
                               print('아이디 찾기');
                             },
                           ),
@@ -440,7 +440,7 @@ class _LoginPageState extends State<LoginPage>{
                             ),
                             ),
                             onPressed: (){
-                              Get.toNamed('/searchidpw/true?content=비밀번호');
+                              Get.toNamed('/searchpw/true?content=PW');
                               print('비밀번호 찾기');
                             },
                           ),

@@ -152,7 +152,7 @@ class _MatchingPageState extends State<MatchingPage>{
                               child: Row(
                                 children: [
                                   CircleAvatar(
-                                    backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_prolist[index].profile_img}',),
+                                    backgroundImage: NetworkImage('http://gowjr0771.cafe24.com/film_pro_profilehttp://gowjr0771.cafe24.com/film_pro_profile/${_prolist[index].profile_img}',),
                                     backgroundColor: Colors.white,
                                     radius: 25,
                                   ),

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/userCheck_model.dart';
 
 class Login_Data{
-  static const ROOT = "https://www.d-grab.co.kr/film_login.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_login.php";
   static const _GET_LOGIN_ACTION= 'LOGIN';
 
   static Future<List<User_Check>> getLogin(String user_id, String user_pw) async {

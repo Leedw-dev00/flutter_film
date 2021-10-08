@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/order_ProList_model.dart';
 
 class Order_ProList_Data{
-  static const ROOT = "https://www.d-grab.co.kr/film_order_list.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_order_list.php";
   static const _GET_ORDER_LIST_ACTION = "GET_ORDER_LIST";
 
   static Future<List<Order_ProList>> getOrderProList(String order_id) async {

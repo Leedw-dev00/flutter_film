@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/customerCheck_model.dart';
 
 class CustomerCheck_Data{
-  static const ROOT = 'https://d-grab.co.kr/customer_check.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/customer_check.php';
   static const _GET_CS_CHECK = 'CS_CHECK';
 
   static Future<List<Customer_Check>> getCustomerCheck(String user_id) async{

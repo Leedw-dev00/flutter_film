@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class Update_ProProfile_Data{
-  static const ROOT = "https://d-grab.co.kr/film_update_proProfile.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_update_proProfile.php";
   static const UPDATE_INTRO_ACTION = "UPDATE_INTRO";
   static const UPDATE_BASIC_ACTION = "UPDATE_BASIC";
   static const UPDATE_COM_ACTION = "UPDATE_COM";

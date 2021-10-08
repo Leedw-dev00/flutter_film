@@ -4,7 +4,7 @@ import '../models/pro_profile_model.dart';
 
 
 class ProProfile_Data{
-  static const ROOT = "https://d-grab.co.kr/film_pro_profile.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_pro_profile.php";
   static const _GET_PRO_PROFILE = "PRO_PROFILE";
 
   static Future<List<Pro_Profile>> getProProfile(String user_id) async {

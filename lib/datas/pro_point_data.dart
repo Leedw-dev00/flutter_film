@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../models/pro_point_model.dart';
 
 class ProPoint_Data{
-  static const ROOT = 'https://www.d-grab.co.kr/film_pro_point.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/film_pro_point.php';
   static const _GET_POINT_ACTION = 'GET_POINT';
   static const _GET_POINT_INFO_ACTION = 'GET_POINT_INFO';
 

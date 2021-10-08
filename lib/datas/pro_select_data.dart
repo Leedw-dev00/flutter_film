@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/pro_select_model.dart';
 
 class ProSelect_Data{
-  static const ROOT = "https://www.d-grab.co.kr/pro_profile_select.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/pro_profile_select.php";
   static const _GET_PRO_SELECT = "PRO_SELECT";
 
   static Future<List<Pro_Select>> getProSelect(String user_id) async {

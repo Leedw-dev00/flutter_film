@@ -20,7 +20,7 @@ class PointPage extends StatefulWidget {
 }
 
 class _PointPageState extends State<PointPage> {
-  bool _is5000 = false;
+
   bool _is10000 = false;
   bool _is30000 = false;
   bool _is50000 = false;
@@ -150,56 +150,12 @@ class _PointPageState extends State<PointPage> {
                         ),
                         child: Row(
                           children: <Widget>[
-
-                            Checkbox(
-                              value: _is5000,
-                              onChanged: (value){
-                                setState(() {
-                                  _is5000 = value;
-                                  _selectedValue = 5000;
-                                  _is10000 = false;
-                                  _is30000 = false;
-                                  _is50000 = false;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 5.0,),
-                            Text('5000원', style:
-                            TextStyle(
-                              fontSize:20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                            ),
-                            Spacer(),
-                            Text('5000P', style:
-                            TextStyle(
-                              fontSize:20,
-                              fontWeight: FontWeight.w400,
-                              color: Color(0xFF398FE2),
-                            ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 15.0,),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        width: MediaQuery.of(context).size.width*0.75,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 0.5, color: Color(0xFF707070)), // 박스 테두리 만들기
-                          borderRadius: BorderRadius.circular(10), //박스 둥글게 만들기
-                        ),
-                        child: Row(
-                          children: <Widget>[
                             Checkbox(
                               value: _is10000,
                               onChanged: (value){
                                 setState(() {
                                   _is10000 = value;
                                   _selectedValue = 10000;
-                                  _is5000 = false;
                                   _is30000 = false;
                                   _is50000 = false;
                                 });
@@ -241,7 +197,6 @@ class _PointPageState extends State<PointPage> {
                                 setState(() {
                                   _is30000 = value;
                                   _selectedValue = 30000;
-                                  _is5000 = false;
                                   _is10000 = false;
                                   _is50000 = false;
                                 });
@@ -283,7 +238,6 @@ class _PointPageState extends State<PointPage> {
                                 setState(() {
                                   _is50000 = value;
                                   _selectedValue = 50000;
-                                  _is5000 = false;
                                   _is10000 = false;
                                   _is30000 = false;
                                 });
@@ -323,7 +277,7 @@ class _PointPageState extends State<PointPage> {
                         ),
                       ),
                       onPressed: (){
-                        if(_is5000 || _is10000 || _is30000 || _is50000){
+                        if(_is10000 || _is30000 || _is50000){
                           // _addPointInfo();
                           Get.defaultDialog(
 

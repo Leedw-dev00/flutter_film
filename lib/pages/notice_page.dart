@@ -44,7 +44,7 @@ class _NoticePageState extends State<NoticePage>{
           child: Column(
             children: <Widget>[
               subject == '이용방법'?
-              Image.asset('assets/images/way.png', width: Get.width, fit: BoxFit.cover,)
+              Image.asset('assets/images/way.png', width: Get.width, fit: BoxFit.fitWidth,)
               :
               subject == '개인정보이용방침'?
               Text('1. 공간인테리어(필름반장)에서는 이용자들의 개인정보보호를 중요시하며, "개인정보보호법", "정보통신망이용촉진 및 정보보호 등에 관합 법률" 등 개인정보와 관련된 법령상의 개인정보보호 규정을 준수하고 있습니다.'

@@ -99,7 +99,7 @@ class _ProMyPageState extends State<ProMyPage>{
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_user_info[0].profile_img}',),
+                            backgroundImage: NetworkImage('http://gowjr0771.cafe24.com/film_pro_profile/${_user_info[0].profile_img}',),
                             backgroundColor: Colors.white,
                             radius: 45,
                           ),

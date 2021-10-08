@@ -7,6 +7,7 @@ import 'package:iamport_flutter/Iamport_certification.dart';
 import 'package:iamport_flutter/model/certification_data.dart';
 
 
+
 class RegisterPage extends StatefulWidget{
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -17,7 +18,6 @@ class _RegisterPageState extends State<RegisterPage>{
   TextEditingController idController;
   TextEditingController pwController;
   TextEditingController checkController;
-  TextEditingController phoneController;
   TextEditingController comNameController;
   TextEditingController comNoController;
   TextEditingController emailController;
@@ -33,15 +33,17 @@ class _RegisterPageState extends State<RegisterPage>{
   final _valueList4 = ["선택", "조공(3개월 ~ 2년 미만)", "준기공(2년~5년 미만)", "조공(3년 이상)", "실장", "팀장"];
   var _selectedValue4 = '선택';
   List<User_Check> _user_check;
+  String ph;
+
 
   @override
   void initState(){
     _user_check = [];
+    ph = Get.parameters['ph'];
     idController = TextEditingController();
     pwController = TextEditingController();
     checkController = TextEditingController();
     emailController = TextEditingController();
-    phoneController = TextEditingController();
     authController = TextEditingController();
     comNameController = TextEditingController();
     comNoController = TextEditingController();
@@ -71,13 +73,13 @@ class _RegisterPageState extends State<RegisterPage>{
 
   //전문가 회원 회원가입
   _addProUser(){
-    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || emailController.text.isEmpty || phoneController.text.isEmpty || comNameController.text.isEmpty || _selectedValue1 == '선택' || _selectedValue2 == '선택'){
+    if(idController.text.isEmpty || pwController.text.isEmpty || checkController.text.isEmpty || emailController.text.isEmpty || comNameController.text.isEmpty || _selectedValue1 == '선택' || _selectedValue2 == '선택'){
       Get.snackbar('회원가입 실패', '값이 입력되지 않았습니다.\n확인 후 회원가입을 완료해주세요');
       return;
     }else{
       if(_ispwLength && _ispwCheck && _isOverlap == false) {
         print('회원가입 완료');
-        ProUser_Data.addProUser(idController.text.trim(), pwController.text.trim(), _selectedValue4, emailController.text.trim(), phoneController.text.trim(), comNameController.text.trim(), comNoController.text.trim(), _selectedValue1, _selectedValue2, _selectedValue3).then((result){
+        ProUser_Data.addProUser(idController.text.trim(), pwController.text.trim(), _selectedValue4, emailController.text.trim(), ph, comNameController.text.trim(), comNoController.text.trim(), _selectedValue1, _selectedValue2, _selectedValue3).then((result){
         Get.offNamed('/registerProfilePage/true?id=${idController.text}');
         });
         return;
@@ -310,97 +312,22 @@ class _RegisterPageState extends State<RegisterPage>{
                   ),
                 ),
                 SizedBox(height: 20.0,),
-                Text('휴대폰 인증', style:
+                Text('휴대폰 번호', style:
                 TextStyle(
-                  color: Colors.grey,
+                  color: Colors.black,
                   fontSize: 13.0,
                 ),
                 ),
                 SizedBox(height: 5.0,),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 3,
-                      child: TextField(
-                        controller: phoneController,
-                        cursorHeight: 20.0,
-                        style: TextStyle(
-                            fontSize: 13.0, height: 0.5
-                        ),
-                        decoration: InputDecoration(
-                          fillColor: Color(0xFFF8F8F8),
-                          filled: true,
-                          labelText: '휴대폰 번호를 입력하세요 (-제외)',
-                          labelStyle: TextStyle(fontSize: 11.0),
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5.0,),
-                    Expanded(
-                      flex: 1,
-                      child: ElevatedButton(
-                        child: Text('본인인증', style:
-                          TextStyle(
-                            fontSize: 13.0
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF398FE2)
-                        ),
-                        onPressed: (){
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => Certification(
-                                phone: phoneController.text
-                              )
-                            )
-                          );
-                          print('본인인증');
-                        },
-                      ),
-                    )
-                  ],
+                Container(
+                  width: Get.width,
+                  height: 50.0,
+                  color: Color(0xFFd4d4d4),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text('$ph',style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 20.0),),
+                  )
                 ),
-                SizedBox(height: 8.0,),
-                // Row(
-                //   children: <Widget>[
-                //     Expanded(
-                //       flex: 3,
-                //       child: TextField(
-                //         controller: authController,
-                //         cursorHeight: 20.0,
-                //         style: TextStyle(
-                //             fontSize: 13.0, height: 0.5
-                //         ),
-                //         decoration: InputDecoration(
-                //           fillColor: Color(0xFFF8F8F8),
-                //           filled: true,
-                //           labelText: '인증번호를 입력하세요',
-                //           labelStyle: TextStyle(fontSize: 11.0),
-                //           border: OutlineInputBorder(),
-                //         ),
-                //       ),
-                //     ),
-                //     SizedBox(width: 5.0,),
-                //     Expanded(
-                //       flex: 1,
-                //       child: ElevatedButton(
-                //         child: Text('인증', style:
-                //           TextStyle(
-                //               fontSize: 13.0
-                //           ),
-                //         ),
-                //         style: ElevatedButton.styleFrom(
-                //             primary: Color(0xFF398FE2)
-                //         ),
-                //         onPressed: (){
-                //           print('인증 번호 전송');
-                //         },
-                //       ),
-                //     )
-                //   ],
-                // ),
                 SizedBox(height: 20.0,),
                 TextField(
                   controller: comNameController,
@@ -558,7 +485,7 @@ class Certification extends StatelessWidget {
   Widget build(BuildContext context) {
     return IamportCertification(
       appBar: new AppBar(
-        title: new Text('아임포트 본인인증'),
+        title: new Text('필름반장 본인인증'),
       ),
       /* 웹뷰 로딩 컴포넌트 */
       initialChild: Container(
@@ -579,18 +506,19 @@ class Certification extends StatelessWidget {
       /* [필수입력] 본인인증 데이터 */
       data: CertificationData.fromJson({
         'merchantUid': 'mid_${DateTime.now().millisecondsSinceEpoch}',  // 주문번호
-        'company': '아임포트',                                            // 회사명 또는 URL
-        'carrier': 'SKT',                                               // 통신사
-        'name': '홍길동',                                                 // 이름
-        'phone': '01012341234',                                         // 전화번호
+        'company': '필름반장(공간인테리어)',                                            // 회사명 또는 URL
+        // 'carrier': 'KT',                                               // 통신사
+        // 'name': '이도원',                                                 // 이름
+        // 'phone': '01044785303',                                         // 전화번호
       }),
       /* [필수입력] 콜백 함수 */
       callback: (Map<String, String> result) {
-        Navigator.pushReplacementNamed(
-          context,
-          '/main',
-          arguments: result,
-        );
+        Get.back(result: result);
+        // Navigator.pushReplacementNamed(
+        //   context,
+        //   '/loginPage',
+        //   arguments: result,
+        // );
       },
     );
   }

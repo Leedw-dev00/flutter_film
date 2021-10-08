@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/ad_page.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
 import 'package:flutter_film/pages/changephone_page.dart';
+import 'package:flutter_film/pages/changepw_page.dart';
 import 'package:flutter_film/pages/customermy_page.dart';
 import 'package:flutter_film/pages/deposit_page.dart';
 import 'package:flutter_film/pages/matching_page.dart';
+import 'package:flutter_film/pages/noti_page.dart';
 import 'package:flutter_film/pages/notice_page.dart';
 import 'package:flutter_film/pages/orderList_Customer_page.dart';
+import 'package:flutter_film/pages/orderList_dir_page.dart';
 import 'package:flutter_film/pages/profileP_edit_page.dart';
 import 'package:flutter_film/pages/profileP_page.dart';
 import 'package:flutter_film/pages/rating_page.dart';
+import 'package:flutter_film/pages/register_page.dart';
 import 'package:flutter_film/pages/request_page.dart';
 import 'package:flutter_film/pages/review_page.dart';
 import 'package:flutter_film/pages/search_page.dart';
+import 'package:flutter_film/pages/search_pw_page.dart';
+import 'package:flutter_film/pages/search_result_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:flutter_film/pages/sms_page.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -86,10 +92,6 @@ class MyApp extends StatelessWidget {
           name:'/profilePage/:param',
           page: () => ProfilePage(),
         ),
-        // GetPage(
-        //   name:'/registerCustomer/:param',
-        //   page: () => RegisterCPage(),
-        // ),
         GetPage(
           name:'/orderList/:param',
           page: () => OrderListPage(),
@@ -143,8 +145,32 @@ class MyApp extends StatelessWidget {
           page: () => ChangePage(),
         ),
         GetPage(
-          name:'/searchidpw/:param',
+          name:'/changepw/:param',
+          page: () => ChangePW_Page(),
+        ),
+        GetPage(
+          name:'/searchid/:param',
           page: () => SearchPage(),
+        ),
+        GetPage(
+          name:'/searchpw/:param',
+          page: () => SearchPWPage(),
+        ),
+        GetPage(
+          name:'/noti/',
+          page: () => NotiPage(),
+        ),
+        GetPage(
+          name:'/searchResult/:param',
+          page: () => SearchResultPage(),
+        ),
+        GetPage(
+        name:'/dir_orderList/:param',
+        page: () => Dir_OrderListPage(),
+        ),
+        GetPage(
+          name:'/register/:param',
+          page: () => RegisterPage(),
         ),
 
 

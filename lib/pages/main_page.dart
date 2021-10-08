@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/ad_data.dart';
 import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/pro_recom_data.dart';
-import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/ad_model.dart';
 import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/pro_recom_model.dart';
-import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/prolist_page.dart';
 import 'package:flutter_film/widgets/carousel_slider.dart';
@@ -34,7 +32,6 @@ class _MainPageState extends State<MainPage>{
   List<Pro_User> _proUser;
   List<Ad> _ad;
   bool _isCS;
-  List<User_Check> _pro_profile;
   String skill;
   String selected = '서울';
 
@@ -56,6 +53,8 @@ class _MainPageState extends State<MainPage>{
   @override
   void dispose(){
     super.dispose();
+    _getProRecom();
+    _getBanner();
   }
 
   @override
@@ -115,16 +114,6 @@ class _MainPageState extends State<MainPage>{
     });
   }
 
-  //전문가 프로필 불러오기
-  _getProProfile(){
-    UserCheck_Data.getUserCheck(_userId).then((pro_profile){
-      setState(() {
-        _pro_profile = pro_profile;
-      });
-      skill = pro_profile[0].skill;
-      Get.toNamed('/orderList/true?id=$_userId&&skill=$skill');
-    });
-  }
 
   _getBanner(){
     Ad_Data.getAd().then((ad){
@@ -223,21 +212,34 @@ class _MainPageState extends State<MainPage>{
                                 ),
                               ],
                             ),
-
-                            Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
-                              TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w700
-                              ),
+                            Text('5명의 전문가로 비교견적 받아보세', textAlign: TextAlign.center,  style:
+                            TextStyle(
+                                fontSize: 15.0,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w700
                             ),
-                            Text('(3명 이상의 시공자가 바로 견적 보내드립니다)', textAlign: TextAlign.center,  style:
-                              TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w700
-                              ),
                             ),
+                            Text('비교견적 1분 OK', textAlign: TextAlign.center,  style:
+                            TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w700
+                            ),
+                            ),
+                            // Text('5명의 전문가로 비교견적 받아보세요', textAlign: TextAlign.center,  style:
+                            //   TextStyle(
+                            //       fontSize: 15.0,
+                            //       color: Colors.black54,
+                            //       fontWeight: FontWeight.w700
+                            //   ),
+                            // ),
+                            // Text('(3명 이상의 시공자가 바로 견적 보내드립니다)', textAlign: TextAlign.center,  style:
+                            //   TextStyle(
+                            //       fontSize: 14.0,
+                            //       color: Colors.grey,
+                            //       fontWeight: FontWeight.w700
+                            //   ),
+                            // ),
                             SizedBox(height: 25.0,),
                             _userType == 'customer'
                             ?
@@ -391,7 +393,7 @@ class _MainPageState extends State<MainPage>{
                               Row(
                                 children: <Widget>[
                                   CircleAvatar(
-                                    backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_proUser[index].profile_img}',),
+                                    backgroundImage: NetworkImage('http://gowjr0771.cafe24.com/film_pro_profile/${_proUser[index].profile_img}',),
                                     radius: 20,
                                     backgroundColor: Colors.white,
                                   ),
@@ -446,7 +448,7 @@ class _MainPageState extends State<MainPage>{
                       height: 3.0,
                       color: Color(0xFF398FE2),
                     ),
-                    Text('공간 인테리어', style:
+                    Text('협력업체등록', style:
                     TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13.0
@@ -463,6 +465,8 @@ class _MainPageState extends State<MainPage>{
                 color: Colors.white,
                 child: Column(
                   children: <Widget>[
+                    _isLoading
+                        ?
                     Container(
                         height: 50.0,
                         width: Get.width*0.9,
@@ -473,10 +477,12 @@ class _MainPageState extends State<MainPage>{
                           onTap: (){
                             Get.toNamed('/ad/true?ad_id=${_ad[0].ad_id}');
                           },
-                          child: Image.asset('assets/images/space_interior.png', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                          child: Image.asset('assets/images/yerim.png', width: Get.width*0.9, fit: BoxFit.fitHeight,),
                         )
-                    ),
+                    ):Container(child: Text(''),),
                     SizedBox(height: 15.0,),
+                    _isLoading
+                        ?
                     Container(
                         height: 50.0,
                         width: Get.width*0.9,
@@ -487,10 +493,12 @@ class _MainPageState extends State<MainPage>{
                           onTap: (){
                             Get.toNamed('/ad/true?ad_id=${_ad[1].ad_id}');
                           },
-                          child: Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                          child: _isLoading?Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )
-                    ),
+                    ):Container(child: Text(''),),
                     SizedBox(height: 15.0,),
+                    _isLoading
+                        ?
                     Container(
                         height: 50.0,
                         decoration: BoxDecoration(
@@ -500,10 +508,12 @@ class _MainPageState extends State<MainPage>{
                           onTap: (){
                             Get.toNamed('/ad/true?ad_id=${_ad[2].ad_id}');
                           },
-                          child: Image.network('${_ad[2].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                          child: _isLoading?Image.network('${_ad[2].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )
-                    ),
+                    ):Container(child: Text(''),),
                     SizedBox(height: 15.0,),
+                    _isLoading
+                        ?
                     Container(
                         height: 50.0,
                         decoration: BoxDecoration(
@@ -513,9 +523,9 @@ class _MainPageState extends State<MainPage>{
                           onTap: (){
                             Get.toNamed('/ad/true?ad_id=${_ad[3].ad_id}');
                           },
-                          child: Image.network('${_ad[3].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,),
+                          child: _isLoading?Image.network('${_ad[3].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )
-                    ),
+                    ):Container(child: Text(''),),
                   ],
                 ),
               )
@@ -629,14 +639,25 @@ class _MainPageState extends State<MainPage>{
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        title: Text('받은 요청', style:
+                        title: Text('직접시공 요청', style:
                         TextStyle(
                             fontSize: 13.0,
                             fontWeight: FontWeight.bold
                         ),
                         ),
                         onTap: () {
-                          _getProProfile();
+                          Get.toNamed('/dir_orderList/true?id=$_userId');
+                        },
+                      ),
+                      ListTile(
+                        title: Text('견적 요청', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/orderList/true?id=$_userId');
                         },
                       ),
                       ListTile(
@@ -659,6 +680,17 @@ class _MainPageState extends State<MainPage>{
                         ),
                         onTap: () {
                           Get.toNamed('/proMyPage/$_isLogin?$_userType&&id=$_userId');
+                        },
+                      ),
+                      ListTile(
+                        title: Text('공지사항', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/noti/');
                         },
                       ),
                       SizedBox(height: 100.0,),
@@ -689,6 +721,17 @@ class _MainPageState extends State<MainPage>{
                         ),
                         onTap: () {
                           Get.toNamed('/customerMyPage/$_isLogin?user_type=$_userType&&id=$user_id');
+                        },
+                      ),
+                      ListTile(
+                        title: Text('공지사항', style:
+                        TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.bold
+                        ),
+                        ),
+                        onTap: () {
+                          Get.toNamed('/noti/');
                         },
                       ),
                       SizedBox(height: 100.0,),

@@ -13,9 +13,10 @@ class OrderListPage extends StatefulWidget{
 class _OrderListPageState extends State<OrderListPage>{
 
   List<Select_Order> _selectOrder;
-  String user_id;
-  String skill;
 
+  String user_id;
+  String order_id;
+  bool _isLoading;
 
   @override
   void dispose(){
@@ -24,23 +25,32 @@ class _OrderListPageState extends State<OrderListPage>{
 
   @override
   void initState(){
+    super.initState();
+    _isLoading = false;
     user_id = Get.parameters['id'];
-    skill = Get.parameters['skill'];
     _selectOrder = [];
+
     _getSelectOrder();
     print('$user_id');
-    print('$skill');
-    super.initState();
   }
 
   //견적서 불러오기
   _getSelectOrder(){
-    Order_Select_Data.getOrderSelect(user_id, skill).then((selectOrder){
+    Order_Select_Data.getOrderSelect(user_id).then((selectOrder){
       setState(() {
         _selectOrder = selectOrder;
       });
+      if(selectOrder.length == 0){
+        _isLoading = false;
+      }else{
+        _isLoading = true;
+      }
     });
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +82,9 @@ class _OrderListPageState extends State<OrderListPage>{
       ),
       backgroundColor: Color(0xFFf0f0f0),
       body: SafeArea(
-        child: Container(
+        child:
+        _isLoading?
+        Container(
           width: Get.width,
           height: Get.height,
           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 30.0),
@@ -92,7 +104,7 @@ class _OrderListPageState extends State<OrderListPage>{
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(width: _selectOrder[index].order_type == 'dir' ? 2.0 : 0.0, color: _selectOrder[index].order_type == 'dir' ? Colors.redAccent: Colors.white),
+                    //border: Border.all(width: _selectOrder[index].order_type == 'dir' ? 2.0 : 0.0, color: _selectOrder[index].order_type == 'dir' ? Colors.redAccent: Colors.white),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -122,7 +134,7 @@ class _OrderListPageState extends State<OrderListPage>{
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              Text('작업 희망일${_selectOrder[index].order_type}', style:
+                              Text('작업 희망일', style:
                                 TextStyle(
                                   fontSize: 13.0,
                                   fontWeight: FontWeight.w600
@@ -194,7 +206,8 @@ class _OrderListPageState extends State<OrderListPage>{
               );
             },
           )
-        ),
+        ):
+            Text(''),
       ),
     );
   }

@@ -102,7 +102,7 @@ class _RatingPageState extends State<RatingPage>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_profile[0].profile_img}',),
+                        backgroundImage: NetworkImage('http://gowjr0771.cafe24.com/film_pro_profile/${_profile[0].profile_img}',),
                         backgroundColor: Colors.white,
                         radius: 60,
                       ),

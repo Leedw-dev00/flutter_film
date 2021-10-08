@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class ProUser_Data{
-  static const ROOT = "https://d-grab.co.kr/prousers_register.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/prousers_register.php";
   static const _ADD_PRO_ACTION = 'ADD_RRO';
 
   static Future<String> addProUser(String user_id, String user_pw, String skill, String user_email, String phone_number, String com_name, String com_no, String area1, String area2, String area3) async {

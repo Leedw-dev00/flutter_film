@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/get_estimate_model.dart';
 
 class Estimate_Info_Data{
-  static const ROOT = "https://d-grab.co.kr/film_estimate_info.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_estimate_info.php";
   static const _GET_ESTIMATE_ACTION = "GET_ESTIMATE";
 
   static Future<List<Estimate_Info>> getEstimateInfo(String pro_id) async {

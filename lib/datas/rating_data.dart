@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class RegisterRating_Data{
-  static const ROOT = "https://www.d-grab.co.kr/film_rating.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_rating.php";
   static const _ADD_RATING_ACTION = "ADD_RATING";
 
   static Future<String> addRating(String pro_id, String user_id, String rating, String review) async {

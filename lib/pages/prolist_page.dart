@@ -91,7 +91,7 @@ class _ProListPageState extends State<ProListPage>{
                             Row(
                               children: <Widget>[
                                 CircleAvatar(
-                                  backgroundImage: NetworkImage('https://d-grab.co.kr/film_pro_profile/${_user_info[index].profile_img}',),
+                                  backgroundImage: NetworkImage('http://gowjr0771.cafe24.com/film_pro_profile/${_user_info[index].profile_img}',),
                                   radius: 20,
                                   backgroundColor: Colors.white,
                                 ),

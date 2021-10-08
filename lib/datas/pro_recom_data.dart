@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/pro_recom_model.dart';
 
 class ProUser_Data{
-  static const ROOT = 'https://d-grab.co.kr/pro_recom.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/pro_recom.php';
   static const _GET_PRO_RECOM = 'PRO_RECOM';
 
   static Future<List<Pro_User>> getProRecom(String area) async {

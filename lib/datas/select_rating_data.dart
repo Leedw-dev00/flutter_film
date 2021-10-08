@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/select_rating_model.dart';
 
 class SelectRating_Data{
-  static const ROOT = "https://www.d-grab.co.kr/film_select_rating.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_select_rating.php";
   static const _GET_RATING_ACTION = "GET_RATING";
 
   static Future<List<Select_Rating>> getRating(String pro_id) async {

@@ -118,7 +118,7 @@ class _ProfilePPageState extends State<ProfilePPage>{
                   children: <Widget>[
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      child: Image.network('https://d-grab.co.kr/film_pro_profile/${_proSelect[0].profile_img}', height: 65.0, width: 65.0, fit: BoxFit.cover,),
+                      child: Image.network('http://gowjr0771.cafe24.com/film_pro_profile/${_proSelect[0].profile_img}', height: 65.0, width: 65.0, fit: BoxFit.cover,),
                     ),
                     SizedBox(width: 20.0,),
                     Column(
@@ -159,7 +159,7 @@ class _ProfilePPageState extends State<ProfilePPage>{
                           elevation: 0.0,
                         ),
                         onPressed: (){
-                          Get.toNamed("/order/true?id=${user_id}&&type=dir");
+                          Get.toNamed("/order/true?id=${user_id}&&type=dir&&dir_pro_id=${pro_id}");
                         },
                       ),
                     )

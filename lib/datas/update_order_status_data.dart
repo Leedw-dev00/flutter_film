@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class UpdateOrderStatus_Data{
-  static const ROOT = 'https://www.d-grab.co.kr/film_update_orderStatus.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/film_update_orderStatus.php';
   static const _UPDATE_STATUS_ACTION = 'UPDATE_ORDER_SELECT';
 
   static Future<String> updateOrderStatus(String user_id, String order_date) async{

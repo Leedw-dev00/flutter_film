@@ -18,8 +18,10 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
   String pro_id;
   String order_id;
   bool _isLoading;
+  bool _isExsist;
   int count;
   List<Select_Estimate> _selectEstimate;
+  List<Select_Estimate> _checkEstimate;
 
   @override
   void dispose(){
@@ -28,6 +30,9 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
 
   @override
   void initState(){
+    super.initState();
+    _isLoading = false;
+    _isExsist = false;
     count = 0;
     _selectEstimate = [];
     user_id = Get.parameters['user_id'];
@@ -35,9 +40,8 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
     pro_id = Get.parameters['pro_id'];
     order_id = '$user_id${order_date}';
     estimateController = TextEditingController();
+    _checkEstimates();
     _getSelectEstimate();
-    _isLoading = false;
-    super.initState();
   }
 
   //견적 갯수 불러오기
@@ -53,6 +57,25 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
       }else{
         setState(() {
           _isLoading = true;
+        });
+      }
+    });
+  }
+
+  _checkEstimates(){
+    Estimate_Select_Data.getEstimateCheck(order_id, pro_id).then((checkEstimate){
+      setState(() {
+        _checkEstimate = checkEstimate;
+      });
+      if(checkEstimate.length == 0){
+        print('ok');
+        setState(() {
+          _isExsist = false;
+        });
+      }else{
+        print('don');
+        setState(() {
+          _isExsist = true;
         });
       }
     });
@@ -192,7 +215,11 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
                 SizedBox(height: 15.0,),
                 ElevatedButton(
                     onPressed: (){
-                      _addEstimate();
+                      if(_isExsist){
+                        Get.snackbar('','이미 보낸 견적서입니다.');
+                      }else{
+                        _addEstimate();
+                      }
                     },
                     child: Text('견적서 보내기 | 300pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
               ],
@@ -236,7 +263,9 @@ class _SendEstimate_PageState extends State<SendEstimate_Page>{
                 SizedBox(height: 15.0,),
                 ElevatedButton(
                     onPressed: (){
+                      print(_isExsist);
                       _addEstimate();
+
                     },
                     child: Text('견적서 보내기 | 300pt 차감', style: TextStyle(fontWeight: FontWeight.bold),))
               ],

@@ -4,7 +4,7 @@ import '../models/ad_model.dart';
 
 
 class Ad_Data{
-  static const ROOT = 'https://d-grab.co.kr/film_ad.php';
+  static const ROOT = 'http://gowjr0771.cafe24.com/film_ad.php';
   static const _GET_AD_ACTION = 'GET_AD';
   static const _GET_AD_ACTION2 = 'GET_AD2';
 

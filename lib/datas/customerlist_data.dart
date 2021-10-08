@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/customerlist_model.dart';
 
 class CustomerList_Data{
-  static const ROOT = "https://www.d-grab.co.kr/film_customer_list.php";
+  static const ROOT = "http://gowjr0771.cafe24.com/film_customer_list.php";
   static const _GET_CUSTOMERLIST_ACTION = "GET_CUSTOMERLIST";
 
   static Future<List<Customer_List>> getCustomerList(String user_id, String status) async{
