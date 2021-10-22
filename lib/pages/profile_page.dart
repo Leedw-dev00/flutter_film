@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                   icon: Icon(Icons.camera_alt, size:30.0, color: Colors.black,),
                                   onPressed: (){
                                     print('프로필 이미지 변경');
-                                    //getImageGallery();
+                                    getImageGallery();
                                   },
                                 ),
                               )

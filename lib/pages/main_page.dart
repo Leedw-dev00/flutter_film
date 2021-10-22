@@ -475,7 +475,8 @@ class _MainPageState extends State<MainPage>{
                         ),
                         child: GestureDetector(
                           onTap: (){
-                            Get.toNamed('/ad/true?ad_id=${_ad[0].ad_id}');
+                            _isLoading?
+                            Get.toNamed('/ad/true?ad_id=${_ad[0].ad_id}'):CircularProgressIndicator();
                           },
                           child: Image.asset('assets/images/yerim.png', width: Get.width*0.9, fit: BoxFit.fitHeight,),
                         )
@@ -491,7 +492,8 @@ class _MainPageState extends State<MainPage>{
                         ),
                         child: GestureDetector(
                           onTap: (){
-                            Get.toNamed('/ad/true?ad_id=${_ad[1].ad_id}');
+                            _isLoading?
+                            Get.toNamed('/ad/true?ad_id=${_ad[1].ad_id}'):CircularProgressIndicator();
                           },
                           child: _isLoading?Image.network('${_ad[1].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )
@@ -506,7 +508,8 @@ class _MainPageState extends State<MainPage>{
                         ),
                         child: GestureDetector(
                           onTap: (){
-                            Get.toNamed('/ad/true?ad_id=${_ad[2].ad_id}');
+                            _isLoading?
+                            Get.toNamed('/ad/true?ad_id=${_ad[2].ad_id}'):CircularProgressIndicator();
                           },
                           child: _isLoading?Image.network('${_ad[2].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )
@@ -521,7 +524,8 @@ class _MainPageState extends State<MainPage>{
                         ),
                         child: GestureDetector(
                           onTap: (){
-                            Get.toNamed('/ad/true?ad_id=${_ad[3].ad_id}');
+                            _isLoading?
+                            Get.toNamed('/ad/true?ad_id=${_ad[3].ad_id}'):CircularProgressIndicator();
                           },
                           child: _isLoading?Image.network('${_ad[3].ad_img}', width: Get.width*0.9, fit: BoxFit.fitHeight,):Text(''),
                         )

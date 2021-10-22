@@ -280,7 +280,6 @@ class _PointPageState extends State<PointPage> {
                         if(_is10000 || _is30000 || _is50000){
                           // _addPointInfo();
                           Get.defaultDialog(
-
                             title: '결제하기',
                             titleStyle: TextStyle(
                               fontSize: 13.0,
@@ -292,7 +291,7 @@ class _PointPageState extends State<PointPage> {
                               child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
                                 width: Get.width*0.9,
-                                height: Get.height*0.5,
+                                height: Get.height*0.35,
                                 child: Column(
                                   children: <Widget>[
                                     Row(
@@ -483,51 +482,51 @@ class _PointPageState extends State<PointPage> {
                                       ],
                                     ),
                                     SizedBox(height: 5.0,),
-                                    Row(
-                                      children: <Widget>[
-                                        Expanded(
-                                          flex: 2,
-                                          child: Container(
-                                              width: 100.0,
-                                              height: 35.0,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
-                                                  color: Colors.redAccent
-                                              ),
-                                              child: Center(
-                                                child: Text('이메일', style:
-                                                TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                                ),
-                                              )
-                                          ),
-                                        ),
-                                        SizedBox(width: 5.0,),
-                                        Expanded(
-                                          flex: 5,
-                                          child: Container(
-                                              width: 100.0,
-                                              height: 35.0,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(width: 1.0, color: Colors.redAccent),
-                                                  color: Colors.white
-                                              ),
-                                              child: Center(
-                                                child: Text('${_user_info[0].user_email}', style:
-                                                TextStyle(
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.grey,
-                                                ),
-                                                ),
-                                              )
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                    // Row(
+                                    //   children: <Widget>[
+                                    //     Expanded(
+                                    //       flex: 2,
+                                    //       child: Container(
+                                    //           width: 100.0,
+                                    //           height: 35.0,
+                                    //           decoration: BoxDecoration(
+                                    //               border: Border.all(width: 1.0, color: Colors.redAccent),
+                                    //               color: Colors.redAccent
+                                    //           ),
+                                    //           child: Center(
+                                    //             child: Text('이메일', style:
+                                    //             TextStyle(
+                                    //               fontSize: 14.0,
+                                    //               fontWeight: FontWeight.bold,
+                                    //               color: Colors.white,
+                                    //             ),
+                                    //             ),
+                                    //           )
+                                    //       ),
+                                    //     ),
+                                    //     SizedBox(width: 5.0,),
+                                    //     Expanded(
+                                    //       flex: 5,
+                                    //       child: Container(
+                                    //           width: 100.0,
+                                    //           height: 35.0,
+                                    //           decoration: BoxDecoration(
+                                    //               border: Border.all(width: 1.0, color: Colors.redAccent),
+                                    //               color: Colors.white
+                                    //           ),
+                                    //           child: Center(
+                                    //             child: Text('${_user_info[0].user_email}', style:
+                                    //             TextStyle(
+                                    //               fontSize: 14.0,
+                                    //               fontWeight: FontWeight.bold,
+                                    //               color: Colors.grey,
+                                    //             ),
+                                    //             ),
+                                    //           )
+                                    //       ),
+                                    //     )
+                                    //   ],
+                                    // ),
                                     SizedBox(height: 50.0,),
                                     ElevatedButton(
                                       child:Text('충전하기', style:

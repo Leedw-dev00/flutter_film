@@ -21,6 +21,7 @@ import 'package:flutter_film/pages/search_pw_page.dart';
 import 'package:flutter_film/pages/search_result_page.dart';
 import 'package:flutter_film/pages/send_estimate_page.dart';
 import 'package:flutter_film/pages/sms_page.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 import 'package:flutter_film/pages/login_page.dart';
 import 'package:flutter_film/pages/main_page.dart';
@@ -33,6 +34,8 @@ import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:get/get.dart';
 
 void main() {
+  KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";
+  KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";
   runApp(MyApp());
 }
 

@@ -1,15 +1,13 @@
+import 'dart:io';
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/datas/userCheck_data.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
-import 'dart:async';
-// import 'package:flutter_sms/flutter_sms.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
-import 'package:telephony/telephony.dart';
 
-onBackgroundMessage(SmsMessage message) {
-  debugPrint("onBackgroundMessage called");
-}
+
 
 class SmsPage extends StatefulWidget{
   @override
@@ -28,8 +26,6 @@ class _SmsPageState extends State<SmsPage>{
 
   //telephony
   String _message = "";
-  final telephony = Telephony.instance;
-
 
   void dispose(){
     super.dispose();
@@ -45,7 +41,6 @@ class _SmsPageState extends State<SmsPage>{
     _isLoading = false;
     _user_info = [];
     _getUserInfo();
-    initPlatformState();
   }
 
 
@@ -67,36 +62,17 @@ class _SmsPageState extends State<SmsPage>{
     });
   }
 
-  final SmsSendStatusListener listener = (SendStatus status) {
-    // Handle the status
-  };
 
-  onMessage(SmsMessage message) async {
-    setState(() {
-      _message = message.body ?? "Error reading message body.";
-    });
-  }
-
-  onSendStatus(SendStatus status) {
-    setState(() {
-      _message = status == SendStatus.SENT ? "sent" : "delivered";
-    });
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-
-
-    final bool result = await telephony.requestPhoneAndSmsPermissions;
-
-    if (result != null && result) {
-      telephony.listenIncomingSms(
-          onNewMessage: onMessage, onBackgroundMessage: onBackgroundMessage);
+  _textMe() async {
+    if (Platform.isAndroid) {
+      dynamic uri = 'sms:+82 ${_user_info[0].phone_number}?body=[필름반장]\n${user_id.substring(0,5)}****님이 시공전문가님에게 작업 의뢰를 요청하였습니다.\nSMS를 통해 자세한 상담을 진행해주세요.';
+      await launch(uri);
+    } else if (Platform.isIOS) {
+      // iOS
+      dynamic uri = 'sms:0082-${_user_info[0].phone_number}&body=[필름반장]\n${user_id.substring(0,5)}****님이 시공전문가님에게 작업 의뢰를 요청하였습니다.\nSMS를 통해 자세한 상담을 진행해주세요.';
+      await launch(uri);
     }
-
-    if (!mounted) return;
   }
-
 
 
 
@@ -145,14 +121,14 @@ class _SmsPageState extends State<SmsPage>{
                   ),
                   child: Column(
                     children: <Widget>[
-                      ExpandablePanel(
-                        theme: const ExpandableThemeData(
-                          headerAlignment: ExpandablePanelHeaderAlignment.center,
-                        ),
-                        header: Text('- 개인정보 이용약관 [필수]', style: TextStyle(fontSize: 13.0, color: Colors.redAccent)),
-                        collapsed: Text('개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부', softWrap: true, maxLines: 5, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11.0, color: Colors.grey), ),
-                        expanded: Text('개인개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부개인정보 이용에 대한 동의 여부', style: TextStyle(fontSize: 11.0, color: Colors.grey), ),
+                      Text('- 개인정보 이용약관 [필수]', style: TextStyle(fontSize: 13.0, color: Colors.redAccent)),
+                      Container(
+                        width: Get.width,
+                        child: Text('\n\n제 1조(개인정보의 처리 목적)\n\n<공간인테리어>은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용로로는 이용되지 않으며 이용 목적이 변경되는 경우 [개인정보 보호법] 재 18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.\n\n1. 홈페이지 회원 강비 및 관리\n\n회원 가입의사 확인 목적으로 개인정보를 처리합니다.', softWrap: true, maxLines: 20, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 11.0, color: Colors.grey), ),
                       ),
+                      TextButton(onPressed: (){
+                        launch('https://gowjr0771.cafe24.com/privacy.html', forceWebView: true);
+                      }, child: Text('자세히 보기')),
                       Spacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -188,108 +164,12 @@ class _SmsPageState extends State<SmsPage>{
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    ElevatedButton(
-                      onPressed: (){
-                        if(_isAgree == true){
-                          Get.defaultDialog(
-                              title: '',
-                              titleStyle: TextStyle(fontSize: 0.0),
-                              content: Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.topLeft,
-                                      child: IconButton(
-                                        icon: Icon(Icons.close, color: Colors.black,),
-                                        onPressed: (){Get.back();},
-                                      ),
-                                    ),
-                                    SizedBox(height: 10.0,),
-                                    Text('오전 9시 ~ 오후 6시 이외의 시간에는 전화 상담은 삼가해주세요', style:
-                                    TextStyle(
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black54
-                                    ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 15.0,),
-                                    SizedBox(
-                                      width: Get.width*0.3,
-                                      child: ElevatedButton(
-                                        onPressed: () async {
-                                          print('성공');
-                                          await telephony.openDialer(
-                                              "${_user_info[0].phone_number}"
-                                          );
-                                        },
-                                        child: Row(
-                                          children: <Widget>[
-                                            Icon(Icons.phone, color: Colors.blueAccent, size: 20.0,),
-                                            SizedBox(width: 2.0,),
-                                            Text('전화걸기', style:
-                                            TextStyle(
-                                              fontSize: 14.0,
-                                              fontWeight: FontWeight.w600,
-                                              color: Colors.blueAccent,
-                                            ),
-                                              textAlign: TextAlign.center,
 
-                                            ),
-                                          ],
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Colors.white,
-                                          side: BorderSide(
-                                            width: 1.0,
-                                            color: Colors.blueAccent,
-                                          ),
-                                          elevation: 0.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                          );
-                        }else{
-                          Get.snackbar('개인정보 이용동의', '개인정보 이용에 동의하지 않으면 전문가에게 SMS 보내기를 사용할 수 없습니다. 관리자에게 문의하여 전문가 견적을 문의하세요');
-                        }
-
-                      },
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.phone, color: Colors.blueAccent, size: 20.0,),
-                          SizedBox(width: 2.0,),
-                          Text('전화걸기', style:
-                            TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blueAccent,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        side: BorderSide(
-                          width: 1.0,
-                          color: Colors.blueAccent,
-                        ),
-                        elevation: 0.0,
-                      ),
-                    ),
-                    SizedBox(width: 10.0,),
                     ElevatedButton(
                       onPressed: () async {
                         if(_isAgree == true){
                           print('성공');
-                          await telephony.sendSms(
-                            to: "${_user_info[0].phone_number}",
-                            message: "[필름반장]\n${user_id.substring(0,5)}****님이 시공전문가님에게 작업 의뢰를 요청하였습니다.\nSMS를 통해 자세한 상담을 진행해주세요.",
-                            statusListener: listener,
-                          );
+                          await _textMe();
                           Get.snackbar('SMS 전송완료', "SMS 상담 요청서를 해당 전문가에게 전송하였습니다.");
                         }else{
                           Get.snackbar('개인정보 이용동의', '개인정보 이용에 동의하지 않으면 전문가에게 SMS 보내기를 사용할 수 없습니다. 관리자에게 문의하여 전문가 견적을 문의하세요');
@@ -331,8 +211,4 @@ class _SmsPageState extends State<SmsPage>{
         )
     );
   }
-
-  // void _send(){
-  //   _sendSMS(["${_user_info[0].phone_number}"]);
-  // }
 }

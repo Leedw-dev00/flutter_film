@@ -131,7 +131,7 @@ class _ProfileP_EditPageState extends State<ProfileP_EditPage>{
   Future upload(File imageFile) async{
     var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
     var length = await imageFile.length();
-    var uri = Uri.parse("http://gowjr0771.cafe24.com/film_pro_profile/film_info_img$no.php");
+    var uri = Uri.parse("http://gowjr0771.cafe24.com/film_info_img$no.php");
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile("image", stream, length, filename: basename(imageFile.path));
