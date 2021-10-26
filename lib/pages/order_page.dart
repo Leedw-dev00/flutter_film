@@ -47,22 +47,22 @@ class _OrderPageState extends State<OrderPage>{
   void sendFCM(String area, String name) async {
     List<String> tList = []; //메세지 보낼 사람 리스트
 
-
     String title = "필름반장 견적 요청";
     String body = "$name님이 견적을 요청했습니다";
+    String token = "ccf_tZQITACHagFEcFyIe8:APA91bFDyVrKBcP5zOxxGXIwNU9QNh2BD6qvyfczQngfR7A_K-QZ_cqhBNdc6ffCCDrKBRO5K_uqm9qg0-RJJ1cPl_MkVCYd5JfE9l1aQ0ZpkFd_C8mrBP_gPK9xC95AnPOLfmTdjY58";
 
-    final response = await http.post(
-        Uri.parse("https://gowjr0771.cafe24.com/pro_token_init.php"),
-        body: {
-          "order": "WHERE area1=$area OR area2=$area",
-        }); //지역을 변수로 전달, 지역에 해당하는 전문가 리턴 | where 문을 변수로 전달
-
-    Map<String, dynamic> jsonBody =json.decode(response.body);
-
-    tList = jsonBody['pro_token'];
+    // final response = await http.post(
+    //     Uri.parse("https://gowjr0771.cafe24.com/pro_token_init.php"),
+    //     body: {
+    //       "order": "WHERE area1=$area OR area2=$area",
+    //     }); //지역을 변수로 전달, 지역에 해당하는 전문가 리턴 | where 문을 변수로 전달
+    //
+    // Map<String, dynamic> jsonBody =json.decode(response.body);
+    //
+    // tList = jsonBody['pro_token'];
 
     final HttpsCallableResult result = await callable.call(
-      <String, dynamic>{"token": tList, "title": title, "body": body},
+      <String, dynamic>{"token": token, "title": title, "body": body},
     ).whenComplete(() => {}); //firebase message 보내기
   }
 

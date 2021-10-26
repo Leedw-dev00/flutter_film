@@ -41,10 +41,10 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 }
 
 void main() async {
-  KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";
-  KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";
+  KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";
   runApp(MyApp());
 }
 
@@ -210,13 +210,14 @@ class _SplashPageState extends State<SplashPage>{
         String title = message.notification.title;
         String body = message.notification.body;
         showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              content: ListTile(
-                title: Text(title),
-                subtitle: Text(body),
-              ),
-            ));
+          context: context,
+          builder: (context) => AlertDialog(
+            content: ListTile(
+              title: Text(title),
+              subtitle: Text(body),
+            ),
+          )
+        );
       }
     });
 //앱 실행중일때
