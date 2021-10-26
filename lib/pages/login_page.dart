@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_film/datas/customerCheck_data.dart';
 import 'package:flutter_film/datas/login_pro_data.dart';
-import 'package:flutter_film/models/customerCheck_model.dart';
 import 'package:flutter_film/models/userCheck_model.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
-import 'package:flutter_film/pages/registerProfile_page.dart';
-import 'package:flutter_film/pages/register_page.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:kakao_flutter_sdk/all.dart';
 
 class LoginPage extends StatefulWidget{
@@ -79,6 +76,7 @@ class _LoginPageState extends State<LoginPage>{
       print("Error on issuing access token: $e");
     }
   }
+
 
   // _issueAccessToken(String authCode) async {
   //   try {

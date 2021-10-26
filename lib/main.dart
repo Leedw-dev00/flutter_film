@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_film/pages/ad_page.dart';
 import 'package:flutter_film/pages/agree_apge.dart';
@@ -33,9 +35,16 @@ import 'package:flutter_film/pages/profile_page.dart';
 import 'package:flutter_film/pages/registerProfile_page.dart';
 import 'package:get/get.dart';
 
-void main() {
+Future<void> backgroundHandler(RemoteMessage message) async {
+  print(message.data.toString());
+  print(message.notification.title);
+}
+
+void main() async {
   KakaoContext.clientId = "c99170a34dc9eed524501824ea669455";
   KakaoContext.javascriptClientId = "2eced4d5fcf0821c6e5526e0dbfac048";
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -189,6 +198,49 @@ class SplashPage extends StatefulWidget{
 }
 
 class _SplashPageState extends State<SplashPage>{
+
+  @override
+  void initState(){
+    super.initState();
+    FirebaseMessaging.instance.getInitialMessage();
+//firebase message 초기화
+
+    FirebaseMessaging.onMessage.listen((message) {
+      if (message.notification != null) {
+        String title = message.notification.title;
+        String body = message.notification.body;
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: ListTile(
+                title: Text(title),
+                subtitle: Text(body),
+              ),
+            ));
+      }
+    });
+//앱 실행중일때
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      if (message.notification != null) {
+        String title = message.notification.title;
+        String body = message.notification.body;
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              content: ListTile(
+                title: Text(title),
+                subtitle: Text(body),
+              ),
+            ));
+      }
+    });
+//알람을 클릭했을때
+
+    FirebaseMessaging.onBackgroundMessage(backgroundHandler);
+//앱이 백그라운드에서 실행중일때
+  }
+
 
   @override
   Widget build(BuildContext context) {

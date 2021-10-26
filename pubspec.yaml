@@ -52,6 +52,7 @@ dependencies:
   select_form_field: ^2.2.0
   firebase_core: ^1.1.0
   firebase_messaging: ^10.0.9
+  cloud_functions: ^3.0.5
 
 
 
